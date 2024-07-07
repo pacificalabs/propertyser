@@ -1,0 +1,16 @@
+<h6>Hi <%= @to.firstname %>, </h6>
+
+<p class="lead">re: <%= @subject %></p>
+
+<p>A contact form was completed and sent:</p>
+
+<ul class="list-unstyled">
+  <li><%= @message_body %></li>
+  <li><%= @name %></li>
+  <li><%= @phone %></li>
+  <li><%= @email %></li>
+</ul>
+
+Source info:
+
+<%= @location_info %>

@@ -1,0 +1,6 @@
+<div class="mobile-break"></div>
+  <p>Choose 3-5 photos which show off your property</p>
+   <small class="tooltipp form-text text-muted">Select more than one photo using the CTRL <%= "\&#8963;".html_safe %> or COMMAND <%= "\&#8984;".html_safe %> keys</small><br>
+  <%= f.label :photo_section do   %>
+  <%= f.file_field :photos, multiple: true, direct_upload: false, onchange: "validateFiles(this);", required: true %>
+  <% end %>

@@ -1,0 +1,6 @@
+<% content_for(:html_title) { "My Personal Page - Homblok" } %>
+<% if device_is_mobile? %>
+<%= render "mobile_index" %>
+<% else %>
+<%= render "desktop_index" %>
+<% end %>

@@ -1,0 +1,70 @@
+      
+<div class='row buy-property-data-div d-none' id="part-2" label="Bedrooms">
+  <div class='col-md-12 text-center location-items'>
+    <%= image_tag get_aws_url("new_system_icons/bed.svg"), title:"Bedrooms", class:"tt iconz d-block mx-auto", data:{toggle:"tooltip", placement:"top"} %>
+    <%= f.label :min_bedrooms, "How many bedrooms?", class: "order-1" %>
+  </div>
+  <div class='col-md-12 col-11 buy-price-range'>
+    <input type="text" id="bed-slider" name="example_name" slider-type="bed">
+    <%= render 'layouts/range_item_span', min_id: "from-bed-range", max_id: "to-bed-range", image_name: 'bed.svg'  %>
+    <%= f.number_field "min_bedrooms", class: "d-none form-control slider-min", id:"bed-slider-min" %>
+    <%= f.number_field "max_bedrooms", class: "d-none form-control slider-max", id:"bed-slider-max" %>
+  </div>
+</div>
+<div class='row buy-property-data-div d-none' id="part-3" label="Bathrooms">
+  <div class='col-md-12 text-center location-items'>
+    <%= image_tag get_aws_url("new_system_icons/bath.svg"),title: "Bathrooms", class:"tt iconz d-block mx-auto" , data:{toggle:"tooltip", placement:"top"} %>
+    <%= f.label :bathrooms, "How many baths?"%>
+  </div>
+  <div class='col-md-12 col-11 buy-price-range'>
+    <input type="text" id="bath-slider" name="example_name" slider-type="bath">
+    <%= render 'layouts/range_item_span', min_id: "from-bath-range", max_id: "to-bath-range", image_name: 'bath.svg' %>
+    <%= f.number_field "min_bathrooms", class: "d-none form-control slider-min", id:"bath-slider-min" %>
+    <%= f.number_field "max_bathrooms", class: "d-none form-control slider-max", id:"bath-slider-max" %>
+  </div>
+</div>
+<div class='row buy-property-data-div d-none' id="part-4" label="Parkings">
+  <div class='col-md-12 text-center location-items'>
+    <%= image_tag get_aws_url("new_system_icons/car.svg"),title: "Parking Spaces", class:"tt iconz d-block mx-auto"  , data:{toggle:"tooltip", placement:"top"} %>
+    <%= f.label :parking, "How many car spaces?" %>
+  </div>
+  <div class='col-md-12 col-11 buy-price-range'>
+    <input type="text" id="parking-slider" name="example_name" slider-type="parking">
+    <%= render 'layouts/range_item_span', min_id: "from-parking-range", max_id: "to-parking-range", image_name: 'car.svg' %>
+    <%= f.number_field "min_parking", class: "d-none form-control slider-min", id:"parking-slider-min" %>
+    <%= f.number_field "max_parking", class: "d-none form-control slider-max", id:"parking-slider-max" %>
+  </div>
+</div>
+<div class='d-none buy-property-data-div' id="part-5" label="PriceRange">
+  <div class="form-row property-price-range">
+    <div class="col-md-12 price-range-img text-center">
+      <%= image_tag(get_aws_url("new_system_icons/price-lg.svg"), class: "tt iconz col-12 d-block mx-auto") %>
+      <%= f.label :pricing, "What is your price range?" %>
+    </div>
+  </div>
+  <div class="form-row mt-auto">
+    <div class="col-md-12 col-11 buy-price-range position-relative" >
+      <p class="btn btn-primary reset-price-range" id="reset-price-range">
+        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.453 12.8932C20.1752 15.5031 18.6964 17.9488 16.2494 19.3616C12.1839 21.7088 6.98539 20.3158 4.63818 16.2503L4.38818 15.8173M3.54613 11.1071C3.82393 8.49723 5.30272 6.05151 7.74971 4.63874C11.8152 2.29153 17.0137 3.68447 19.3609 7.74995L19.6109 8.18297M3.49316 18.0662L4.22521 15.3341L6.95727 16.0662M17.0424 7.93413L19.7744 8.66618L20.5065 5.93413" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </p>
+      <input type="text" id="price-slider" name="example_name">
+      <span class="irs--round d-flex justify-content-between h-auto">
+        <p id="from-price-range" class="irs-min">2000000</p>
+        <p id="to-price-range" class="irs-max">3000000</p>
+      </span>
+    </div>
+  </div>
+  <div class="d-none">
+    <!-- hidden input fields for range slider -->
+    <%= number_field_tag("min_pricing",nil, class: "d-none form-control", id:"pricing-slider-min") %>
+    <%= number_field_tag("max_pricing",nil, class: "d-none form-control", id:"pricing-slider-max") %>
+  </div>
+  <div class="d-none">
+    <span class="property-title mt-md-3 ml-md-2" id="search-checkbox">SAVE SEARCH AS:</span>
+    <%= f.text_field "saved_search_title",class: "form-control #{device_is_tablet? ? 'col-md-8' : 'col-md-9'} ml-md-4 mt-md-2 save-search-input",placeholder: "Name your search",value: DateTime.now.strftime("%a %d %b %Y %I:%M%p"), autocomplete: "gday" %>
+    <br>
+    <small class="form-text text-muted align-bottom my-2">Homblok will email you when new properties match your search criteria</small>
+  </div>
+</div>

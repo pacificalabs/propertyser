@@ -1,0 +1,35 @@
+<% @address = (@apartment.owner == current_user || @current_user.is_admin?) ? @apartment.full_address_line_1 : @apartment.address_line_1 %>
+<% content_for(:html_title) { "#{@address}, #{@apartment.suburb} - Homblok" } %>
+<% unless device_is_mobile? %>
+<div id="navArrow"></div>
+<% end %>
+<div class="container-fluid">
+  <div class="row mt-md-3 mb-md-5 ml-md-5">
+    <div class="col-md-3 order-sm-1 mt-md-5">
+      <%= render "about", apartment: @apartment  %>
+      <%= render "land_size_internal_space", apartment: @apartment %>
+      <%= render "description" if @descriptors.present? %>
+      <%= render "features_amenities", apartment: @apartment %>
+      <%= render "market_ratings" %>
+      <%= render "floorplan" %>
+      <%= link_to "Return To Search Results",return_to_search_results_path(title: @search_title), class: "btn btn-outline-primary" if @search_title.present? %>
+    </div>
+    <!-- middle column -->
+    <div class="col-md-8 order-sm-2 ml-md-5">
+      <div class="row">
+      <%= render "carousel" %>        
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+      <%= render "map" %>          
+        </div>
+        <div class="col-md-6">
+      <%= render "comments" %>
+      <%= render "edit_delete" %>          
+        </div>
+      </div>
+    </div>
+    <div class="mobile-break"></div>
+    <div class="desktop-break"></div>
+  </div>
+</div>

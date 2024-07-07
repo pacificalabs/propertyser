@@ -1,0 +1,8 @@
+<div class="row reply-field d-none">
+  <!-- <span class="avatar"><%#= user_avatar(current_user) %></span> -->
+  <div class="col-10">
+    <%= form_for :reply, url: replies_path(:comment_id => comment.id) do |f| %>
+    <%= f.text_field :body, class: "form-control mt-2 reply-box", placeholder: "Write a reply...", maxlength: 200 %>
+    <% end %>
+  </div>
+</div>

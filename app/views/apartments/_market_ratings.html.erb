@@ -1,0 +1,30 @@
+<div class="my-md-4 display-inline">
+  <h5 class="mt-3 mb-1 property-info"><%= image_tag(get_aws_url("new_icons/price-small.svg"), class: "iconz mr-md-1 mt-md-1") %>Asking Price</h5>
+  <p class="show-property">$<%= number_with_delimiter @apartment.asking_price %></p>
+</div>
+<% if current_user.id == @apartment.user_id || current_user.is_admin? %>
+  <div class="my-md-4">
+    <h5 class="mt-3 mb-1"><%= "Average Voted Price" %></h5>
+    <p class="show-property"><%= @apartment.market_ratings.exists? ? "$"+number_with_delimiter(@apartment.average_suggested_price) : "No feedback yet" %></p>
+  </div>
+<% end %>
+<% if @apartment.user_id != current_user.id %>
+  <% if @self_rating.blank? %>
+    <div>
+      <%= form_for @apartment.market_ratings.new, url: apartment_market_scores_path(:apartment_id => @apartment.id, ), class: "form-control" do |f| %>
+        <div class="form-row">
+          <%= image_tag(get_aws_url("white_icons/icons8-expensive-64.png"), class: "iconz #{device_is_mobile? ? 'my-2' : 'mt-2'}  mr-1") %>
+          <%= f.number_field :suggested_price, class: "form-control #{device_is_mobile? ? 'col-9' : 'col-10'} ml-2 mt-2 reply-box", placeholder:"How much would you offer?" %>
+          <%= f.button :submit, id: "mobile-feedback-submit", class: "m-2 btn btn-outline-primary" do %>
+            <%= image_tag(get_aws_url('white_icons/icons8-checkmark-40.png')).html_safe %>
+          <% end if device_is_mobile? %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="my-md-4">
+      <h5><%= current_user.is_admin? ? "#{current_user.username}"+" voted" : "YOU VOTED".humanize %></h5>
+      <h5>$<%= number_with_delimiter @self_rating.suggested_price %></h5>
+    </div>
+  <% end %>
+<% end %>

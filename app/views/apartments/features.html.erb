@@ -1,0 +1,40 @@
+<%= render "nav" %>
+<div class="container">
+    <form action="/apartments" method="put">
+      <div class="form-row">
+        <div class="col-md-3"></div>
+        <div id="center-form" class="col-6">
+           <div id="center-form" class="col-12">
+              <br>
+              <label>BEDROOMS</label>
+              <select class="custom-select">
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+              </select>
+              <br>
+              <label>BATHROOMS</label>
+              <select class="custom-select">
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+              </select>
+              <br>
+              <label>PARKING SPACES</label>
+              <select class="custom-select">
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+              </select>
+          </div>
+          <ul class="detectul">
+           <li class="listitems"> <div class="checkbox"><label><input name="check[]" type="checkbox" class="checkbox" value="AirCon">&nbsp;AirCon</label></div></li>
+           <li class="listitems"> <div class="checkbox"><label><input name="check[]" type="checkbox" class="checkbox" value="Built-In Wardrobes"> &nbsp;Built-In Wardrobes</label></div></li>
+           <li class="listitems"> <div class="checkbox"><label><input name="check[]" type="checkbox" class="checkbox" value="Dishwasher">&nbsp;Dishwasher</label> </div></li>
+           <li class="listitems"> <div class="checkbox"><label><input name="check[]" type="checkbox" class="checkbox" value="Floorboards">&nbsp;Floorboards</label></div></li>
+       </ul>
+       <button type="submit" formmethod="put" class="btn btn-outline-primary ">Continue</button>
+   </div>
+    </div>
+    </form>
+</div>

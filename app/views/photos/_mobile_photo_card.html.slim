@@ -1,0 +1,9 @@
+- @apartment.photos.each_with_index do |photo, index|
+  - desc = PhotoDescription.find_by_photo_id(photo.id)&.description
+  - imago = device_is_ipad? ? ipad_photo_edit_page_apartment_image_url(photo) : mobile_photo_edit_page_apartment_image_url(photo)
+
+  .img-wrapper
+    = image_tag(imago,class:"m-1 mobile-photo")
+    .img-overlay.new-caption-area.text-left
+      a href= "#{edit_photo_path(id: photo.id,apartment_id: @apartment.id)}" #{image_tag("white_icons/icons8-edit-property-50.png", class: "iconz")}
+        #{desc.present? ? desc : "Describe this image"}

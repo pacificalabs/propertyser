@@ -1,0 +1,29 @@
+<div class="mt-5 commento">
+  <%= "<h5>Any Feedback?</h5>".html_safe unless @apartment.comments.present? %>
+  <div class="overflow-auto p-3 <%= 'd-none' unless @apartment.comments.present? %> " id="comment-box">
+    <% @apartment.comments.present? && @apartment.comments.order("created_at DESC").each do |comment| %>
+      <%#= render partial: "comments/comment_unit", locals: {comment: comment, reply_class: "r0", replies_allowed: true} %>
+      <% comment.replies.each_with_index do |reply, index| %>
+        <% sub_replies = Comment.where(comment_id: reply.id) %>
+        <div class="reply">
+          <%#= render partial: "comments/comment_unit", locals: {comment: reply, reply_class: "r1", replies_allowed: true} %>
+          <% sub_replies.each do |sub_reply| %>
+            <div>
+              <%#= render partial: "comments/comment_unit", locals: {comment: sub_reply, reply_class: "r2", replies_allowed: false} %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<%= form_for :comment, url: apartment_comments_path(:apartment_id => @apartment.id, ), class: "form-group alert alert-info" do |f| %>
+  <% no_feedback = @apartment.comments.empty? ? "Be the first to give feedback!" : "Give your feedback on this property!"  %>
+  <div class="form-row my-4 mb-2">
+    <div class='reply-avatar <%= "ml-3" if !device_is_mobile? %>'><%= user_avatar(current_user) %></div>
+    <%= f.text_field :body, class: "form-control col-8 ml-md-2 mt-md-3 mt-2 reply-box", placeholder: no_feedback.html_safe, maxlength: 200 %>
+    <%= f.button :submit, id: "mobile-feedback-submit", class: "m-2 btn btn-outline-primary" do %>
+      <%= image_tag(get_aws_url('white_icons/icons8-checkmark-40.png')).html_safe %>
+    <% end if device_is_mobile? %>
+  </div>
+<% end %>

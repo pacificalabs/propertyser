@@ -1,0 +1,44 @@
+<br>
+<div class="col-md-4"></div>
+<p class="text-center mt-md-5 ml-md-5 display-4 property-title">ARCHIVAL SECTION</p>
+<div class="col-md-3"></div>
+<div class="col-md-3"></div>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+  <table class="table" id="adminTable">
+      <thead>
+        <% if @apartments.empty? %>
+        <p class="text-center mt-md-5 ml-md-5 display-5 property-title">None Archived</p>
+        <% else %>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Address</th>
+          <th scope="col">User</th>
+          <th scope="col">Status</th>
+         <th scope="col">Actions
+          <%= link_to "View Archive", archival_path %>
+         </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% end %>
+        <% @apartments.each_with_index do |apartment,i| %>
+        <tr>
+          <th scope="row"><span><%= i+1 %></span></th>
+          <td><%= link_to "#{apartment.house_number} #{apartment.street_address}, #{apartment.suburb} #{apartment.postcode}", apartment_path(apartment), class: "page-link" %></td>
+          <td><%= link_to "#{apartment.user.username}  / #{apartment.user.email} (#{apartment.user.total_properties}) ", admin_owner_path(apartment.user), class: "page-link" %></td>
+          <td>
+            <span class='btn btn-secondary'>Archived</span>
+          </td>
+          <td>
+            <%= link_to("UnArchive", admin_unarchive_path(apartment), class: "btn btn-primary", method: "post") %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-1"></div>
+</div>
+

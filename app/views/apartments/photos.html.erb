@@ -1,0 +1,5 @@
+<%= render "nav" %>
+<%= form_with model: @apartment, local: true  do |form| %>
+  <%= form.file_field :photos, direct_upload: false, multiple: true %><br>
+  <%= form.submit %>
+<% end %>

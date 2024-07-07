@@ -1,0 +1,15 @@
+:timeout: 25
+:queues:
+  - critical
+  - ["high_priority", 4]
+  - ["mailers",1]
+  - ["default", 2]
+  - ["low_priority", 1]
+
+production:
+  :concurrency: 12
+staging:
+  :concurrency: 12
+development:
+  :concurrency: 10
+  :verbose: true

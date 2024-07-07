@@ -1,0 +1,25 @@
+<div class='row'>
+  <h1 class="my-5 py-5">Whats your address?</h1>
+  <div class="col-md-5 mt-sm-3">
+    <%= image_tag get_aws_url("dark_icons/icons8-mailbox-50.png"), class: "feature-icons-edit-new #{'ml-md-2' if !device_is_tablet?}" %>
+    <%= f.label :house_number, "HOUSE NUMBER" %>
+    <%= f.text_field :house_number, class: "form-control", required: true %>
+  </div>
+  <div class="col-md-7 mt-sm-3">
+    <%= image_tag get_aws_url("dark_icons/icons8-road-50.png"), class: "feature-icons-edit-new #{'ml-md-2' if !device_is_tablet?}" %>
+    <%= f.label :street_address, "STREET ADDRESS", class: "text-md-left" %>
+    <%= f.text_field :street_address, class: "form-control mb-md-2", required: true %>
+  </div>
+</div>
+<div class='row'>
+  <div class="col-md-8 mt-sm-3">
+    <%#= image_tag get_aws_url("white_icons/icons8-user-location-50.png"), class: "feature-icons-edit-new #{'ml-md-2' if !device_is_tablet?}" %>
+    <%= f.label :suburb, "SUBURB"%>
+    <%= f.text_field :suburb, class: "form-control", required: true  %>
+  </div>
+  <div class="col-md-4 mt-sm-3">
+    <%= image_tag get_aws_url("dark_icons/icons8-envelope-50.png"), class: "feature-icons-edit-new #{'ml-md-2' if !device_is_tablet?}" %>
+    <%= f.label :postcode, "POSTCODE", class: "text-md-left" %>
+    <%= f.text_field :postcode, class: "form-control", required: true  %>
+  </div>
+</div>

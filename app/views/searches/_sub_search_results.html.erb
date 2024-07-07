@@ -1,0 +1,11 @@
+  <p class="form-text text-muted text-center m-1">Select one or more locations.</p>  
+  <% @location_options = [] %>
+  <% @options.map {|o| @location_options.push ["#{o.locality.titlecase} #{o.state}, #{o.postcode}","#{o.state}-#{o.id}"] } %>
+  <div class="input-group btn-group-toggle ml-4 mb-md-5 justify-content-center" data-toggle="buttons">
+    <% @location_options.each_with_index do |option, index | %>
+    <label class="col-5 p-3 my-1 mx-2 btn btn-light">
+      <%= check_box_tag 'locales[]', option[1] %>
+      <span> <%= option[0] %></span> 
+    </label>
+    <% end %>
+  </div>

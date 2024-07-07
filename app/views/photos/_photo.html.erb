@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-3">
+    <%= image_tag(photo_edit_page_apartment_image_url(photo), alt: "") %>    
+  </div>
+  <% pd = PhotoDescription.find_by_photo_id(photo.id) %>
+  <%= form_for photo, url: photo_path(photo.id), class: "form-group alert alert-info col-md-6" do |f| %>
+  <div class="form-row mb-md-2 ml-md-2">
+    <%= f.text_field :description, class: "form-control col-md-9 ml-md-2 mt-md-2 reply-box", value: pd&.description, maxlength: 200, placeholder: "#{pd&.description.present? ? pd&.description : "Describe this image".upcase }" %>
+    <%= f.hidden_field :apartment_id, value:@apartment.id %>
+    <%= f.submit "#{pd&.description.present? ? 'Update Description' : 'Save Description'}", name:"update", class: "m-md-2 btn #{pd&.description.present? ? 'btn-outline-info' : 'btn-outline-primary' }" %>
+    <% if @apartment.photos.size <= 1 %>
+    <div title="min 1 photo required" class="tt d-inline-block" tabindex="0" data-toggle="tooltip" data-placement="top">
+      <%= f.submit "Delete", name:"delete", pointer_events: "none", disabled:"true", class: "m-md-2 btn btn-outline-info" %>
+    </div>
+    <% else %>
+    <%= f.submit "Delete", name:"delete",  class: "m-md-2 btn btn-outline-info" %>
+    <% end %>
+    <%= f.submit "#{pd&.featured ? 'Feature Photo' : 'Set As Feature Photo'}", name: "#{pd&.featured ? nil : 'featured'}", class: "m-md-2 btn btn-outline-info" %>
+    <% end %>
+  </div>
+</div>

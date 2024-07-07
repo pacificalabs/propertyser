@@ -1,0 +1,38 @@
+<% content_for(:html_title) { "Edit info for #{@apartment.full_address} - Homblok" } %>
+<div class="container-fluid mb-md-5">
+  <div class="row mb-md-5">
+    <div class="col-md-2 order-sm-1 mt-md-5"></div>
+    <div class="col-md-9 order-sm-2 mt-md-5">
+      <%= form_for @apartment, html: {class: "form-row property-title"} do |f| %>
+      <div class="col-md-11">
+      <h2 class="text-center ml-md-4 mt-md-5">EDIT PROPERTY INFO</h2>
+        <%= render "address", f: f %>
+      </div>
+      <div class="col-md-11">
+        <%= render "bed_bath_parking.html.erb", f: f, apartment: @apartment %>
+      </div>
+      <div class="col-md-11">
+        <%= render "features", f: f, apartment: @apartment, feature_icons: @feature_icons %>
+      </div>
+      <div class="col-md-11">
+        <%= render "descriptors", f: f, apartment: @apartment, descriptor_icons: @descriptor_icons %>
+      </div>
+      <div class="col-md-11">
+        <%= render "amenities", f: f, apartment: @apartment, amenity_icons: @amenity_icons %>
+      </div>      
+      <div class="col-md-11">
+        <%= render "values",f:f, apartment: @apartment  %>      
+      </div>
+      <div class="col-md-11">
+        <%#= render "photos", f:f %>
+      </div>
+      <div class="col-md-11">
+        <br>
+        <%= f.submit "SAVE AND LOAD PHOTOS", class: "btn btn-outline-primary col-md-12 mb-md-5",id: "edit-submit", method: "patch" %>
+      </div>
+      <% end %>
+    </div>
+    <div class="mobile-break"></div>
+  </div>
+  <div class="col-sm-1 order-sm-3 mt-md-5"></div>
+</div>

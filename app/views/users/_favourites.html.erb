@@ -1,0 +1,17 @@
+<% unless device_is_mobile? || @favourites&.size <= 1 %>
+<div id="navArrow"></div>
+<% end %>
+
+<div class="row">
+<h1><%= @favourites.size %></h1>
+  <div class="mx-auto col-sm-11 order-sm-2 my-md-5">
+    <% if @favourites.present? %>
+    <%= render partial: "apartments/show_apartment", locals: { apartments: @favourites} %>
+    <% else %>
+    <div class="mobile-break"></div>
+    <p class="text-center display-5 show-property">You haven't saved any properties as favourites yet.</p>
+    <br>
+    <% end %>
+    <div class="mobile-break"></div>
+  </div>
+</div>

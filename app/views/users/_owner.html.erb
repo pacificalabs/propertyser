@@ -1,0 +1,15 @@
+<% unless device_is_mobile? || @apartments&.size < 2 %>
+<div id="navArrow"></div>
+<% end %>
+
+<div class="row">
+  <div class="mx-auto col-md-12 order-sm-2 my-md-5">
+    <% if @apartments.present? %>
+    <%= render partial: "apartments/show_apartment", locals: { apartments: @apartments} %>
+    <% else %>
+    <p class="text-center display-5 show-property">You haven't added any properties to sell yet.</p>
+    <br>
+    <% end %>
+    <div class="mobile-break"></div>
+  </div>
+</div>

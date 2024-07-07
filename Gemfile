@@ -56,6 +56,7 @@ group :development do
   gem "letter_opener"
   gem "brakeman"
   gem "annotate"
+  gem "pry-remote", "~> 0.1.8"
 
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
@@ -80,12 +81,6 @@ gem "awesome_print"
 # Use SCSS for stylesheets
 gem "dartsass-rails", "~> 0.5.0"
 
-# Use Bootstrap for styling
-gem "bootstrap", "~> 5.3.3"
-
-# Font Awesome for icons
-gem "font-awesome-sass", "~> 6.4.2"
-
 # User Agent detection
 gem "browser"
 gem "device_detector"
@@ -102,3 +97,5 @@ gem "image_processing", "~> 1.12"
 gem "sidekiq"
 gem "haml"
 gem "slim"
+
+gem "bcrypt-ruby", "~> 3.1"

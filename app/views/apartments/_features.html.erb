@@ -1,0 +1,21 @@
+<div class="mobile-break"></div>
+<p class="mt-md-3"><%= image_tag(get_aws_url("dark_icons/icons8-extra-features-50.png"), class: "iconz mr-md-1 my-md-1") %>FEATURES</p>
+<p>Choose the features applicable for your property </p>
+<div class="row">
+  <%= f.fields_for @feature do |d| %>
+    <% a = apartment.feature.attributes.keys %>
+    <% array = a.reject { |v| ["apartment_id","id","created_at","updated_at"].include? v } %>
+    <% array.each do |item| %>
+      <div class="col-md-4">
+        <%= d.check_box item.to_sym,{checked: apartment.feature[item], include_id: false, multiple: true}, true, false %>
+        <span>
+          <%= image_tag(@feature_icons[item.to_sym].to_s, class: "#{'iconz' if action_name == 'show'} #{'feature-icons-edit-new' if action_name == "edit" || action_name == "new"} ml-md-2") %>
+        </span>
+        <%= '<br>'.html_safe if device_is_tablet? %>
+        <span class="icon-span">
+          <%= f.label item.to_sym, item.humanize.upcase, class: "align-center mt-md-2" %>
+        </span>
+      </div>
+    <% end %>
+  <% end %>
+</div>

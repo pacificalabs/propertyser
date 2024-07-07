@@ -1,0 +1,13 @@
+<% array = ["/location","/features","/description","/size","/photos","/price"] %>
+<% @mid = '' %>
+<% array.each do |umax| %>
+  <% if umax == "#{request.path}" %>
+    <% @class = "<li class= 'page-item active'><a class='page-link' href='#{umax}'>#{umax.split('/')[1].titleize}</a></li>".strip %>
+  <% else %>
+    <% @class = "<li class= 'page-item'><a class='page-link' href='#{umax}'>#{umax.split('/')[1].titleize}</a></li>".strip %>
+  <% end %>
+  <% @mid+=@class %>
+<% end %>
+<% @start = '<br><nav><ul class="pagination pagination-lg justify-content-center">'.strip %>
+  <% @end =   '</ul></nav>'.strip %>
+<%= (@start+@mid+@end).html_safe %>

@@ -1,0 +1,27 @@
+<div class="container-fluid">
+    <div class="row top-row"></div>
+    <div class="row my-5">
+        <div class="col-md-2"></div>
+        <div class="column col-md-3">
+            <div class="buy-sell-box">
+                <%= link_to search_path, class: 'nav-item nav-link active' do %>
+                <div class="icon-box">
+                    <%= image_tag "buy_sell" %>
+                </div>
+                <% end %>
+            </div>
+            <h3 class="text-center my-5">I'm buying a property</h3>
+        </div>
+        <div class="column col-md-2"></div>
+        <div class="column col-md-3">
+            <%= link_to new_apartment_path, class: 'nav-item nav-link active' do %>
+            <div class="buy-sell-box">
+                <div class="icon-box">
+                    <%= image_tag "buy_sell" %>
+                </div>
+            </div>
+            <% end %>
+            <h3 class="text-center my-5">I'm selling a property</h3>
+        </div>
+    </div>
+</div>

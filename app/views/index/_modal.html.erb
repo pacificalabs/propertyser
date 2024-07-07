@@ -1,0 +1,75 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="text-white navbar navbar-expand-md navbar-dark bg-dark">
+          <%= image_tag(get_aws_url("logo.png")) %>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container" id=myGroup>
+          <div class="collapse" id="collapseExample" data-parent="#myGroup">
+            <div class="card card-body">
+              <p>Choose a Username</p>
+              <%= form_with url: signup_path do |f| %>
+
+              <div class="field">
+                <%= f.hidden_field(:url, value: request.original_fullpath) %>
+                <%= f.text_field :username, autofocus: true, placeholder:"Username*" %>
+              </div>
+              <div class="field">
+                <br>
+              <p>Your details</p>
+                <%= f.text_field :firstname, autofocus: true, placeholder:"First Name*" %>
+                <%= f.text_field :surname, placeholder: "Surname*" %>
+                <br>
+                <br>
+                <%= f.telephone_field :phone, placeholder: "Mobile" %><%= f.email_field :email, autocomplete: "email", placeholder: "Email*" %>
+              </div>
+
+              <div class="field">
+                <% if @minimum_password_length %>
+                <em>(<%= @minimum_password_length %> characters minimum)</em>
+                <% end %><br />
+                <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password*" %>
+                <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm Password*" %>
+              </div>
+              <br>
+              <div class="actions">
+                <%= f.submit "Sign up", class:"btn btn-info"  %>
+                <button type="button" class="btn btn-outline-primary new-existing-user" data-target="#collapseExample2" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Existing User?</button>
+              </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="collapse show" id="collapseExample2" data-parent="#myGroup">
+            <div class="card card-body">
+              <p>Already Registered? Log In</p>
+              <%= form_with url: login_path do |f| %>
+              <div class="field">
+                <%= f.hidden_field(:url, value: request.original_fullpath) %>
+                <%= f.label :email %><br />
+                <%= f.email_field :email, autofocus: true, autocomplete: "Email" %>
+              </div>
+              <div class="field">
+                <%= f.label :password %><br />
+                <%= f.password_field :password, autocomplete: "current-password" %>
+              </div>
+              <br>
+              <div class="actions">
+                <%= f.submit "Log in", class:"btn btn-info" %>
+                <button type="button" class="btn btn-outline-primary new-existing-user" data-target="#collapseExample" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">New User?</button>
+              </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer text-white navbar navbar-expand-lg navbar-dark bg-dark">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

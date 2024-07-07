@@ -1,0 +1,40 @@
+<div class="container-fluid mb-md-5">
+  <div class="row mb-md-5">
+    <div class="col-md-1 mt-md-5"></div>
+    <div class="col-md-8 mt-md-5">
+      <div class="row mt-md-2">
+        <h2 class="mt-md-5">
+          <%= image_tag get_aws_url("dark_icons/icons8-home-address-50.png"), class: "title-icons mb-md-1"%>
+          <%= @apartment.full_address.upcase %>
+        </h2>
+      </div>
+      <% @photos&.each_with_index do |photo,index| %>
+        <div class="row mt-md-2 mb-md-5">
+          <%= render "photo", photo: photo, index: index %>
+        </div>
+      <% end %>
+      <% if @floorplans.present? %>
+        <h5 class="mt-md-1"><%= image_tag(get_aws_url("white_icons/icons8-floor-plan-50.png"), class: "iconz mr-md-1 mb-md-3") %>Floorplans</h5>
+        <div class="row mt-md-2 mb-md-5">
+          <% @floorplans&.each_with_index do |floorplan,index| %>
+            <%= render "floorplan", floorplan: floorplan, index: index %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-3">
+      <div class="my-md-5">
+        <p class="property-title">ADD A PHOTO</p>
+        <%= render "new" %>
+      </div>
+      <div class="my-md-5">
+        <p class="property-title">ADD A FLOORPLAN</p>
+        <%= render partial: "floorplans/new" %>
+      </div>
+      <div class="my-md-5">
+        <%= link_to "Edit Details", edit_apartment_path(@apartment), class: "text-left mt-md-5 btn btn-info col-md-8" %>
+        <%= link_to "Submit Property", submit_path(property_id: @apartment.id), class: "text-left mt-md-1 btn btn-info col-md-8" %>
+      </div>
+    </div>
+  </div>
+</div>

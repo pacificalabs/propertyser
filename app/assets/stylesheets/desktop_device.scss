@@ -1,0 +1,144 @@
+@media only screen and (min-width: 600px) and (max-width: 1120px)  {
+
+body {
+    font-size: calc(12px + 3 * ((100vw - 320px) / 680));
+  }
+
+.icon-span {
+  display: block;
+}
+
+.nav-link {
+  display: block;
+  padding: 0 0.7rem;
+}
+
+#user_avatar_profile_name {
+  margin-right: -35vw;
+}
+
+.tablet-fave {
+  display: block;
+  margin-right: 120px !important;
+}
+
+.tablet-cant-find {
+  display: block;
+  margin-bottom: 10vh;
+}
+
+.tablet-card-border {
+  margin: 5vh -10vw 2vh 8vw;
+  min-width: 80%;
+  border: 1px solid #17a2b8;
+}
+
+.dropdown {
+  margin-left: 5vw;
+}
+.navbar img {
+  margin-right: 1vw;
+}
+
+#sell-submit, #edit-submit, #property-submit {
+  margin-bottom: 10vh;
+}
+
+#property-submit {
+  max-width: 90%;
+  margin: 2vh 5vh 10vh 3vh;
+}
+
+#profile-pic {
+  display: block;
+}
+
+.bedbathpark {
+  margin-top: 1.5rem !important;
+}
+
+ #mobile-feedback-submit > img {
+  max-width: 25px;
+  margin: -2px -9px;
+ }
+
+ #mobile-feedback-submit {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+ }
+
+ .red-text {
+  color: red !important;
+ }
+
+}
+
+@media only screen and (min-width: 1121px){
+
+  #strapline-logo {
+    max-width: 50%;
+    padding: 0.1rem;
+  }
+
+  #strapline {
+    margin: 1.2rem 0.2rem 0rem -7rem;
+  }
+
+  .desktop-strapline:hover {
+    text-decoration: none;
+  }
+
+
+    #contact-column{
+    min-height: 46rem;
+  }
+
+
+  .dropdown {
+    margin-left: 30vw;
+  }
+
+}
+
+
+@media only screen and (min-width: 600px) {
+
+.desktop-break {
+  margin: 12vh 0;
+}
+
+.reply-field {
+  margin-left: 3vw;
+  background-color: #fff !important;
+}
+
+  #apartment-card {
+    height: 100%;
+    background-color: #F6F6F6;
+    /*border-radius: 5%;*/
+  }
+  img.like {
+    width: 16px;
+    vertical-align: middle;
+    border-style: none;
+    height: 16px;
+    margin-top: 0.6vh; 
+  }
+
+  .r0 {
+    margin-left: 50px;
+  }
+
+  .r1 {
+    margin-left: 70px;
+  }
+
+  .r2 {
+    margin-left: 95px;
+  }
+  #review-details {
+    margin-left: 7rem !important;
+  }
+
+}

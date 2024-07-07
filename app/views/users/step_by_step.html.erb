@@ -1,0 +1,18 @@
+<div class="row small-screen">
+  <div class="column col-md-2"></div>
+  <div class="col-md-8">
+    <h1 class="text-center mt-md-5">ABOUT ME</h2>
+      <div class="list-group my-md-5 list-group-horizontal" id="list-tab" role="tablist">
+        <a class="list-group-item col-md-4 ml-md-5 active text-center" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">MY PROPERTIES</a>
+        <a class="list-group-item col-md-4 list-group-item-action  text-center" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">MY FAVOURITES</a>
+        <a class="list-group-item col-md-4 ml-md-5 active text-center" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">MY DETAILS</a>
+      </div>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active mb-md-5" id="list-home" role="tabpanel" aria-labelledby="list-home-list"><%= render "owner" %></div>
+        <div class="tab-pane fade mb-md-5" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list"><%= render "favourites" %></div>
+        <div class="tab-pane fade mb-md-5" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list"><%= render "my_details" %></div>
+      </div>
+    </div>
+    <div class="column col-md-2"></div>
+  </div>
+</div>

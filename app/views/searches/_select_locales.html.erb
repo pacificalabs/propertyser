@@ -1,0 +1,10 @@
+<div id="part-1" class="buy-property-data-div" label="Locations">
+      <div class="location-items text-center">
+            <%= image_tag get_aws_url("new_system_icons/location.svg"), class: "tt iconz d-block mx-auto"%>
+            <%= f.label :location, "What locations are you interested in?", class: 'w-100' %>
+      </div>
+      <div id="scrollable-location-menu" class="row">
+            <input class="form-control location-input col-md-12 col-sm-8 text-left text-capitalize typeahead" type="text" placeholder="Search using suburbs and postcodes" id="locations-list-input">
+            <div id="hidden-location-data"></div>
+      </div>
+</div>

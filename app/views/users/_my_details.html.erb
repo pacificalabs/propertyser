@@ -1,0 +1,54 @@
+<div class="row mt-md-5">
+  <div class="col-md-1" id="contact-column"></div>
+  <div class="col-md-11">
+    <%= form_with url: user_path(user_id: current_user.id), local:true, method: "PATCH", class:"form-row", id: "personal-page-form" do |f| %>
+      <div class="col-md-7">
+        <%= image_tag get_aws_url("white_icons/icons8-name-50.png"), class: "feature-icons-edit-new ml-md-2" %>
+        <%= f.label :username, :"Update your details" %>
+        <%= f.text_field :username, autofocus: true, placeholder:"Your Username",required:true, class: "form-control mb-md-3",value: current_user.username %>
+        <div class="form-row">
+          <div class="col-md-6">
+            <%= image_tag get_aws_url("white_icons/icons8-name-50.png"), class: "feature-icons-edit-new ml-md-2" %>
+            <%= f.label :firstname, "First Name" %>
+            <%= f.text_field :firstname, placeholder:"Your First Name",required:true, class: "form-control mb-md-3",value: current_user.firstname %>
+          </div>
+          <div class="col-md-6">
+            <%= image_tag get_aws_url("white_icons/identification-documents.png"), class: "feature-icons-edit-new ml-md-2" %>
+            <%= f.label :surname, "Surname" %>
+            <%= f.text_field :surname, placeholder:"Your Surname",required:true, class: "form-control mb-md-3",value: current_user.surname %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-12">
+            <%= image_tag get_aws_url("white_icons/icons8-mobile-50.png"), class: "feature-icons-edit-new" %>
+            <%= f.label :phone %>
+            <%= f.text_field :phone, placeholder:"Your Phone",required:true, class: "form-control mb-md-3", value: current_user.phone %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-12">
+            <%= image_tag get_aws_url("white_icons/icons8-email-50.png"), class: "feature-icons-edit-new ml-md-2" %>
+            <%= f.label :email %>
+            <%= f.text_field :email, placeholder:"Your Email Address",required:true, class: "form-control mb-md-3", value: current_user.email %>
+          </div>
+        </div>
+        <%= f.submit "Save", id: "my-details-send", class:"btn btn-outline-info col-md-12"  %>
+        <div class="actions">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <%= f.label user_avatar_profile_label, id: "profile-avatar-label" %>
+        <span id="profile-pic"></span>
+        <%= f.label :avatar do %>
+          <%= f.file_field :avatar, direct_upload: false %>
+        <% end %>
+        <br>
+        <% if current_user.avatar.attached?  %>
+          <%= image_tag profile_pic_url(current_user), id: "profile-avatar" %>
+        <% else %>
+          <img id="profile-avatar"></img>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+</div>

@@ -1,0 +1,28 @@
+<% if @features.present? %>
+  <h5 class="mt-3 mb-1"><%= image_tag(get_aws_url("dark_icons/icons8-extra-features-50.png"), class: "#{'d-none' if device_is_mobile?} iconz mr-md-1 mb-md-3")%>Features</h5>
+<% end %>
+<% if apartment.strata.present? %>
+  <span data="placement-top" class="mr-1 my-2 tt" data="toggle-tooltip" title="Strata Title">
+    <%= image_tag(get_aws_url("white_icons/icons8-apartment-50.png"), class: "iconz mr-md-1 my-md-1") %>
+    <%#= image_tag(get_aws_url("white_icons/icons8-checkmark-50.png"), class: "iconz mr-md-1 my-md-1") %>
+  </span>
+<% end %>
+<% if @features.present? %>
+  <div class="mt-md-1">
+    <% @features&.each do|feature| %>
+      <%= image_tag(@feature_icons[feature.to_sym].to_s, title:feature.humanize.titlecase, class: "tt iconz mr-1 my-2",data:{toggle:"tooltip", placement:"top"}) %>
+    <% end %>
+  </div>
+<% end %>
+<% if @amenities.present? %>
+  <div class="mt-md-1">
+    <h5 class="mt-3 mb-1">Amenities</h5>
+    <% @amenities&.each do|amenity| %>
+      <%= image_tag(@amenity_icons[amenity.to_sym].to_s, title: amenity.humanize.titlecase,class: "tt iconz mr-1 my-2",data:{toggle:"tooltip", placement:"bottom"}) %>
+    <% end %>
+  </div>
+<% end %>
+<div class="mt-2">
+  <h5 class="mt-3 mb-1"><%= image_tag(get_aws_url("dark_icons/icons8-create-50.png"), class: "#{'d-none' if device_is_mobile?} iconz mr-md-1 mb-md-3") %>More Details</h5>
+  <p class="text-wrap text-break show-property"><%= apartment.description.present? ? apartment.description : "Not Provided"  %></p>
+</div>

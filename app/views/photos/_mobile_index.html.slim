@@ -1,0 +1,15 @@
+h5.mobile_photos.ml-1 
+  = link_to image_tag("dark_icons/return.png", class: "iconz"), apartment_path(@apartment), class: "nounderline"
+= render "mobile_photo_card"
+p.property-title.mt-4
+  = @apartment.photos.present? ? "ADD ANOTHER PHOTO" : "ADD A PHOTO"
+= render "new"
+- if @floorplans.blank?
+  = image_tag("dark_icons/icons8-floor-plan-50.png", class: "iconz mr-md-1 mb-md-3")
+  p.property-title ADD A FLOORPLAN
+  = render partial: "floorplans/new"
+- @floorplans&.each_with_index do |floorplan,index|
+  = render "floorplan", floorplan: floorplan, index: index
+= link_to "Submit Property", submit_path(property_id: @apartment.id), id: "property-submit", class: "text-left mt-md-1 btn btn-info col-md-8"
+.mobile-break
+.mobile-break

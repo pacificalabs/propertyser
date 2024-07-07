@@ -1,0 +1,22 @@
+<div class="comment-container">
+  <div class="row mt-2">
+    <span class="comment-avatar <%= replies_allowed ? '' : 'ml-4' %> "><%= user_avatar(comment.user) %></span>
+    <div class="<%= replies_allowed ? 'col-10' : 'reply-grey col-9' %> mt-md-1 comment-item">
+      <span class="comment-delete">
+        <%= link_to("<span aria-hidden='true'>&times;</span>".html_safe, delete_comment_path(comment.id), method: "delete") if current_user.is_admin? || comment.user == current_user %>
+      </span>
+      <b class="<%= current_user.is_admin? || comment.user == current_user ? "comment-owner" : "comment-user"  %>"><%= comment.user.username %>:</b>
+      <br>
+      <span class="display-inline comment-body ml-3">
+        <%= comment.body %>
+      </span>
+      <div class="like-counter"><span><%= comment.likes.size %></span></div>
+    </div>
+    <br>
+    <%= image_tag get_aws_url("white_icons/icons8-facebook-like#{"-outline" unless current_user.already_liked_comment?(comment)}-64.png"), class: " #{reply_class} like"  %>
+    <%= link_to "#{current_user.already_liked_comment?(comment) ? 'Unl' : 'L'}ike", like_comment_path(comment.id), method: "update", class: "like-reply" %>
+    <%= link_to "Reply", 'javascript:;', class: "like-reply ml-2" if replies_allowed %>
+    <span class="comment-time ml-2"><%= time_ago_in_words comment.created_at %> ago </span>
+    <%= render partial: "comments/reply-box", locals: {comment: comment, replies_allowed: replies_allowed } %>
+  </div>
+</div>

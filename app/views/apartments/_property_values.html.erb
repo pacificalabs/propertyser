@@ -1,0 +1,6 @@
+<div class="bedbathpark mt-2 ml-xs-5">
+  <%= image_tag get_aws_url("new_icons/bed.svg"), title:"Bedrooms", class:"tt iconz mb-md-2", data:{toggle:"tooltip", placement:"top"} %><span class="show-property tt badge<%= ' badge-light' if action_name == 'owner' %> alert-link property-value" title="Bedrooms" data-toggle="tooltip" data-placement="top"}><%= apartment.bedrooms || 0 %></span>
+  <%= image_tag get_aws_url("new_icons/bath.svg"), title: "Bathrooms", class:"tt iconz mb-md-2" , data:{toggle:"tooltip", placement:"top"} %><span class="show-property tt badge #{'badge-light' if action_name == 'owner'} alert-link property-value" title:="Bathrooms" data-toggle="tooltip" data-placement="top"><%= apartment.bathrooms || 0 %></span>
+  <%= image_tag get_aws_url("new_icons/car.svg"), title: "Parkings", class:"tt iconz mb-md-2" , data:{toggle:"tooltip", placement:"top"} %><span class="show-property tt badge #{'badge-light' if action_name == 'owner'} alert-link property-value" title="Parking Spaces"  data-toggle="tooltip" data-placement="top"><%= apartment.parking_spaces || 0 %></span>
+  <br>
+</div>

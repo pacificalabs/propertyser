@@ -1,0 +1,49 @@
+<div class='container-xxl py-5'>
+  <div class='container'>
+    <div class='text-center mx-auto mb-5 fadeInUp'  style='max-width: 600px;'>
+      <h1 class='mb-3'>Login</h1>
+    </div>
+    <div class='row g-4'>
+      <div class='col-md-6 fadeInUp' >
+        <%= image_tag(get_aws_url('image5traditionalhouse.jpg'), class: 'img-fluid') %>
+      </div>
+      <div class='col-md-6'>
+        <div class='wow fadeInUp' data-wow-delay='0.5s'>
+          <p class='mb-4'>Already Registered? Log In</p>
+          <%= form_with(url: login_path, local: true, class: 'form-group') do |f| %>
+            <div class='row g-3'>
+              <div class='col-12'>
+                <div class='form-floating'>
+                  <%= f.email_field :email, autocomplete: 'Email', class: 'form-control', placeholder: 'Email', required: true %>
+                  <%= f.label :email %>
+                </div>
+              </div>
+              <div class='col-12'>
+                <div class='form-floating'>
+                  <%= f.password_field :password, autocomplete: 'current-password', class: 'form-control', placeholder: 'Password', required: true %>
+                  <%= f.label :password %>
+                </div>
+              </div>
+              <div class='col-12'>
+                <%= link_to "I've forgotten my password", forgot_my_password_path, class: 'run-saved-search' %>
+              </div>
+              <div class='col-md-6'>
+                <div class='form-floating'>
+                  <%= f.submit 'Log in', class:'btn btn-primary w-100 py-3' %>
+                </div>
+              </div>
+              <div class='col-md-6'>
+                <div class='form-floating'>
+                  <%= link_to 'New User?', mobile_signup_path, class:'btn btn-primary w-100 py-3' %>
+                </div>
+              </div>
+              <div class='col-12'>
+                <small>By logging in to Homblok, I agree to the  <strong><a class="about nounderline" href="/terms-and-conditions"> <b>Conditions of Use</b></a></strong> and <a class="about nounderline" href="/privacy-policy"> <b> Privacy Policy</b></a>.</small>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

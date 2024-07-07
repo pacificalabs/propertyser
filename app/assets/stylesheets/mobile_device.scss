@@ -1,0 +1,277 @@
+@media only screen and (max-width: 767px) {
+  #location {
+    .irs--round .irs-from,
+    .irs--round .irs-to,
+    .irs--round .irs-single{
+      font-size: 15px;
+    }
+    #part-5 .property-price-range{
+      margin-bottom: 0px;
+    }
+    #startSearching{
+      margin: 1rem 0 !important;
+    }
+    .buy-back-button {
+      margin-right: auto !important;
+      float: left;
+    }
+    .buy-next-button {
+      margin-left: auto !important;
+      float: right;
+    }
+    .mobile-buy-button{
+      margin-top: 0px !important;
+      position: relative;
+    }
+  }
+
+
+  .home-img-item{
+    margin: 0px 10px;
+  }
+  
+  img.tt.iconz {
+    max-width: 7.3rem;
+    max-height: 7.3rem;
+  }
+  .price-range-img,
+  .count-items {
+    justify-content: center;
+  }
+  .location-items {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .location-input.form-control.tt-hint{
+    left: 50% !important;
+    width: 70%;
+    transform: translateX(-50%);
+  }
+  .location-input.form-control {
+    font-size: 16px;
+    width: 70%;
+    margin: 0px auto 0px;
+  }
+
+  .save-search-input{
+    font-size: 16px;
+  }
+  
+  .buy-price-range {
+    margin: 0px auto;
+  }
+}
+@media only screen and (max-width: 575px) {
+  .location-input.form-control.tt-hint {
+    left: calc(50% + 14px) !important;
+    width: 90%;
+  }
+  .location-input.form-control {
+    width: 90%;
+  }
+  .input-number {
+    padding: 4px !important;
+    border: 3px solid #116d7e !important;
+    font-size: 18px !important;
+  }
+  .plus-minus-icon {
+    max-width: 42px !important;
+  }
+  #location .side-image-icon {
+    max-height: 28px;
+    max-width: 28px;
+  }
+}
+
+@media only screen and (max-width: 376px) {
+  .landing-text {
+    font-size: 2rem;
+  }
+
+  .nav-buffer {
+    margin-top: 45vh;
+  }
+
+  body > nav.navbar.navbar-expand-lg.fixed-top.navbar-dark.bg-dark > a:hover {
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+}
+
+@media only screen and (max-width: 415px) {
+  .plus,.minus{
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  
+  .commento {
+   background-color: #17a2b80d;
+   border-radius: 5%; 
+   }
+
+ .small-screen {
+  margin-top: 1vh !important;
+  }
+#landing-page-container {
+  margin-top: -11vh !important;
+}
+
+.reply-field {
+  margin-left: 12vw;
+}
+
+img.like {
+  width: 16px;
+  vertical-align: middle;
+  border-style: none;
+  height: 16px;
+  margin-top: 0.6vh; 
+}
+
+.r0 {
+  margin-left: 40px;
+}
+
+.r1 {
+  margin-left: 85px;
+}
+
+.r2 {
+  margin-left: 105px;
+}
+
+#comment-box {
+  max-height: 20rem;
+}
+
+#mobile-feedback-submit {
+  width: 8vw;
+  height: 8vw;
+  border-radius: 50%;
+  position: relative;
+}
+
+#mobile-feedback-submit img {
+  max-height: 26px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+h1, h4,h6, .alertnotice, #comment-delete a {
+  color: #5a6268 !important;
+}
+
+h2, h3, h5  {
+  color: #17a2b8 !important;
+}
+.bedbathpark .iconz {
+  margin-right: 0.05rem !important;
+}
+
+.sticky-bottom {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  z-index: 1020;
+}
+
+.btn-link, .btn-link:hover, .btn-link:active, .btn-link:visited {
+  color: #17a2b8;
+  text-decoration: none;
+}
+
+.property-value {
+  margin-left: -1rem;
+}
+
+.img-wrapper {
+  position: relative;
+}
+
+.img-responsive {
+  width: 100%;
+  height: auto;
+}
+
+.img-overlay {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  padding: 15px;
+  text-align: left;
+  background-color: #17a2b861;
+}
+
+.img-overlay:before {
+  content: ' ';
+  display: block;
+  /* adjust 'height' to position overlay content vertically */
+  height: 10%;
+}
+
+.card {
+  border: 1px solid #fff;
+  color: #17a2b8;
+}
+
+h2.mobile_photos {
+  font-size: 1.3rem
+}
+
+.feature-icons-edit-new {
+  max-width: 1.9rem;
+  margin: 0.5rem 0.3rem;
+}
+
+.mobile-break {
+  border: 1px solid #ededee;
+  min-width: 100%;
+  position: relative;
+  margin: 2rem 0;
+}
+
+.carousel-fullscreen .carousel-inner .carousel-item {
+  height: 25rem;
+}
+
+.desktop-strapline {
+  color: #fff;
+}
+
+#strapline-logo {
+  position: relative;
+  min-width: 100%;
+  display: block;
+  max-height: 4rem;
+}
+
+.iconz {
+  max-width: 1.9rem;
+  margin: 0 4vw 0 0;
+}
+
+.apartment-card .iconz {
+  margin: 0 0;
+}
+
+#location select {
+  max-width: 49%
+}
+
+#max_bedrooms, #max_bathrooms, #max_parking, #max_pricing {
+  margin-left: 1.2vw;
+}
+form {
+  margin: 0 0 4vh 0;
+}
+
+#homblok-container, #homblok-container mobile-photo {
+  width: 100% 
+}
+
+h2, .h2 {
+  font-size: 1.7rem;
+}
+}

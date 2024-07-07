@@ -1,0 +1,33 @@
+<% content_for(:html_title) { "My Personal Page - Homblok" } %>
+<div class="container-fluid mb-md-5">
+  <div class="row mb-md-5">
+    <div class="col-md-1 mt-md-5"></div>
+    <div class="col-md-9 mt-md-5">
+      <h2 class="text-center ml-md-4 mt-md-5"><%= image_tag get_aws_url("white_icons/icons8-information-50.png"), class: "title-icons ml-md-2 mb-md-1" %>MY PERSONAL PAGE</h2>
+      <div class="container-fluid">
+        <div class="col-md-11 mx-auto list-group mt-md-4 list-group-horizontal-sm" role="tablist">
+          <a class="col-md-3 list-group-item flex-fill list-group-item-action list-home-list" data-toggle="list" href="#owner" role="tab" aria-controls="home"><%= image_tag get_aws_url("white_icons/icons8-skyscrapers-50-2.png"), class: "iconz my-md-1 mx-md-1"%>MY PROPERTIES</a>
+          <a class="col-md-3 list-group-item flex-fill list-group-item-action list-home-list" data-toggle="list" href="#favourites" role="tab" aria-controls="home"><%= image_tag get_aws_url("white_icons/icons8-star-50.png"), class: "iconz my-md-1 mx-md-1"%>MY FAVOURITES</a>
+          <a class="col-md-3 list-group-item flex-fill list-group-item-action list-home-list" data-toggle="list" href="#saved-searches" role="tab" aria-controls="home"><%= image_tag get_aws_url("white_icons/icons8-star-50.png"), class: "iconz my-md-1 mx-md-1"%>MY SEARCHES</a>
+          <a class="col-md-3 list-group-item flex-fill list-group-item-action active list-home-list" data-toggle="list" href="#my-details" role="tab" aria-controls="home"><%= image_tag get_aws_url("white_icons/icons8-contact-50.png"), class: "iconz my-md-1 mx-md-1"%>MY DETAILS</a>
+          <a class="col-md-3 list-group-item flex-fill list-group-item-action list-home-list" data-toggle="list" href="#my-password" role="tab" aria-controls="home"><%= image_tag get_aws_url("white_icons/icons8-password-50.png"), class: "iconz my-md-1 mx-md-1"%>MY PASSWORD</a>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show mb-md-5" id="owner" role="tabpanel" aria-labelledby="list-home-list"><%= render "owner" %></div>
+          <div class="tab-pane fade mb-md-5" id="favourites" role="tabpanel" aria-labelledby="list-profile-list"><%= render "favourites" %></div>
+          <div class="tab-pane fade show active mb-md-5" id="my-details" role="tabpanel" aria-labelledby="list-profile-list"><%= render "my_details" %></div>
+          <div class="tab-pane fade mb-md-5" id="my-password" role="tabpanel" aria-labelledby="list-profile-list"><%= render "password" %></div>
+          <div class="tab-pane fade mb-md-5" id="saved-searches" role="tabpanel" aria-labelledby="list-profile-list">
+            <div class="col-md-12 align-center">
+              <%= render "users/saved_searches" unless device_is_mobile? %>
+              <%= render "apartments/saved_searches" if device_is_mobile? %>
+              <div class="mobile-break"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

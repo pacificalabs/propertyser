@@ -1,0 +1,15 @@
+<div class="row mt-md-3">
+  <ul class="about list-group mx-auto">
+    <li class="list-group-item text-center">Can't find the property you are seeking?</li>
+    <li class="list-group-item text-center">Please contact us with your buying requirements or refine your search criteria.</li>    
+  </ul>
+  </div>
+<div class="row mt-md-3 mb-md-5">
+  <div class="mx-auto mb-md-5 text-center">
+    <%= link_to "Contact Us", contact_us_path, class:"btn btn-outline-primary"  %>
+    <%= link_to("New Search", search_path, class:"btn btn-outline-primary ml-md-1", data: {action: action_name})%>
+    <%= link_to("Return to Search Results", return_to_search_results_path(title: search_title), class:"btn btn-outline-primary ml-md-1", data: {action: action_name}) unless search_title.blank? %>
+  </div>        
+</div>
+<span class="tablet-cant-find"></span>
+<div class="mobile-break"></div>

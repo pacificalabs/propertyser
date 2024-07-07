@@ -1,0 +1,6 @@
+<% if current_user.present? && apartment.owner != current_user  %>
+  <!-- if not on favourites then add to favourites -->
+  <%= link_to image_tag(get_aws_url("white_icons/icons8-add-to-favorites-50.png"), class:"iconz mb-md-2"), favourites_path(id:apartment), method:"post", class: "tt", data:{toggle:"tooltip", placement:"top",title:"Save to Favourites"} unless current_user.favourites.include? apartment  %>
+  <!-- if currently favourited, then remove from favourites -->
+  <%= link_to image_tag(get_aws_url("white_icons/icons8-rating-circled-64.png"), class:"iconz mb-md-2"), favourite_path(id: apartment.id), method:"delete", class: "tt", data:{toggle:"tooltip", placement:"top",title:"Remove from Favourites"} if current_user.favourites.include? apartment %>
+<% end %>

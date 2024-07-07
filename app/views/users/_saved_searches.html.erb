@@ -1,0 +1,88 @@
+<% if @searches.blank? %>
+  <div class="row">
+    <div class="mx-auto col-sm-11 order-sm-2 my-md-5">
+      <div class="mobile-break"></div>
+      <p class="text-center display-5 show-property">You haven't saved any searches yet.</p>
+      <br>
+    </div>
+  <% else %>
+    <div class="container">
+      <table class="col-md-10 ml-md-5 table table-hover">
+        <thead>
+          <tr class="d-flex mt-md-2">
+            <th class="col-md-2" scope="col"></th>
+            <th class="col-md-4" scope="col"></th>
+            <th class="col-md-1" scope="col">
+              <%= image_tag get_aws_url("white_icons/icons8-bed-100.png"),
+           title:"Bedrooms",
+           class:"tt iconz m-2",
+           data:{toggle:"tooltip", placement:"top"} %>
+            </th>
+            <th class="col-md-1"
+          scope="col">
+              <%= image_tag get_aws_url("white_icons/icons8-bathtub-100.png"),
+         title:"Bathrooms",
+          class:"tt iconz m-2",
+          data:{toggle:"tooltip", placement:"top"} %>
+            </th>
+            <th class="col-md-1" scope="col">
+              <%= image_tag get_aws_url("white_icons/icons8-car-50.png"), title: "Parking Spaces",
+         class:"tt iconz m-2",
+        data:{toggle:"tooltip", placement:"top"} %>
+            </th>
+            <th class="col-md-1" scope="col">
+              <%= image_tag get_aws_url("white_icons/icons8-us-dollar-50.png"),
+           title:"Price Range",
+            class:"tt iconz m-2",
+            data:{toggle:"tooltip", placement:"top"} %>
+            </th>
+            <th class="col-md-1" scope="col"></th>
+            <th class="col-md-1" scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @searches.order('created_at DESC').each do |search| %>
+            <% query = eval(search.query) %>
+            <tr class="d-flex">
+              <th scope="row" 
+          class="tt col-md-2"
+          data-toggle="tooltip"
+          placement="top"
+          title="<%= search.title.length > 20 ? search.title.upcase : nil %>"><%= search.title.upcase.first(20) %><%= "..." if search.title.length > 20 %>
+              </th>
+              <td class="col-md-4">
+                <% locations = search.selected_location_names.split(',') %>
+                <% locations.each do |location| %>
+                  <span> <%= location %></span><br>
+                <% end %>
+              </td>
+              <td class="col-md-1">
+                <%= query["min_bedrooms"] %> - <%= query["max_bedrooms"] %>
+              </td>
+              <td class="col-md-1">
+                <%= query["min_bathrooms"] %> - <%= query["max_bathrooms"] %>
+              </td>
+              <td class="col-md-1">
+                <%= query["min_parking"] %> - <%= query["max_parking"] %>
+              </td>
+              <td class="col-md-1">
+                $<%= number_to_human(query["min_pricing"], precision: 2) %> - $<%= number_to_human(query["max_pricing"], precision: 2) %>
+              </td>
+              <td class="col-md-1">
+                <%= link_to("Search", saved_search_path(id: search.id, "run-saved-search":true),
+         title:"Click to search",
+          class: "tt run-saved-search ml-2",
+          data:{toggle:"tooltip", placement:"top"} ) %>
+              </td>
+              <td class="col-md-1">
+                <%= link_to("Delete", delete_saved_search_path(search.id),
+         title:"Click to delete", method: "delete", id:"delete-search",
+          class: "tt ml-2" ,
+          data:{toggle:"tooltip", placement:"top"}) %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>

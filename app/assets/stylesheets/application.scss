@@ -1,1 +1,18 @@
-// Sassy
+/*// Custom bootstrap variables must be set or imported *before* bootstrap.*/
+
+@import "desktop_device";
+@import "mobile_device";
+@import "tablet_device";
+
+nav a {
+    color: antiquewhite !important;
+}
+
+.dropdown-menu {
+    background-color: var(--bs-primary) !important;
+    border: calc(var(--bs-primary) - 50px) solid var(--bs-primary) !important;
+}
+
+.dropdown-item {
+  background-color: var(--bs-primary) !important;
+}

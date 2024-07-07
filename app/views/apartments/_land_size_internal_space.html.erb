@@ -1,0 +1,7 @@
+<div class="mt-md-2">
+  <%= apartment.internal_space.present? && apartment.internal_space > 0 ? 
+ "<span class='show-property tt' title='Internal Space' data-toggle-tooltip, data-placement-top> #{image_tag(get_aws_url("white_icons/icons8-room-50.png"),class: "iconz mr-md-1 mb-md-3").html_safe}#{apartment.internal_space}\u{33A1}</span>".html_safe : nil %>
+  <%= apartment.land_size.present? && apartment.land_size > 0 ?
+"<span class='show-property tt' title='Land Size' data-toggle-tooltip, data-placement-top> 
+#{image_tag(get_aws_url("white_icons/icons8-country-50.png"), class: "iconz mx-md-1 mb-md-3").html_safe}#{apartment.land_size}\u{33A1}</span>".html_safe : nil %>
+</div>

@@ -1,0 +1,14 @@
+<% @apartment.photo_descriptions.each_with_index do |desc, index| %>
+<% pic = @apartment.photos.find(desc.photo_id) %>
+<div class="row mt-md-5">
+<div class="form-group col-md-8 my-md-5">
+<%= fields_for :photo_descriptions do |p| %>
+<%= f.label :photo, "PHOTO #{index+1}" %> <%= desc.featured? ? "(FEATURED PHOTO)" : "" %>
+<%= p.text_field :description, class: "form-control col-md-11", id: desc.id, name: "photo_description[#{desc.id}]", value: desc.description, required: true  %>
+<% end %>
+<small class="form-text text-muted"><%= desc.description.blank? ? "Please label this image" : nil %></small>  
+</div>  
+<div class="col-md-4 my-md-5"><%= image_tag(photo_update_page_apartment_image_url(pic))%> </div>
+<br>
+</div>
+<% end %>

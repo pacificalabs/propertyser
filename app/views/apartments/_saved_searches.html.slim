@@ -1,0 +1,61 @@
+- if @searches.present? && device_is_mobile?
+    #accordionSavedSearch.accordion
+      - @searches.order('created_at DESC').each_with_index do |search,index|
+        - query = eval(search.query)
+        - selections = search.selected_location_names
+        - @toggle = index > 0 ? "collapse show" : "collapse"
+        .card
+          .card-header id = "heading#{index}"
+            h5.mb-0.text-center
+              button.btn.btn-link.collapsed [type="button" data-toggle="collapse" data-target="#collapse#{index}" aria-expanded="true" aria-controls="collapse#{index}"]
+                = image_tag "dark_icons/icons8-home-address-50.png", class: "tt iconz mb-md-2 mr-md-1"
+                = search.title.upcase
+          .collapse [id= "collapse#{index}" aria-labelledby="heading#{index}" data-parent="#accordionSavedSearch"]
+            .card-body
+              .row
+              = link_to("Search", saved_search_path(id: search.id, "run-saved-search":true), {title:"Click to search", class: "run-saved-search btn btn-outline-primary col-5 ml-2"})
+              = link_to("Delete", delete_saved_search_path(search.id),{title:"Delete", method: "delete", id:"delete-search", class: "btn btn-outline-primary col-5 ml-2"})
+              br
+              br
+              | #{image_tag "dark_icons/icons8-bed-100.png", title:"Bedrooms", class:"tt iconz", data:{toggle:"tooltip", placement:"top"}} #{query["min_bedrooms"]}-#{query["max_bedrooms"]}
+              br
+              br 
+              | #{image_tag "dark_icons/icons8-bathtub-100.png",title: "Bathrooms", class:"tt iconz", data:{toggle:"tooltip", placement:"top"}} #{query["min_bathrooms"]}-#{query["max_bathrooms"]} 
+              br
+              br
+              | #{image_tag "dark_icons/icons8-car-50.png",title: "Parking Spaces", class:"tt iconz" , data:{toggle:"tooltip", placement:"top"}} #{query["min_parking"]}-#{query["max_parking"]}
+              br
+              br 
+              | #{image_tag "dark_icons/icons8-us-dollar-50.png", title:"Price Range", class:"tt iconz mb-md-2 mx-md-1", data:{toggle:"tooltip", placement:"top"}} $#{number_to_human(query["min_pricing"], precision: 2)}-$#{number_to_human(query["max_pricing"], precision: 2)}
+              br
+              br
+              | #{ image_tag "dark_icons/icons8-home-address-50.png", class: "tt iconz" }
+              small.text-muted
+                = selections.upcase
+              br
+
+      .mobile-break
+- if @searches.present? && !device_is_mobile?
+  .row.mt-md-1
+    ul
+      = image_tag "dark_icons/icons8-search-50.png", class: "tt iconz mb-md-3", id:"saved-search-icon"
+      p.d-inline.property-title.mt-md-2.ml-md-2 SAVED SEARCHES
+      - @searches.order('created_at DESC').each do |search|
+        - query = eval(search.query)
+        - selections = search.selected_location_names
+        li
+          .row
+            small.text-muted.ml-md-2
+              = link_to "#{search.title.upcase}".html_safe, saved_search_path(id: search.id, "run-saved-search":true), class: "run-saved-search", title:"Click to search"
+          .row
+            small.text-muted
+              = image_tag "dark_icons/icons8-home-address-50.png", class: "tt iconz mb-md-2 mr-md-1"
+              = selections.upcase
+              br
+              | #{image_tag "dark_icons/icons8-us-dollar-50.png", title:"Price Range", class:"tt iconz mb-md-2 mx-md-1", data:{toggle:"tooltip", placement:"top"}} $#{number_to_human(query["min_pricing"], precision: 2)}-$#{number_to_human(query["max_pricing"], precision: 2)} 
+              | #{image_tag "dark_icons/icons8-bed-100.png", title:"Bedrooms", class:"tt iconz mb-md-2 mx-md-1", data:{toggle:"tooltip", placement:"top"}}
+              | #{query["min_bedrooms"]}-#{query["max_bedrooms"]} 
+              | #{image_tag "dark_icons/icons8-bathtub-100.png",title: "Bathrooms", class:"tt iconz mb-md-2 mx-md-1", data:{toggle:"tooltip", placement:"top"}} #{query["min_bathrooms"]}-#{query["max_bathrooms"]} 
+              | #{image_tag "dark_icons/icons8-car-50.png",title: "Parking Spaces", class:"tt iconz mb-md-2 mx-md-1" , data:{toggle:"tooltip", placement:"top"}}
+              | #{query["min_parking"]}-#{query["max_parking"]}     
+              = link_to("#{image_tag "dark_icons/icons8-trash-64.png",title: "Delete", class:"tt iconz mb-md-2 mx-md-1" , data:{toggle:"tooltip", placement:"top"}}".html_safe, delete_saved_search_path(search.id),{title:"Delete", method: "delete", id:"delete-search"})

@@ -1,0 +1,22 @@
+- pic = photo_edit_page_mobile_image_url(@photo)
+- pd = PhotoDescription.find_by_photo_id(@photo.id)
+.img-wrapper
+  = image_tag pic
+  .img-overlay
+    .white-text
+      = pd.description
+= form_with model: @photo, url: photo_path(@photo.id) do |f|
+  = f.hidden_field :apartment_id, value:@apartment.id
+  .form-row
+   = f.text_field :description, class: "mt-1 form-control reply-box", maxlength: 200, placeholder: "#{pd&.description.present? ? "Update description" : "Describe this image" }"
+  - if @apartment.photos.size <= 1
+    .form-row.mt-2
+      .tt.d-inline-block[data-placement="top" data-toggle="tooltip" tabindex="0" title="min 1 photo required"]
+      = f.submit "Delete", name:"delete", pointer_events: "none", disabled:"true", class: "ml-1 btn btn-outline-info"
+      = f.submit "Save", name: "update", class: "ml-1 col-3 btn #{pd&.description.present? ? 'btn-outline-info' : 'btn-outline-primary' }"    
+      = f.submit "#{pd&.featured ? 'Feature Photo' : 'Set As Feature Photo'}", name: "#{pd&.featured ? nil : 'featured'}", class: "ml-1 btn btn-outline-info"
+  - else
+    .form-row.mt-2
+      = f.submit "Delete", name:"delete",  class: "ml-1 btn btn-outline-info"
+      = f.submit "Save", name: "update", class: "ml-1 col-3 btn #{pd&.description.present? ? 'btn-outline-info' : 'btn-outline-primary' }"    
+      = f.submit "#{pd&.featured ? 'Feature Photo' : 'Set As Feature Photo'}", name: "#{pd&.featured ? nil : 'featured'}", class: "ml-1 btn btn-outline-info"

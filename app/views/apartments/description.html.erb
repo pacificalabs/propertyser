@@ -1,0 +1,15 @@
+<%=  render "nav" %>
+<div class="container">
+  <br>
+  <%= form_with method: :put, url: apartments_path, model: @apartment, local: true do |form| %>
+  <%= form.label "luxurious" %>
+  <%= form.radio_button "apartment","descriptor", id: @apartment.id %>
+  <%= form.submit "continue", class: "btn btn-outline-primary" %>
+  <% end %>
+</div>
+
+<!--     t.boolean "spacious", default: false
+    t.boolean "luxurious", default: false
+    t.boolean "renovated", default: false
+    t.boolean "elegant", default: false
+    t.boolean "bright", default: false -->

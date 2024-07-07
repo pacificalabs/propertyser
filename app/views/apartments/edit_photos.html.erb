@@ -1,0 +1,57 @@
+<% content_for(:html_title) { "Edit Photos - Homblok" } %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 order-sm-1 mt-md-5"></div>
+    <div class="col-sm-8 order-sm-2 mt-md-5">
+      <%= form_for :photo, html: {class: "form-row property-title"}, url: {action: 'update'} do |f| %>
+      <p id="review-details" class="text-center mt-md-5 ml-md-5 display-4">REVIEW DETAILS</p>
+      <div class="col-md-9">
+        <% if @apartment.photos.exists? %>
+        <% featured = @apartment.photo_descriptions.find_by(featured:true) %>
+        <% options_array = @apartment.photo_descriptions.pluck(:id).map.with_index {|e,i| ["PHOTO #{i+1}",e]} %>
+        <% actions_array = [["Set as featured photo","set_featured_photo"],["Delete Photo","delete_photo"]] %>
+        <%= select_tag(:selected_photo, options_for_select(options_array),
+          {required: (featured ? false : true) , 
+            class: "col-md-7 mb-md-2",
+              prompt:"SELECT A PHOTO"}) %>
+
+        <%= select_tag(:photo_actions, options_for_select(actions_array),
+          {required: featured.nil?, 
+            class: "col-md-7",
+              prompt:"SELECT AN ACTION"}) %>
+              <br><br>
+              <% end %>
+              <%= "<p>Add a description to each photo</p>".html_safe if @apartment.photos.exists? && !@apartment.photo_descriptions.exists? %>
+              <% flash[:notice] = "<p>Please select a feature photo</p>".html_safe if @apartment.photo_descriptions.exists? && featured.nil? %>
+              <%= f.file_field(:photo, direct_upload: false, multiple: true, accept: 'image/png,image/jpeg,image/jpg', id: "photo-file-field") unless @apartment.photos.present? %>
+              <% @apartment.photo_descriptions.each_with_index do |desc, index| %>
+              <% pic = @apartment.photos.find(desc.photo_id) %>
+              <br>
+              <div class="row">
+                <div class="form-group col-md-8">
+                  <%= fields_for :photo_descriptions do |p| %>
+                  <%= f.label :photo, "PHOTO #{index+1}" %> <%= desc.featured? ? "(FEATURE PHOTO)" : "" %>
+                  <%= p.text_field :description, class: "form-control col-md-11", value: desc.description == '' ? "Please label your image" : desc.description , id: desc.id, name: "photo_description[#{desc.id}]"  %>
+                  <% end %>
+                  <%= f.label :photo, desc.description == "" ? "Please label your image" : "" %>
+                </div>  
+                <div class="col-md-4 mt-md-4"><%= image_tag(photo_edit_page_apartment_image_url(pic))%> </div>
+                <br>
+              </div>
+              <% end %>
+              <br><br>
+              <%= f.label :asking_price, 'ASKING PRICE ($)' %>
+              <br>
+              <%= f.number_field  'asking_price', class: "form-control", step: 100 %>
+              <br>
+              <br>
+              <div class="col-md-3"></div>
+              <%= f.submit "SUBMIT PROPERTY", class: "btn btn-outline-primary col-md-12 mb-md-5", method: "patch" %>              
+              <br><br>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-1 order-sm-3 mt-md-5"></div>
+    </div>
