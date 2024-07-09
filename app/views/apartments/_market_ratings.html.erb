@@ -1,5 +1,5 @@
 <div class="my-md-4 display-inline">
-  <h5 class="mt-3 mb-1 property-info"><%= image_tag(get_aws_url("new_icons/price-small.svg"), class: "iconz mr-md-1 mt-md-1") %>Asking Price</h5>
+  <h5 class="mt-3 mb-1 property-info"><%= image_tag(get_aws_url("new_system_icons/price-small.svg"), class: "iconz mr-md-1 mt-md-1") %>Asking Price</h5>
   <p class="show-property">$<%= number_with_delimiter @apartment.asking_price %></p>
 </div>
 <% if current_user.id == @apartment.user_id || current_user.is_admin? %>

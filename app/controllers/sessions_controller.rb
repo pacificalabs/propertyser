@@ -6,7 +6,6 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by_email(params[:email])
-    binding.remote_pry
     if user && user.authenticate(params[:password])
       user.searches.create!(session[:saved_search]) if session[:saved_search].present?
       session.delete "saved_search"

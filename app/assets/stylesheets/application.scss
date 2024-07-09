@@ -16,3 +16,9 @@ nav a {
 .dropdown-item {
   background-color: var(--bs-primary) !important;
 }
+
+.dropdown-menu.li.a:hover {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg) !important;
+    border-color: var(--bs-btn-hover-border-color)
+}
