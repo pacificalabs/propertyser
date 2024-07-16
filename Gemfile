@@ -99,3 +99,5 @@ gem "haml"
 gem "slim"
 
 gem "bcrypt-ruby", "~> 3.1"
+
+gem "friendly_id", "~> 5.5"

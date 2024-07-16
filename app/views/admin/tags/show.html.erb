@@ -1,0 +1,29 @@
+<!-- app/views/admin/tags/show.html.erb -->
+<h1><%= @tag.name %></h1>
+<p>
+  <strong>Slug:</strong>
+  /<%= @tag.slug %>
+</p>
+<% if @tag.child_tags.any? %>
+  <h2>Child Tags</h2>
+  <ul>
+    <% @tag.child_tags.each do |child_tag| %>
+      <li><%= link_to child_tag.name, admin_tag_path(child_tag) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No child tags.</p>
+<% end %>
+<% if @tag.parent_tags.any? %>
+  <h2>Parent Tags</h2>
+  <ul>
+    <% @tag.parent_tags.each do |parent_tag| %>
+      <li><%= link_to parent_tag.name, admin_tag_path(parent_tag) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No Parent tags.</p>
+<% end %>
+<%= link_to 'Edit', edit_admin_tag_path(@tag), class: 'btn btn-primary' %>
+<%= link_to 'Back', admin_tags_path, class: 'btn btn-secondary' %>
+<%= link_to 'Delete', admin_tag_path(@tag), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'tags/index'
+  get 'tags/show'
   require 'sidekiq/web'
   require 'admin_constraint'
 
@@ -59,6 +61,11 @@ Rails.application.routes.draw do
   resources :favourites
   resources :photos
   resources :replies
+  # config/routes.rb
+  resources :tags, param: :slug do
+    resources :child_tags, only: [:show], param: :slug, controller: 'tags'
+  end
+
 
   # Apartment search routes
   get 'sub-search', to: 'apartments#index', constraints: lambda { |request| request.query_parameters[:commit] == 'SEARCH' }, as: 'search_page_two'
@@ -89,6 +96,9 @@ Rails.application.routes.draw do
   get 'admin/archival', to: 'admin#archival', as: 'archival'
   get 'admin/owner/:user_id', to: 'admin#owner', as: 'admin_owner'
   delete 'delete_saved_search/:id', to: 'searches#delete', as: 'delete_saved_search'
+  namespace :admin do
+    resources :tags
+  end
 
   get "up" => "rails/health#show", as: :rails_health_check
   # Catch-all route for 404 errors

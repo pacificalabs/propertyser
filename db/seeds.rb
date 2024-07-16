@@ -84,12 +84,22 @@ end
 puts "Time to destroy models"
 puts time1
 
+apartment1 = Apartment.create(name: 'Sunny Side', address: '123 Sunny St')
+apartment2 = Apartment.create(name: 'Cozy Cottage', address: '456 Cozy Ln')
+
+apartment1.tags << Tag.find_by(name: 'Luxury')
+apartment1.tags << Tag.find_by(name: 'Pet-friendly')
+
 
 time2 = Benchmark.measure {
   puts "creating users"
   create_users(list:@user_list)
+
+  t1 = Tag.create(name: 'Luxury', user: @users.first)
+  t2 = Tag.create(name: 'Pet-friendly', user: @users.first)
+
   puts "creating properties!"
-  500.times do |cycle|
+  5.times do |cycle|
     @users.each_with_index do |u,i|
       puts "#{u.email}"
       a = u.apartments.new (addresses[cycle])
@@ -100,6 +110,7 @@ time2 = Benchmark.measure {
       a.strata = [true,false].sample
       a.parking_spaces = small_numbers.sample
       a.asking_price = pricing.sample
+
       puts "$#{a.asking_price}"
       a.save!
       puts a.full_address

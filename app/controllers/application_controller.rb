@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
   helper_method :device_is_surface?
   before_action :user_is_authorised?
   before_action :read_user_agent
+  before_action :set_tags
+
+  def set_tags
+    @tags = current_user.tags.includes(:child_tags, :parent_tags).all
+  end
 
   def read_user_agent
     client = DeviceDetector.new(request.user_agent)

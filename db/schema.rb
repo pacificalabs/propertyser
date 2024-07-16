@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_04_034621) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_10_012939) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -84,6 +84,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_04_034621) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["apartment_id"], name: "index_amenities_on_apartment_id"
+  end
+
+  create_table "apartment_tags", force: :cascade do |t|
+    t.bigint "apartment_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["apartment_id", "tag_id"], name: "index_apartment_tags_on_apartment_id_and_tag_id", unique: true
+    t.index ["apartment_id"], name: "index_apartment_tags_on_apartment_id"
+    t.index ["tag_id"], name: "index_apartment_tags_on_tag_id"
   end
 
   create_table "apartments", force: :cascade do |t|
@@ -219,6 +229,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_04_034621) do
     t.index ["apartment_id"], name: "index_floorplans_on_apartment_id"
   end
 
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
   create_table "locations", force: :cascade do |t|
     t.string "name"
     t.string "state"
@@ -347,6 +368,26 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_04_034621) do
     t.index ["user_id"], name: "index_searches_on_user_id"
   end
 
+  create_table "tag_relationships", force: :cascade do |t|
+    t.bigint "parent_tag_id", null: false
+    t.bigint "child_tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["child_tag_id"], name: "index_tag_relationships_on_child_tag_id"
+    t.index ["parent_tag_id", "child_tag_id"], name: "index_tag_relationships_on_parent_tag_id_and_child_tag_id", unique: true
+    t.index ["parent_tag_id"], name: "index_tag_relationships_on_parent_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["slug"], name: "index_tags_on_slug", unique: true
+    t.index ["user_id"], name: "index_tags_on_user_id"
+  end
+
   create_table "tas_postcodes", force: :cascade do |t|
     t.integer "postcode"
     t.string "locality"
@@ -435,6 +476,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_04_034621) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "apartment_tags", "apartments"
+  add_foreign_key "apartment_tags", "tags"
   add_foreign_key "banners", "users"
   add_foreign_key "locations", "searches"
+  add_foreign_key "tag_relationships", "tags", column: "child_tag_id"
+  add_foreign_key "tag_relationships", "tags", column: "parent_tag_id"
+  add_foreign_key "tags", "users"
 end

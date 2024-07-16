@@ -49,11 +49,13 @@ class Apartment < ApplicationRecord
   has_one :descriptor, dependent: :destroy
   has_one :feature, dependent: :destroy
   has_one :amenity, dependent: :destroy
-  has_many_attached :photos, dependent: :destroy 
+  has_many_attached :photos, dependent: :destroy
   has_many_attached :floorplans, dependent: :destroy
-  
+
+  has_many :apartment_tags, dependent: :destroy
+  has_many :tags, through: :apartment_tags
   has_many :comments, dependent: :destroy
-  has_many :market_ratings, dependent: :destroy 
+  has_many :market_ratings, dependent: :destroy
   has_many :photo_descriptions, dependent: :destroy
   has_many :property_milestones, dependent: :destroy
   accepts_nested_attributes_for :feature, :descriptor, :amenity, :comments, :photo_descriptions, :property_milestones
@@ -99,7 +101,7 @@ class Apartment < ApplicationRecord
   end
 
   def revoke_approval
-    self.update!("approved": false)    
+    self.update!("approved": false)
   end
 
   def self.approved?
@@ -128,8 +130,8 @@ class Apartment < ApplicationRecord
 
   def update_postcode
     begin
-    result = Geocoder.search([self.latitude,self.longitude])
-    self.update!(postcode: result.first.postal_code)      
+      result = Geocoder.search([self.latitude,self.longitude])
+      self.update!(postcode: result.first.postal_code)
     rescue Exception => e
       Rails.logger.debug { "#{e}" }
       return nil
@@ -164,7 +166,7 @@ class Apartment < ApplicationRecord
 
   def presort_photos
     begin
-      featured = photo_descriptions.find_by_featured(true) && photo_descriptions.find_by_featured(true).photo_id 
+      featured = photo_descriptions.find_by_featured(true) && photo_descriptions.find_by_featured(true).photo_id
       photo_list = self.photos.order('created_at DESC').pluck(:id)
       photo_list.delete(featured)
       photo_list.unshift(featured)
@@ -174,7 +176,7 @@ class Apartment < ApplicationRecord
       logger.error { "#{e}" }
       return self.photos
     end
-    return photos 
+    return photos
   end
 
   def set_featured_photo(id)
@@ -191,7 +193,7 @@ class Apartment < ApplicationRecord
   end
 
   def congratulate_owner_on_first_drafted_property
-    return false if self.property_milestone.minimum_completed == true 
+    return false if self.property_milestone.minimum_completed == true
     self.property_milestone.update! minimum_completed: true
     # FIXME property_milestone.congratulated_on_first_property.freeze
   end

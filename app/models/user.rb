@@ -27,6 +27,7 @@ class User < ApplicationRecord
   has_secure_password
   has_one_attached :avatar, dependent: :destroy
   has_many :apartments, dependent: :destroy
+  has_many :tags, dependent: :destroy
   has_many :searches, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :user_milestones, dependent: :destroy
