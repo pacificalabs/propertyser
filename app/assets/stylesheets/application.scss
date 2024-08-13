@@ -4,6 +4,7 @@
 @import "mobile_device";
 @import "tablet_device";
 
+
 nav a {
     color: antiquewhite !important;
 }
@@ -22,3 +23,15 @@ nav a {
     background-color: var(--bs-btn-hover-bg) !important;
     border-color: var(--bs-btn-hover-border-color)
 }
+
+nav.navbar.bg-primary, .btn-primary, .dropdown-item,
+.dropdown-menu {
+  --bs-bg-opacity: 1;
+  background-color: #b31317 !important;
+  border-color: #b31317 !important;
+}
+
+.bg-primary {
+    background-color: #b31317 !important;
+}
+

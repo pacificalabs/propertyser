@@ -1,5 +1,6 @@
 class IndexController < ApplicationController
-  skip_before_action :user_is_authorised?
+  skip_before_action :user_is_authorised?, :set_tags
+
   layout :resolve_layout
 
   def index
@@ -9,25 +10,25 @@ class IndexController < ApplicationController
   def buy_sell
   end
 
-  def about    
+  def about
   end
-  
+
   def contact
     @apartment = Apartment.find apartment_params[:id] if apartment_params.present?
   end
-  
+
   def faq
   end
-  
+
   def terms_and_conditions
     if current_user.present? && current_user.accepted_terms? == false
-      @user = current_user 
+      @user = current_user
     end
   end
-  
+
   def step_by_step
   end
-  
+
   def policy
   end
 
@@ -48,5 +49,5 @@ class IndexController < ApplicationController
   def apartment_params
     params.permit(:id)
   end
- 
+
 end

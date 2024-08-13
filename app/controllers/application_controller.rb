@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :set_tags
 
   def set_tags
-    @tags = current_user.tags.includes(:child_tags, :parent_tags).all
+    @tags = current_user.tags.includes(:child_tags, :parent_tags).all if current_user.present?
   end
 
   def read_user_agent

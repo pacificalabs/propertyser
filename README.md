@@ -1,24 +1,15 @@
-# README
+# TODO
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### DISPLAY:
+- notice
+- icon selection
+- font sizes
 
-Things you may want to cover:
+### FUNCTIONALITY:
+ - Photos CRUD
+ - Floorplan CRUD
+ - Tags CRUD UI
+ - Apartments CRUD flow
+### ERRORS:
+* ActionView::MissingTemplate in Apartments#edit
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

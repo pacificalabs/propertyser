@@ -1,15 +1,19 @@
 <div class="dropdown">
   <a class="btn btn-primary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-<%= user_avatar(current_user) %><%= current_user.username %>
+    <%= user_avatar(current_user) %><%= current_user.username %>
   </a>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-    <li><%= image_tag(get_aws_url("white_icons/icons8-information-50.png"), class: "iconz mb-md-3 mx-md-1") %><%= link_to 'Sell a Property', new_apartment_path, class: 'dropdown-item' %></li>
+    <li><%= link_to new_apartment_path, class: 'dropdown-item' do %>
+        <%= image_tag(get_aws_url("white_icons/icons8-information-50.png"), class: "iconz mx-md-1") %>
+        Sell a Property
+      <% end %>
+    </li>
     <li><a class="dropdown-item" href="<%= user_path(id: current_user.id) %>"><%= image_tag(get_aws_url("white_icons/icons8-information-50.png"), class: "iconz mb-md-3 mx-md-1") %>My Personal Page</a></li>
     <li><a class="dropdown-item" href=<%= logout_path %>><%= image_tag(get_aws_url("white_icons/icons8-exit-50.png"), class: "iconz mb-md-2 mx-md-1") %>Logout</a></li>
-        <% if current_user.is_admin? %>
-    <li><a class="dropdown-item" href=<%= archival_path %>><%= image_tag get_aws_url("white_icons/icons8-archive-folder-50.png"), class: "iconz mb-md-2 mx-md-1"%>Archive</a></li>
-    <li><a class="dropdown-item" href=<%= admin_path %>><%= image_tag get_aws_url("white_icons/icons8-administrative-tools-50.png"), class: "iconz mb-md-2 mx-md-1"%>Admin</a></li>
-    <li><a class="dropdown-item" href=<%= sidekiq_web_path %>><%= image_tag get_aws_url("white_icons/icons8-administrative-tools-50.png"), class: "iconz mb-md-2 mx-md-1"%>Job Manager</a></li>
-    <% end %>
-  </ul>
-</div>
+      <% if current_user.is_admin? %>
+        <li><a class="dropdown-item" href=<%= archival_path %>><%= image_tag get_aws_url("white_icons/icons8-archive-folder-50.png"), class: "iconz mb-md-2 mx-md-1"%>Archive</a></li>
+          <li><a class="dropdown-item" href=<%= admin_path %>><%= image_tag get_aws_url("white_icons/icons8-administrative-tools-50.png"), class: "iconz mb-md-2 mx-md-1"%>Admin</a></li>
+            <li><a class="dropdown-item" href=<%= sidekiq_web_path %>><%= image_tag get_aws_url("white_icons/icons8-administrative-tools-50.png"), class: "iconz mb-md-2 mx-md-1"%>Job Manager</a></li>
+            <% end %>
+          </ul>
+        </div>

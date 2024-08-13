@@ -1,7 +1,7 @@
 <% @address = (@apartment.owner == current_user || @current_user.is_admin?) ? @apartment.full_address_line_1 : @apartment.address_line_1 %>
 <% content_for(:html_title) { "#{@address}, #{@apartment.suburb} - Homblok" } %>
 <% unless device_is_mobile? %>
-<div id="navArrow"></div>
+  <div id="navArrow"></div>
 <% end %>
 <div class="container-fluid">
   <div class="row mt-md-3 mb-md-5 ml-md-5">
@@ -17,15 +17,15 @@
     <!-- middle column -->
     <div class="col-md-8 order-sm-2 ml-md-5">
       <div class="row">
-      <%= render "carousel" %>        
+        <%= render "carousel" %>
       </div>
       <div class="row">
         <div class="col-md-6">
-      <%= render "map" %>          
+          <%= render "map" %>
         </div>
         <div class="col-md-6">
-      <%= render "comments" %>
-      <%= render "edit_delete" %>          
+          <%#= render "comments" %>
+          <%= render "edit_delete" %>
         </div>
       </div>
     </div>
