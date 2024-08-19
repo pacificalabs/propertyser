@@ -40,12 +40,10 @@ def attach_pics
   end
 end
 
-def create_users(list:, users:[] )
-  @users = users
-  list.each do |new_user|
+def create_users(users)
+  @users = users.each do |new_user|
     u = User.create! new_user
     u.milestones.create! sent_welcome_letter: true, email_address_confirmed: true
-    @users << u
   end
 end
 
@@ -84,24 +82,19 @@ end
 puts "Time to destroy models"
 puts time1
 
-apartment1 = Apartment.create(name: 'Sunny Side', address: '123 Sunny St')
-apartment2 = Apartment.create(name: 'Cozy Cottage', address: '456 Cozy Ln')
-
-apartment1.tags << Tag.find_by(name: 'Luxury')
-apartment1.tags << Tag.find_by(name: 'Pet-friendly')
-
 
 time2 = Benchmark.measure {
   puts "creating users"
-  create_users(list:@user_list)
+  create_users(@user_list)
 
-  t1 = Tag.create(name: 'Luxury', user: @users.first)
-  t2 = Tag.create(name: 'Pet-friendly', user: @users.first)
+  t1 = Tag.create(name: 'Luxury', user_id: User.first.id)
+  t2 = Tag.create(name: 'Pet-friendly', user_id: User.first.id)
 
   puts "creating properties!"
+
   5.times do |cycle|
-    @users.each_with_index do |u,i|
-      puts "#{u.email}"
+    User.all.each_with_index do |u,i|
+      puts u.email
       a = u.apartments.new (addresses[cycle])
       puts a.full_address
       a.approved = true
@@ -115,8 +108,8 @@ time2 = Benchmark.measure {
       a.save!
       puts a.full_address
       # a.attach_pics
-
-      comments.map { |comment|  a.comments.create!( user: @users.sample , body:comment ) }
+      ([t1,t2].sample).apartments << a
+      comments.map { |comment|  a.comments.create!( user: User.all.sample , body:comment ) }
     end
   end
 }
