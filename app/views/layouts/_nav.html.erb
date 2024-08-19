@@ -17,21 +17,19 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <div class="navbar-nav ms-auto">
-        <% unless current_user.blank? %>
-          <% @tags.each do |tag| %>
-            <% if tag.parent_tags.empty? %>
-              <% if tag.child_tags.any? %>
-                <div class="nav-item dropdown">
-                  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><%= tag.name %></a>
-                  <div class="dropdown-menu">
-                    <% tag.child_tags.each do |child_tag| %>
-                      <%= link_to child_tag.name, tag_path(child_tag), class: 'dropdown-item' %>
-                    <% end %>
-                  </div>
+        <% @tags.each do |tag| %>
+          <% if tag.parent_tags.empty? %>
+            <% if tag.child_tags.any? %>
+              <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><%= tag.name %></a>
+                <div class="dropdown-menu">
+                  <% tag.child_tags.each do |child_tag| %>
+                    <%= link_to child_tag.name, tag_path(child_tag), class: 'dropdown-item' %>
+                  <% end %>
                 </div>
-              <% else %>
-                <%= link_to tag.name, tag_path(tag), class: 'nav-item nav-link' %>
-              <% end %>
+              </div>
+            <% else %>
+              <%= link_to tag.name, tag_path(tag), class: 'nav-item nav-link' %>
             <% end %>
           <% end %>
         <% end %>

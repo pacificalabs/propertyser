@@ -1,5 +1,5 @@
 class IndexController < ApplicationController
-  skip_before_action :user_is_authorised?, :set_tags
+  skip_before_action :user_is_authorised?
 
   layout :resolve_layout
 
