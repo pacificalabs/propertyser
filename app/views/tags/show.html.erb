@@ -8,15 +8,8 @@
     <% end %>
   </ul>
 <% end %>
-<h2>Apartments</h2>
 <% if @apartments.any? %>
-  <ul>
-    <% @apartments.each do |apartment| %>
-      <li>
-        <%= link_to apartment.street_address, apartment_path(apartment) %>
-      </li>
-    <% end %>
-  </ul>
+  <%= render partial: "apartments/show_apartment", locals: {apartments: @apartments} %>
 <% else %>
   <p>
     No Apartments added yet
