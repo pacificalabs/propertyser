@@ -7,10 +7,10 @@ class Tag < ApplicationRecord
   has_many :apartments, through: :apartment_tags
 
   has_many :tag_relationships, foreign_key: :parent_tag_id, dependent: :destroy
-  has_many :child_tags, through: :tag_relationships, source: :child_tag
-
   has_many :reverse_tag_relationships, foreign_key: :child_tag_id, class_name: 'TagRelationship', dependent: :destroy
+
   has_many :parent_tags, through: :reverse_tag_relationships, source: :parent_tag
+  has_many :child_tags, through: :tag_relationships, source: :child_tag
 
   validates :name, presence: true
   validate :parent_tags_valid?
