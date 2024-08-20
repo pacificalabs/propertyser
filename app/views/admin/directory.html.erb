@@ -1,0 +1,125 @@
+<div class="container my-4">
+  <h2>Directory</h2>
+  <div class="row">
+    <%# Section for 'tags' routes %>
+    <div class="col-md-4">
+      <h4>Tags</h4>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <%= link_to 'Tags Index', admin_tags_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'New Tag', new_admin_tag_path, class: 'btn btn-primary btn-block' %>
+        </li>
+      </ul>
+    </div>
+    <%# Section for 'sessions' and 'users' routes %>
+    <div class="col-md-4">
+      <h4>Sessions & Users</h4>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <%= link_to 'Sign Up', signup_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Login', login_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Logout', logout_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Forgot My Password', forgot_my_password_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Update Password', update_password_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Change Password', change_password_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Users (Index)', users_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'New User', new_user_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Edit User', edit_user_path('id-placeholder'), class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Show User', user_path('id-placeholder'), class: 'btn btn-primary btn-block' %>
+        </li>
+      </ul>
+    </div>
+    <%# Section for 'apartments' routes %>
+    <div class="col-md-4">
+      <h4>Apartments</h4>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <%= link_to 'Apartments (Index)', apartments_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'New Apartment', new_apartment_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Edit Apartment', edit_apartment_path('id-placeholder'), class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Show Apartment', apartment_path('id-placeholder'), class: 'btn btn-primary btn-block' %>
+        </li>
+      </ul>
+    </div>
+    <%# Section for 'admin' routes %>
+    <div class="col-md-4">
+      <h4>Admin</h4>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <%= link_to 'Admin Dashboard', admin_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Tags (Admin)', admin_tags_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'New Tag (Admin)', new_admin_tag_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Edit Tag (Admin)', edit_admin_tag_path('id-placeholder'), class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Show Tag (Admin)', admin_tag_path('id-placeholder'), class: 'btn btn-primary btn-block' %>
+        </li>
+      </ul>
+    </div>
+    <%# Section for 'errors' %>
+    <div class="col-md-4">
+      <h4>Error Pages</h4>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <%= link_to '404 Error', '/404', class: 'btn btn-danger btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to '500 Error', '/500', class: 'btn btn-danger btn-block' %>
+        </li>
+      </ul>
+    </div>
+    <%# Section for other routes %>
+    <div class="col-md-4">
+      <h4>Miscellaneous</h4>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <%= link_to 'Home', root_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Contact', contact_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'About', about_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Terms and Conditions', terms_and_conditions_path, class: 'btn btn-primary btn-block' %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to 'Privacy Policy', policy_path, class: 'btn btn-primary btn-block' %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
