@@ -55,6 +55,10 @@ class AdminController < ApplicationController
     notify_admin_team 'contact_form', contact_form_params.to_h.merge(location_info: request.location.data)
   end
 
+  def directory
+
+  end
+
   private
 
   def contact_form_params

@@ -1,6 +1,7 @@
 # app/controllers/tags_controller.rb
 class TagsController < ApplicationController
   before_action :set_tag, only: [:show, :related_show]
+  skip_before_action :user_is_authorised?, only: :show
 
   def index
     @tags = current_user.tags
@@ -9,6 +10,7 @@ class TagsController < ApplicationController
   def show
     @apartments = @tag.apartments
     @child_tags = @tag.child_tags
+    @parent_tags = @tag.parent_tags
   end
 
   def related_show

@@ -1,24 +1,19 @@
-<!-- app/views/tags/show.html.erb -->
-<h1><%= @tag.name %></h1>
-<% if @child_tags.any? %>
-  <h2>Child Tags:</h2>
-  <ul>
-    <% @child_tags.each do |child_tag| %>
-      <li><%= link_to child_tag.name, tag_child_tag_path(@tag, child_tag) %></li>
-    <% end %>
-  </ul>
-<% end %>
-<h2>Apartments</h2>
-<% if @apartments.any? %>
-  <ul>
-    <% @apartments.each do |apartment| %>
-      <li>
-        <%= link_to apartment.street_address, apartment_path(apartment) %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>
-    No Apartments added yet
-  </p>
-<% end %>
+<div class="container-fluid my-3">
+  <!-- app/views/tags/show.html.erb -->
+  <h3><%= @tag.name %></h3>
+  <% if @child_tags.any? %>
+    <h2>Child Tags:</h2>
+    <ul>
+      <% @child_tags.each do |child_tag| %>
+        <li><%= link_to child_tag.name, tag_child_tag_path(@tag, child_tag) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <% if @apartments.any? %>
+    <%= render partial: "apartments/show_apartment", locals: {apartments: @apartments} %>
+  <% else %>
+    <p>
+      No Apartments added yet
+    </p>
+  <% end %>
+</div>

@@ -88,6 +88,7 @@ Rails.application.routes.draw do
 
   # Admin section
   get 'admin', to: 'admin#index', as: 'admin'
+  get 'admin/directory', to: 'admin#directory', as: 'admin_directory'
   post 'approve/:id', to: 'admin#approve', as: 'approval'
   post 'revoke/:id', to: 'admin#revoke', as: 'revoke'
   delete 'admin/delete/:id', to: 'admin#delete', as: 'admin_deletion'

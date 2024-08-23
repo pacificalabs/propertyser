@@ -3,7 +3,11 @@ class Admin::TagsController < ApplicationController
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
 
   def new
-    @tag = current_user.tags.new
+    @tag = if params[:parent]
+      Tag.find(params[:parent])
+    else
+      current_user.tags.new
+    end
   end
 
   def show
@@ -12,7 +16,7 @@ class Admin::TagsController < ApplicationController
   def create
     @tag = current_user.tags.new(tag_params)
     if @tag.save
-      redirect_to admin_tag_path(@tag), notice: 'Tag was successfully created.'
+      redirect_to  edit_admin_tag_path(@tag), notice: 'Tag was successfully created.'
     else
       logger.error @tag.errors.full_messages
       render :new
