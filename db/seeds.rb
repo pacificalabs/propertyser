@@ -28,13 +28,13 @@ def destroy_models
   delete_state_models
 end
 
-def attach_pics
+def attach_pics(apartment)
   pics = ["image2melbournecityaparment.jpg","image1sydneycityapartment.jpg"]
   pics.each_with_index do |pik, shindex|
-    self.photos.attach(io: File.open(Rails.root.join("./app/assets/images/#{pik}")),filename: "#{pik}",content_type:'image/png')
-    puts "attached! #{self.photos.pluck :blob_id}" if self.photos.attached?
-    self.photos.each do |pic|
-      p = self.photo_descriptions.create!(description: "pic #{shindex+1}", photo_id: pic.id, featured: false)
+    apartment.photos.attach(io: File.open(Rails.root.join("./app/assets/images/#{pik}")),filename: "#{pik}",content_type:'image/png')
+    puts "attached! #{apartment.photos.pluck :blob_id}" if apartment.photos.attached?
+    apartment.photos.each do |pic|
+      p = apartment.photo_descriptions.create!(description: "pic #{shindex+1}", photo_id: pic.id, featured: false)
       # p.featured && self.update!(featured_photo_id:p.photo_id)
     end
   end
@@ -107,7 +107,7 @@ time2 = Benchmark.measure {
       puts "$#{a.asking_price}"
       a.save!
       puts a.full_address
-      # a.attach_pics
+      attach_pics a
       ([t1,t2].sample).apartments << a
       comments.map { |comment|  a.comments.create!( user: User.all.sample , body:comment ) }
     end

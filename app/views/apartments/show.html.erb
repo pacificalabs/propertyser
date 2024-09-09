@@ -3,33 +3,24 @@
 <% unless device_is_mobile? %>
   <div id="navArrow"></div>
 <% end %>
-<div class="container-fluid g-0">
+<div class="container g-0">
   <div class="row mt-md-3 mb-md-5 ml-md-5">
     <div class="col-md-3 order-sm-1 mt-md-5">
       <%= render "about", apartment: @apartment  %>
       <%= render "land_size_internal_space", apartment: @apartment %>
       <%= render "description" if @descriptors.present? %>
       <%= render "features_amenities", apartment: @apartment %>
-      <%= render "market_ratings" %>
+      <%#= render "market_ratings" %>
       <%= render "floorplan" %>
       <%= link_to "Return To Search Results",return_to_search_results_path(title: @search_title), class: "btn btn-outline-primary" if @search_title.present? %>
+      <%#= render "comments" %>
+      <%= render "map" %>
+      <%= render "edit_delete" %>
     </div>
-    <!-- middle column -->
-    <div class="col-md-8 order-sm-2 ml-md-5">
-      <div class="row">
-        <%= render "carousel" %>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <%= render "map" %>
-        </div>
-        <div class="col-md-6">
-          <%#= render "comments" %>
-          <%= render "edit_delete" %>
-        </div>
-      </div>
+    <div class="col-md-7 order-sm-2 ml-md-5">
+      <%= render "carousel" %>
     </div>
-    <div class="mobile-break"></div>
-    <div class="desktop-break"></div>
   </div>
 </div>
+<div class="mobile-break"></div>
+<div class="desktop-break"></div>

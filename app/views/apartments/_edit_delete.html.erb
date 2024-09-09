@@ -1,26 +1,26 @@
 <% if device_is_mobile? %>
-<% if @apartment.user_id == current_user.id %>
-<div class="row">
+  <% if @apartment.user_id == current_user.id %>
+    <div class="row">
       <%= link_to("Edit Details", edit_apartment_path(@apartment), class: "btn btn-info mt-md-3 ml-1") %>
       <%= link_to("Edit Photos", photos_path(apartment_id:@apartment.id), class: "btn btn-info mt-md-3 ml-1") %>
-      <%= link_to("Delete", apartment_path(@apartment), class: "btn btn-secondary mt-md-3 ml-1", method: "delete") %>
- </div>
+      <%#= link_to("Delete", apartment_path(@apartment), class: "btn btn-secondary mt-md-3 ml-1", method: "delete") %>
+    </div>
+  <% else %>
+    <div class="row">
+      <%= link_to "Contact Us", contact_path(id: @apartment.id), class: "btn btn-info mt-md-3 ml-1" %>
+    <% end %>
+    <%= link_to("Approve", approval_path(@apartment), class: "btn btn-secondary mt-md-3 ml-1", method: "post") if current_user.is_admin? && @apartment.approved? == false  %>
+  </div>
+  <div class="mobile-break"></div>
 <% else %>
-<div class="row"> 
-    <%= link_to "Contact Us", contact_path(id: @apartment.id), class: "btn btn-info mt-md-3 ml-1" %>
-      <% end %>
-      <%= link_to("Approve", approval_path(@apartment), class: "btn btn-secondary mt-md-3 ml-1", method: "post") if current_user.is_admin? && @apartment.approved? == false  %>  
-</div>
-<div class="mobile-break"></div>
-<% else %>
-    <div class="mb-md-5">
-      <% if @apartment.user_id == current_user.id %>
+  <div class="mb-md-5">
+    <% if @apartment.user_id == current_user.id %>
       <%= link_to("Edit Details", edit_apartment_path(@apartment), class: "btn btn-info mt-md-3 ml-md-2") %>
       <%= link_to("Edit Photos", photos_path(apartment_id:@apartment.id), class: "btn btn-info mt-md-3 ml-md-2") %>
-      <%= link_to("Delete", apartment_path(@apartment), class: "btn btn-secondary mt-md-3 ml-md-2", method: "delete") %>
-      <% else %>
-    <%= link_to "Contact Us", contact_path(id: @apartment.id), class: "btn btn-info mt-md-3 ml-md-2" %>
-      <% end %>
-      <%= link_to("Approve", approval_path(@apartment), class: "btn btn-secondary mt-md-3 ml-md-2", method: "post") if current_user.is_admin? && @apartment.approved? == false  %>              
-    </div>
+      <%#= link_to("Delete", apartment_path(@apartment), class: "btn btn-secondary mt-md-3 ml-md-2", method: "delete") %>
+    <% else %>
+      <%= link_to "Contact Us", contact_path(id: @apartment.id), class: "btn btn-info mt-md-3 ml-md-2" %>
     <% end %>
+    <%= link_to("Approve", approval_path(@apartment), class: "btn btn-secondary mt-md-3 ml-md-2", method: "post") if current_user.is_admin? && @apartment.approved? == false  %>
+  </div>
+<% end %>

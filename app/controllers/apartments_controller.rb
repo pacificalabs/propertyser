@@ -115,7 +115,6 @@ class ApartmentsController < ApplicationController
     flash[:alert] = "PROPERTY WAS DELETED!"
   end
 
-
   def size
   end
 
