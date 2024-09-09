@@ -52,7 +52,7 @@
    ```
    Update your user access details in the seeds.rb file.
    ```ruby
-   @user_list = [{:firstname => "Tarun", :email => "tarun@pacificasearch.com", "password":"gdaymate", "username":"tarunm", is_admin:true, accepted_terms_and_conditions: true}]
+    @user_list = [{:firstname => "Tarun", :email => "tarun@pacificasearch.com", "password":"gdaymate", "username":"tarunm", is_admin:true, accepted_terms_and_conditions: true}]
    ```
    Seed the database.
    ```bash
