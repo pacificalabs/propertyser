@@ -28,4 +28,17 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  business:
+    name: "Ruyi Realty"
+    company: "Ruyi Realty Pty Ltd"
+    address: "PO Box 1148, Epping, NSW 1710"
+    phone: "0425 305 678"
+    email: "cherry@ruyirealty.net.au"
+    website: "https://www.ruyirealty.net.au"
+    domain: "ruyirealty.net.au"
+    logo: "ruyi_logo.svg"
+    abn: "1234567890"
+    acn: "ACN 1234567890"
+    contact: "Cherry"
+
+
