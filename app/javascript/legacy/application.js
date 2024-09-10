@@ -1,33 +1,3 @@
-// Include this script in your application.js or equivalent
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('a[data-method]').forEach(anchor => {
-        anchor.addEventListener('click', (event) => {
-            event.preventDefault();
-            const method = anchor.getAttribute('data-method');
-            const url = anchor.getAttribute('href');
-
-            fetch(url, {
-                method: method.toUpperCase(),
-                headers: {
-                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-                }
-            }).then(response => {
-                if (response.ok) {
-                    window.location.reload(); // Reload the page or handle success
-                } else {
-                    // Parse the error response
-                    return response.text().then(text => {
-                        // Display the error message
-                        alert(text || 'An error occurred');
-                    });
-                }
-            }).catch(error => {
-                alert('An error occurred: ' + error.message);
-            });
-        });
-    });
-});
-
 $(document).ready(function() {
     // Size of browser viewport.
     window.viewport = {

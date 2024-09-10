@@ -91,7 +91,7 @@ Rails.application.routes.draw do
   get 'admin/directory', to: 'admin#directory', as: 'admin_directory'
   post 'approve/:id', to: 'admin#approve', as: 'approval'
   post 'revoke/:id', to: 'admin#revoke', as: 'revoke'
-  delete 'admin/delete/:id', to: 'admin#delete', as: 'admin_deletion'
+  get 'delete/:id', to: 'admin#delete', as: :admin_deletion
   post 'admin/archive/:id', to: 'admin#archive', as: 'admin_archive'
   post 'admin/unarchive/:id', to: 'admin#unarchive', as: 'admin_unarchive'
   get 'admin/archival', to: 'admin#archival', as: 'archival'
