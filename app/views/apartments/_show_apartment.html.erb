@@ -13,7 +13,7 @@
         <div class="row">
           <div class="row">
             <div class="col-12 image-box">
-              <% tag = pic.present? ? image_tag(apartment_results_page_image_url(pic), alt: "", class: "img-fluid img-thumbnail") : '' %>
+              <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : '' %>
               <div><%= link_to tag, apartment_path(a,title: search_title), class: "alert-link" %></div>
             </div>
           </div>
@@ -56,7 +56,7 @@
             <%= render partial: "favourites/widget", locals: {apartment: a} %>
           </div>
           <div class="col-md-5 order-md-1 image-box">
-            <% tag = pic.present? ? image_tag(apartment_results_page_image_url(pic), alt: "", class: "img-fluid img-thumbnail") : "<span class='nounderline m-5'>There was a problem loading the image.</span>".html_safe  %>
+            <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : "<span class='nounderline m-5'>There was a problem loading the image.</span>".html_safe  %>
             <div><%= link_to tag, apartment_path(a,title: search_title), class: "alert-link" %></div>
           </div>
           <div class="col-md-6 order-md-2">

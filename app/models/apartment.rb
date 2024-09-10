@@ -49,6 +49,7 @@ class Apartment < ApplicationRecord
   has_one :descriptor, dependent: :destroy
   has_one :feature, dependent: :destroy
   has_one :amenity, dependent: :destroy
+
   has_many_attached :photos, dependent: :destroy
   has_many_attached :floorplans, dependent: :destroy
 

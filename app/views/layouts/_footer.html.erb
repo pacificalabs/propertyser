@@ -1,19 +1,19 @@
 <!-- Footer Start -->
-<div class="container-fluid bg-primary text-white-50 footer pt-5 mt-5 fadeIn" >
+<div class="container-fluid g-0 footer pt-5 mt-5 fadeIn" >
   <div class="container py-5">
     <div class="row g-5">
       <div class="col-lg-3 col-md-6">
-        <h5 class="text-white mb-4">Get In Touch</h5>
-        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123  George Street, Sydney NSW 2000</p>
-        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+612 0400 999 999</p>
-        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@homblok.com</p>
+        <h5 class="mb-4">Get In Touch</h5>
+        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><%= t("business.address") %></p>
+        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><%= t("business.phone") %></p>
+        <a href="mailto:<%= t("business.email") %>" class="mb-2"><i class="fa fa-envelope me-3"></i><%= t("business.email") %></a>
         <div class="d-flex pt-2">
           <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
           <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
         </div>
       </div>
       <div class="col-lg-3 col-md-6">
-        <h5 class="text-white mb-4">Quick Links</h5>
+        <h5 class="mb-4">Quick Links</h5>
         <%= link_to 'About Us', background_path, class: 'btn btn-link text-white-50' %>
         <%= link_to 'FAQ', faq_path, class: 'btn btn-link text-white-50' %>
         <%= link_to 'STEP-BY-STEP GUIDE', guide_path, class: 'btn btn-link text-white-50' %>
@@ -57,7 +57,7 @@
     <div class="copyright">
       <div class="row">
         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-          &copy; <a class="border-bottom" href="#">Homblok</a>. All Right Reserved.
+          <a class="border-bottom" href="#"><%= t("business.name") %></a> &copy; <%= Time.new.year %>, All Right Reserved.
         </div>
         <div class="col-md-6 text-center text-md-end">
           <div class="footer-menu">

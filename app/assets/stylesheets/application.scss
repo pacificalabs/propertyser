@@ -5,33 +5,41 @@
 @import "tablet_device";
 
 
-nav a {
-    color: antiquewhite !important;
-}
+    nav a {
+        color: antiquewhite !important;
+    }
 
-.dropdown-menu {
-    background-color: var(--bs-primary) !important;
-    border: calc(var(--bs-primary) - 50px) solid var(--bs-primary) !important;
-}
+    .dropdown-menu {
+        background-color: var(--bs-primary) !important;
+        border: calc(var(--bs-primary) - 50px) solid var(--bs-primary) !important;
+    }
 
-.dropdown-item {
-  background-color: var(--bs-primary) !important;
-}
+    .dropdown-item {
+      background-color: var(--bs-primary) !important;
+    }
 
-.dropdown-menu.li.a:hover {
-    color: var(--bs-btn-hover-color);
-    background-color: var(--bs-btn-hover-bg) !important;
-    border-color: var(--bs-btn-hover-border-color)
+    .dropdown-menu.li.a:hover {
+        color: var(--bs-btn-hover-color);
+        background-color: var(--bs-btn-hover-bg) !important;
+        border-color: var(--bs-btn-hover-border-color)
+    }
+
+.homepage {
+  background: image_url('bg-home.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 nav.navbar.bg-primary, .btn-primary, .dropdown-item,
-.dropdown-menu {
+.dropdown-menu, .btn-info, .bg-primary {
   --bs-bg-opacity: 1;
   background-color: #b31317 !important;
   border-color: #b31317 !important;
 }
 
-.bg-primary {
-    background-color: #b31317 !important;
+.carousel-item {
+  background-size: cover;
+  background-position: center;
+  height: 480px; /* Adjust the height to suit your carousel */
 }
-
