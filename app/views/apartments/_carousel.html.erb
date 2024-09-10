@@ -21,7 +21,7 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
-    <% else %>
+    <% elsif @apartment.photos.blank? %>
       <div class="col-md-12 text-center new-caption-area mt-md-2">PHOTOS MISSING</div>
     <% end %>
   </div>

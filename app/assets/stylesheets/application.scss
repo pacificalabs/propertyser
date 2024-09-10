@@ -5,24 +5,29 @@
 @import "tablet_device";
 
 
-    nav a {
-        color: antiquewhite !important;
-    }
+.card {
+  background-color: #c7c6c0 !important;
+  border: 1.5px solid !important;
+}
 
-    .dropdown-menu {
-        background-color: var(--bs-primary) !important;
-        border: calc(var(--bs-primary) - 50px) solid var(--bs-primary) !important;
-    }
+nav a {
+    color: antiquewhite !important;
+}
 
-    .dropdown-item {
-      background-color: var(--bs-primary) !important;
-    }
+.dropdown-menu {
+    background-color: var(--bs-primary) !important;
+    border: calc(var(--bs-primary) - 50px) solid var(--bs-primary) !important;
+}
 
-    .dropdown-menu.li.a:hover {
-        color: var(--bs-btn-hover-color);
-        background-color: var(--bs-btn-hover-bg) !important;
-        border-color: var(--bs-btn-hover-border-color)
-    }
+.dropdown-item {
+  background-color: var(--bs-primary) !important;
+}
+
+.dropdown-menu.li.a:hover {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg) !important;
+    border-color: var(--bs-btn-hover-border-color)
+}
 
 .homepage {
   background: image_url('bg-home.webp');
