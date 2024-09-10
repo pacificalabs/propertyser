@@ -28,23 +28,27 @@ class AdminController < ApplicationController
   end
 
   def delete
-    Apartment.find(params[:id]).destroy!
+    @apartment = Apartment.find(params[:id])
+    if @apartment.destroy
+      flash[:notice] = "Apartment was successfully deleted."
+    else
+      flash[:alert] = "Error deleting apartment: #{@apartment.errors.full_messages.to_sentence}"
+    end
     redirect_to admin_path
-    flash[:alert] = "PROPERTY WAS DELETED!"
   end
 
   def archive
     @apartment = Apartment.find_by_id(approval_params[:id])
     @apartment.archive
-    redirect_to admin_path
     flash[:alert] = "PROPERTY WAS ARCHIVED!"
+    redirect_to admin_path
   end
 
   def unarchive
     @apartment = Apartment.find_by_id(approval_params[:id])
     @apartment.unarchive
-    redirect_to archival_path
     flash[:alert] = "PROPERTY WAS UNARCHIVED!"
+    redirect_to archival_path
   end
 
   def archival
