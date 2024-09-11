@@ -15,8 +15,12 @@ nav a {
 }
 
 .dropdown-menu {
-    background-color: var(--bs-primary) !important;
-    border: calc(var(--bs-primary) - 50px) solid var(--bs-primary) !important;
+  background-color: var(--bs-primary) !important;
+  border: calc(var(--bs-primary) - 50px) solid var(--bs-primary) !important;
+  position: absolute;
+  top: 4rem;
+  left: -4rem;
+
 }
 
 .dropdown-item {
@@ -24,16 +28,14 @@ nav a {
 }
 
 .dropdown-menu.li.a:hover {
-    color: var(--bs-btn-hover-color);
-    background-color: var(--bs-btn-hover-bg) !important;
-    border-color: var(--bs-btn-hover-border-color)
+  color: var(--bs-btn-hover-color);
+  background-color: var(--bs-btn-hover-bg) !important;
+  border-color: var(--bs-btn-hover-border-color)
 }
 
 .homepage {
-  background: image_url('bg-home.webp');
+  background: image_url('bg-home.webp') no-repeat center;
   background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 nav.navbar.bg-primary, .btn-primary, .dropdown-item,
