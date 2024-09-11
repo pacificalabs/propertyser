@@ -17,36 +17,36 @@
                 <%= render "bed_bath_parking", f: f, apartment: @apartment %>
               </div>
             </div>
-            <div class='row buy-property-data-div d-none' id="part-3" label="features">
-              <div class="col-md-12">
-                <%= render "features", f: f, apartment: @apartment, feature_icons: @feature_icons %>
-              </div>
-            </div>
-            <div class='row buy-property-data-div d-none' id="part-4" label="descriptors">
-              <div class="col-md-12">
-                <%= render "descriptors", f: f, apartment: @apartment, descriptor_icons: @descriptor_icons %>
-              </div>
-            </div>
-            <div class='row buy-property-data-div d-none' id="part-5" label="amenities">
-              <div class="col-md-12">
-                <%= render "amenities", f: f, apartment: @apartment, amenity_icons: @amenity_icons %>
-              </div>
-            </div>
-            <div class='row buy-property-data-div d-none' id="part-6" label="values">
+            <div class='row buy-property-data-div d-none' id="part-3" label="values">
               <div class="col-md-12">
                 <%= render "values", f:f, apartment: @apartment  %>
               </div>
             </div>
-            <div class='row buy-property-data-div d-none' id="part-7" label="photos">
+            <div class='row buy-property-data-div d-none' id="part-4" label="photos">
               <div class="col-md-12">
                 <%= render "photos/add", f:f, apartment: @apartment  %>
               </div>
             </div>
-            <div class='row buy-property-data-div d-none' id="part-8" label="save">
+            <div class='row buy-property-data-div d-none' id="part-5" label="save">
               <div class="col-md-12">
                 <br>
                 <%= f.submit "SAVE DRAFT and LOAD PHOTOS", class: "btn btn-outline-primary col-md-12 mb-md-5", id: "sell-submit" %>
               </div>
+            </div>
+          </div>
+          <div class='row buy-property-data-div d-none' id="part-6" label="descriptors">
+            <div class="col-md-12">
+              <%#= render "descriptors", f: f, apartment: @apartment, descriptor_icons: @descriptor_icons %>
+            </div>
+          </div>
+          <div class='row buy-property-data-div d-none' id="part-7" label="amenities">
+            <div class="col-md-12">
+              <%#= render "amenities", f: f, apartment: @apartment, amenity_icons: @amenity_icons %>
+            </div>
+          </div>
+          <div class='row buy-property-data-div d-none' id="part-8" label="features">
+            <div class="col-md-12">
+              <%#= render "features", f: f, apartment: @apartment, feature_icons: @feature_icons %>
             </div>
           </div>
           <div class="col-lg-6 position-relative overflow-hidden">
@@ -88,7 +88,7 @@
               <circle cx="25" cy="25" r="21.25" stroke="#18A2B8" stroke-width="1.5"/>
             </svg>
           </span>
-          <%= f.submit "SEARCH", class: "btn btn-outline-primary my-3 d-none", id: "startSearching" %>
+          <%#= f.submit "SEARCH", class: "btn btn-outline-primary my-3 d-none", id: "startSearching" %>
         </div>
       <% end %>
     </div>
