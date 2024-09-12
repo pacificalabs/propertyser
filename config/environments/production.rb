@@ -91,7 +91,6 @@ Rails.application.configure do
     open_timeout:    60,
   read_timeout:    60 }
 
-
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   config.action_mailer.raise_delivery_errors = true
