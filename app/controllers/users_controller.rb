@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :user_is_authorised?, except: [:create,:forgot_my_password,:send_token_email, :complete_signup, :new_token_confirmation,:validate_token,:accept], raise: false
   before_action :load_icons, only: [:show]
-  
+
   def index
     @users = User.all
   end
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
       end
       # FIXME userscontrollerhelper not recognised
     rescue ActiveRecord::RecordNotUnique => e
-      @message = "That username has been taken, please choose another username " if e.inspect.include? "(username)" 
+      @message = "That username has been taken, please choose another username " if e.inspect.include? "(username)"
       flash[:updated_user_params] = user_params.permit(:email, :firstname, :surname, :phone)
       redirect_to mobile_signup_path(updated_params) and return
     rescue ActiveRecord::RecordInvalid => e
@@ -61,17 +61,17 @@ class UsersController < ApplicationController
     flash[:notice] = "You have registered as #{@user&.username}"
     UserMailer.with(user: @user).welcome_email.deliver_later
     notify_admin_team 'new_user_alert',
-    location_info: Geocoder.search(request.remote_ip).first.data,
-    email: @user.email,
-    firstname: @user.firstname,
-    surname: @user.surname,
-    username: @user.username,
-    phone: @user.phone
+      location_info: Geocoder.search(request.remote_ip).first.data,
+      email: @user.email,
+      firstname: @user.firstname,
+      surname: @user.surname,
+      username: @user.username,
+      phone: @user.phone
     redirect_to previous_page and return @user
   end
 
   def decline
-    redirect_to logout_path    
+    redirect_to logout_path
   end
 
   def update
@@ -90,9 +90,9 @@ class UsersController < ApplicationController
   def send_token_email
     @email = password_params[:email]
     @user = User.find_by_email(@email)
-    if @user.present? 
-      @user.set_password_token(15.minutes)
-      UserMailer.with(user_id: @user.id).reset_password_email.deliver_later
+    if @user.present?
+      @user.set_password_token(valid_for: 15.minutes)
+      UserMailer.with(user_id: @user.id, request_url: request.original_url).reset_password_email.deliver_later
       message = "success"
     else
       message = "failure"
@@ -110,7 +110,7 @@ class UsersController < ApplicationController
     begin
       # receives link and token and validates entry, if valid redirects to new password method
       @user = User.find_by_reset_password_token(params[:token])
-      @user.present? && @user.password_token_valid_until < Time.now  
+      @user.present? && @user.password_token_valid_until < Time.now
       @token = params[:token]
       session[:user_id] = @user.id
       render "update_password"
@@ -126,34 +126,34 @@ class UsersController < ApplicationController
       current_user.update!(reset_password_token:nil)
       redirect_to myproperties_path, alert:  "Password successfully updated" and return
     else
-     flash[:alert] = "New password & confirmation fields do not match"
-   end
- end
-
- def change_password
-  if current_user.authenticate old_password_params[:old_password]
-    current_user.update new_password_params
-    flash[:notice] = "Password successfully updated."
-  else
-   flash[:alert] = "Old password is incorrect or new password & confirmation fields do not match"    
- end
- redirect_to user_path(current_user)
-end
-
-def destroy
-  @user.destroy
-  respond_to do |format|
-    format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-    format.json { head :no_content }
+      flash[:alert] = "New password & confirmation fields do not match"
+    end
   end
-end
 
-def complete_signup
-  begin
+  def change_password
+    if current_user.authenticate old_password_params[:old_password]
+      current_user.update new_password_params
+      flash[:notice] = "Password successfully updated."
+    else
+      flash[:alert] = "Old password is incorrect or new password & confirmation fields do not match"
+    end
+    redirect_to user_path(current_user)
+  end
+
+  def destroy
+    @user.destroy
+    respond_to do |format|
+      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def complete_signup
+    begin
       # receives link and token and validates entry, if valid redirects to new password method
       @user = User.find_by_reset_password_token(params[:token])
       @user.present? && @user.password_token_valid_until < Time.now
-      @user.milestones.update(email_address_confirmed: true)  
+      @user.milestones.update(email_address_confirmed: true)
       @token = params[:token]
       session[:user_id] = @user.id
       flash[:alert] = "Congratulations. You have successfully completed your registration."
@@ -167,36 +167,36 @@ def complete_signup
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.permit(:avatar, :email, :firstname, :surname, :phone, :username, :password, :password_confirmation)
-    end
-
-    def terms_params
-      params.permit(:user_id)
-    end
-
-    def password_params
-      params.permit(:email)
-    end
-
-    def update_user_params
-      params.permit(:email, :firstname, :surname, :phone, :username, :avatar)
-    end
-
-    def update_password_params
-      params.require(:user).permit(:password,:password_confirmation)
-    end
-
-    def old_password_params
-      params.require(:user).permit(:old_password)      
-    end
-    def new_password_params
-      params.require(:user).permit(:password,:password_confirmation)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
   end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.permit(:avatar, :email, :firstname, :surname, :phone, :username, :password, :password_confirmation)
+  end
+
+  def terms_params
+    params.permit(:user_id)
+  end
+
+  def password_params
+    params.permit(:email)
+  end
+
+  def update_user_params
+    params.permit(:email, :firstname, :surname, :phone, :username, :avatar)
+  end
+
+  def update_password_params
+    params.require(:user).permit(:password,:password_confirmation)
+  end
+
+  def old_password_params
+    params.require(:user).permit(:old_password)
+  end
+  def new_password_params
+    params.require(:user).permit(:password,:password_confirmation)
+  end
+end

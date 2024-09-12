@@ -207,7 +207,7 @@ class Apartment < ApplicationRecord
   end
 
   def run_geocode_job
-    GeocodeApartmentJob.perform_later(self.id)
+    GeocodeApartmentJob.perform(self.id)
   end
 
 end

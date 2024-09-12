@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
 
   def notify_admin_team(mailer,data = {})
     User.where(is_admin: true).find_each do |admin_user|
-      AdminMailer.with(recipient:admin_user,data:data).send(mailer).deliver_later
+      AdminMailer.with(recipient:admin_user, data:data).new_user_alert.deliver_later
     end
   end
 

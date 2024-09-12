@@ -1,14 +1,18 @@
 class AdminMailer < ApplicationMailer
-  default from: "Leena from Homblok <leena@homblok.com>", cc: "Support Desk <homblok@pacificasearch.com>"
+
   def new_user_alert
     @location_info = params[:data][:location_info]
-    @email = params[:data][:email]
     @firstname = params[:data][:firstname]
     @surname = params[:data][:surname]
     @username = params[:data][:username]
     @phone = params[:data][:phone]
     @to = params[:recipient]
-    mail(from: "Homblok Admin Team <leena@homblok.com>" , to: @to.email, subject: "New user alert -  #{@firstname} #{@surname}")
+    @subject = "New user alert - #{@firstname} #{@surname}"
+
+    mail(
+      to: @to.email,
+      subject: @subject
+    )
   end
 
   def contact_form
@@ -19,6 +23,11 @@ class AdminMailer < ApplicationMailer
     @email = params[:data][:email]
     @subject = params[:data][:subject]
     @to = params[:recipient]
-    mail(from: "Homblok Contact Us Form <leena@homblok.com>", to: @to.email, subject: "#{@subject}")
+
+    mail(
+      from: "Contact Form <zoilism@gmail.com>",
+      to: @to.email,
+      subject: @subject
+    )
   end
 end
