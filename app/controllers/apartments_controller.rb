@@ -49,33 +49,46 @@ class ApartmentsController < ApplicationController
   def create
     begin
       @apartment = Apartment.new(apartment_params)
-      @apartment.bedrooms = params[:bedrooms]
-      @apartment.bathrooms = params[:bathrooms]
-      @apartment.strata = params[:strata]
-      @apartment.parking_spaces = params[:parking_spaces]
-      @apartment.asking_price = helpers.currency_to_number(apartment_params[:asking_price])
-      f = Feature.new(feature_params[:feature])
-      @apartment.feature = f
-      d = Descriptor.new(descriptor_params[:descriptor])
-      @apartment.descriptor = d
-      a = Amenity.new(amenity_params[:amenity])
-      @apartment.amenity = a
-      @apartment.user = current_user
-      @apartment.save
-      @apartment.valid? && flash[:notice] = "Your property has been saved to draft. Please describe your photo#{"s" if params[:apartment][:photos].size > 1} and add any floorplan if available."
-      if params[:apartment][:photos]
-        @apartment.photos.attach(params[:apartment][:photos])
-        if @apartment.photos.attached?
-          @apartment.photos.each do |pic|
-            @apartment.photo_descriptions.create!(description: nil, photo_id: pic.id)
+      @apartment.assign_attributes(
+        bedrooms: params[:bedrooms],
+        bathrooms: params[:bathrooms],
+        strata: params[:strata],
+        parking_spaces: params[:parking_spaces],
+        asking_price: helpers.currency_to_number(apartment_params[:asking_price]),
+        user: current_user
+      )
+
+      # Creating associated objects
+      @apartment.feature = Feature.new(feature_params[:feature]) if feature_params[:feature].present?
+      @apartment.descriptor = Descriptor.new(descriptor_params[:descriptor]) if descriptor_params[:descriptor].present?
+      @apartment.amenity = Amenity.new(amenity_params[:amenity]) if amenity_params[:amenity].present?
+
+      # Save apartment
+      if @apartment.save
+        flash[:notice] = "Your property has been saved to draft. Please describe your photo#{"s" if params[:apartment][:photos].size > 1} and add any floorplan if available."
+
+        # Attach photos and create photo descriptions
+        if params[:apartment][:photos].present?
+          @apartment.photos.attach(params[:apartment][:photos])
+
+          if @apartment.photos.attached?
+            @apartment.photos.each do |pic|
+              @apartment.photo_descriptions.create!(description: nil, blob_id: pic.blob_id)
+            end
           end
         end
+
+        redirect_to photos_path(apartment_id: @apartment.id)
+      else
+        flash[:alert] = "There was an error saving the apartment. Please check the form and try again."
+        render :new
       end
-    rescue Exception => e
-      redirect_to new_apartment_path, alert: "There was an error. #{e.inspect}. Please try again"
+
+    rescue StandardError => e
+      flash[:alert] = "There was an error. #{e.message}. Please try again."
       logger.error { "#{action_name} ERROR: #{e.inspect}" }
+      redirect_to new_apartment_path
     end
-    redirect_to photos_path(apartment_id: @apartment.id)
   end
 
   def edit
