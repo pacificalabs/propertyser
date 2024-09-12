@@ -1,6 +1,6 @@
 class ApartmentsController < ApplicationController
   before_action :update_fullpath
-  before_action :user_is_authorised?, except: [:search,:index,:search_location]
+  # before_action :user_is_authorised?, except: [:search,:index,:search_location]
   before_action :load_icons, only: [:index,:new,:edit,:owner,:show]
 
   def search
