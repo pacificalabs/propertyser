@@ -34,7 +34,7 @@ def attach_pics(apartment)
     apartment.photos.attach(io: File.open(Rails.root.join("./app/assets/images/#{pik}")),filename: "#{pik}",content_type:'image/png')
     puts "attached! #{apartment.photos.pluck :blob_id}" if apartment.photos.attached?
     apartment.photos.each do |pic|
-      p = apartment.photo_descriptions.create!(description: "pic #{shindex+1}", photo_id: pic.id, featured: false)
+      description = apartment.photo_descriptions.create!(description: "pic #{shindex+1}", blob_id: pic.blob_id, featured: false)
       # p.featured && self.update!(featured_photo_id:p.photo_id)
     end
   end

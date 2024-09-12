@@ -39,32 +39,34 @@ class PhotosController < ApplicationController
   end
 
   def update
-    @apartment = Apartment.find params[:attachment][:apartment_id]
-      # define actions such as set feature or delete
-      if params[:featured]
-        @apartment.set_featured_photo(params[:id])
-        flash[:notice] = "PHOTO SET AS FEATURE PHOTO"
-      elsif params[:delete]
-        @apartment.delete_photo_and_description(params[:id]) 
-      elsif params[:update]
-        @description = PhotoDescription.find_by_photo_id(params[:id])
-        @description.update!(description:params[:attachment][:description])
-      end
-      redirect_to photos_path(apartment_id: @apartment.id)
+    @apartment = Apartment.find params[:photo_description][:apartment_id]
+    # define actions such as set feature or delete
+    if params[:featured]
+      # @apartment.set_featured_photo(params[:id])
+      flash[:notice] = "PHOTO SET AS FEATURE PHOTO"
+    elsif params[:delete]
+      @apartment.delete_photo_and_description(params[:id])
+      flash[:notice] = "Photo Deleted!"
+    elsif params[:update]
+      @description = PhotoDescription.find_or_initialize_by(apartment_id: @apartment.id, blob_id: params[:id])
+      @description.update!(description: params[:photo_description][:description])
+      flash[:notice] = "Photo Description Updated!"
     end
-
-    private
-
-    def photo_edit_params
-      params.permit(:apartment_id,:id)
-    end
-
-    def photo_delete_params
-      params.permit(:apartment,:id)
-    end
-
-    def photo_params
-      params.require(:photo).permit(:photos,:apartment_id)
-    end
-
+    redirect_to photos_path(apartment_id: @apartment.id)
   end
+
+  private
+
+  def photo_edit_params
+    params.permit(:apartment_id,:id)
+  end
+
+  def photo_delete_params
+    params.permit(:apartment,:id)
+  end
+
+  def photo_params
+    params.require(:photo).permit(:photos,:apartment_id)
+  end
+
+end

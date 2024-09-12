@@ -3,7 +3,7 @@
     <div class="carousel-inner">
       <% @apartment.photos.each_with_index do |pic, index| %>
         <% active = (index == 0) ? "active" : "" %>
-        <% desc = PhotoDescription.find_by(photo_id: pic.id) %>
+        <% desc = PhotoDescription.find_by(blob_id: pic.id) %>
         <div class="carousel-item <%= active %>" style="background-image: url('<%= CGI.escapeHTML(apartment_carousel_image_url(pic)) %>');">
           <div class="carousel-caption d-none d-sm-block">
             <!-- Add caption content here -->
