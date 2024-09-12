@@ -58,7 +58,7 @@ end
 @user_list = [
   {:firstname => "Tarun", :email => "tarun@pacificasearch.com", "password":"gdaymate", "username":"tarunm", is_admin:true, accepted_terms_and_conditions: true},
   {:firstname => "Tarun", :email => "test@test.com", "password":"gdaymate", "username":"tyrone", is_admin:false, accepted_terms_and_conditions: false},
-  {:firstname => "Lee", :email => "lee@toonstudio.com", "password":"gdaymate", "username":"leesheppard", is_admin:true, accepted_terms_and_conditions: true}
+  {:firstname => "Lee", :email => "lee@toonstudio.com.au", "password":"gdaymate", "username":"leesheppard", is_admin:true, accepted_terms_and_conditions: true}
 ]
 
 small_numbers = (1..10).to_a
