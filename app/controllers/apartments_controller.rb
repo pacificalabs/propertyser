@@ -1,5 +1,7 @@
 class ApartmentsController < ApplicationController
   before_action :update_fullpath
+  skip_before_action :user_is_authorised?, only: :show
+
   # before_action :user_is_authorised?, except: [:search,:index,:search_location]
   before_action :load_icons, only: [:index,:new,:edit,:owner,:show]
 
@@ -146,7 +148,7 @@ class ApartmentsController < ApplicationController
   def show
     begin
       @apartment = Apartment.includes(:user,:amenity,:feature,{comments:[:user,:replies]}).with_attached_photos.find(params[:id])
-      @self_rating = @apartment.market_ratings.find_by_user_id(current_user.id)
+      # @self_rating = @apartment.market_ratings.find_by_user_id(current_user.id)
       @features = @apartment&.feature&.attributes&.select {|k,f| f == true }
       @features = @features.keys if @features.present?
       @descriptors = @apartment&.descriptor&.attributes&.select {|k,f| f == true }
