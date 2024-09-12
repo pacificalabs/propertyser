@@ -13,13 +13,13 @@
   <div class="col-md-4 mt-sm-3">
     <br>
     <%= image_tag(get_aws_url("dark_icons/icons8-country-50.png"), class: "feature-icons-edit-new ml-md-2") %>
-    <%= f.label :land_size, "LAND SIZE" %>
+    <%= f.label :land_size, "LAND SIZE (m&#178;)".html_safe %>
     <%= f.text_field :land_size, class: "form-control", placeholder: "leave blank if n/a"  %>
   </div>
   <div class="col-md-4 mt-sm-3">
     <br>
     <%= image_tag(get_aws_url("dark_icons/icons8-extra-features-50.png"), class: "feature-icons-edit-new ml-md-2") %>
-    <%= f.label :internal_space, "INTERNAL AREA"  %>
+    <%= f.label :internal_space, "INTERNAL AREA (m&#178;)".html_safe  %>
     <%= f.text_field 'internal_space', class: "form-control", placeholder: "leave blank if n/a" %>
   </div>
 </div>
