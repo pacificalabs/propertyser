@@ -3,7 +3,7 @@
   .col-md-8
     %h2.text-center.ml-md-4.mt-md-5
       = image_tag "dark_icons/icons8-about-50.png", class: "title-icons ml-md-2 mr-md-1 mb-md-1"
-      ABOUT HOMBLOK
+      ABOUT <%= t("business.name") %>
   #aboutus.column.col-md-2
 .row
   .column.col-md-2
@@ -13,13 +13,13 @@
       %h4 The Team
       %li
         %p
-          Homblok&#x2019;s Principal and Founder is
-          %a#link5{href: "mailto:leena@homblok.com"} Leena Gupta
+          <%= t("business.name") %> s Principal and Founder is
+          %a#link5{href: "mailto:#{t("business.email")}"} <%= t("business.contact") %>
           , a qualified Real Estate Agent with her Real Estate Licence and experience in both Buying and Selling property.
       %li
         %p Highly professional, she has a prior extensive background and experience in banking and finance as well as executive search, giving her the attention to detail and communication skills needed across a depth of industries.
       %li
-        %p Homblok consists of a team of qualified professionals who are trained in real estate, understand the market and want to give people more choices and control over their property transactions.
+        %p <%= t("business.name") %> consists of a team of qualified professionals who are trained in real estate, understand the market and want to give people more choices and control over their property transactions.
     %ul
       %h4 The Proposition
       %li
@@ -33,7 +33,7 @@
       %li
         %p#theconcept In her roles as Sales Agent and Buyers Agent, Leena has established many relationships with Real Estate Agents which has given her extensive insight into the needs of the market and how to fill the gap in it.
       %li
-        %p Homblok sets out to help people achieve a seamless transaction in one of the biggest decisions they make in their life.
+        %p <%= t("business.name") %> sets out to help people achieve a seamless transaction in one of the biggest decisions they make in their life.
   .column.col-md-2
 .row
   .column.col-md-2

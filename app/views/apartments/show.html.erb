@@ -1,5 +1,5 @@
 <% @address = current_user.present? && (@apartment.owner == current_user || @current_user&.is_admin?) ? @apartment.full_address_line_1 : @apartment.address_line_1 %>
-<% content_for(:html_title) { "#{@address}, #{@apartment.suburb} - Homblok" } %>
+<% content_for(:html_title) { "#{@address}, #{@apartment.suburb} - #{t("business.name")}" } %>
 <% unless device_is_mobile? %>
   <div id="navArrow"></div>
 <% end %>
