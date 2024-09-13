@@ -38,7 +38,7 @@ class Apartment < ApplicationRecord
   after_create :create_associations
 
   # TODO change this to get lat long from db
-  after_create :run_geocode_job
+  after_save :run_geocode_job
   geocoded_by :full_address
 
   belongs_to :user
