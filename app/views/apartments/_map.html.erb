@@ -48,6 +48,8 @@
       }
 </style>
 <% string = [@apartment.latitude,@apartment.longitude].join(",") %>
-<gmpx-api-loader key=<%= Rails.application.credentials.dig(:google, :maps_api_key) %> solution-channel="GMP_GE_mapsandplacesautocomplete_v1"></gmpx-api-loader>
-<gmp-map center=<%= string %> zoom="13" map-id="DEMO_MAP_ID">
-  <gmp-advanced-marker position=<%= string %> title=<%= @apartment.full_address %>></gmp-advanced-marker></gmp-map>
+<div class="my-md-3">
+  <gmpx-api-loader key=<%= Rails.application.credentials.dig(:google, :maps_api_key) %> solution-channel="GMP_GE_mapsandplacesautocomplete_v1"></gmpx-api-loader>
+  <gmp-map center=<%= string %> zoom="13" map-id="DEMO_MAP_ID">
+    <gmp-advanced-marker position=<%= string %> title=<%= @apartment.full_address %>></gmp-advanced-marker></gmp-map>
+</div>

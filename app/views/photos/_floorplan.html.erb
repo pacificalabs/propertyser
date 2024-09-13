@@ -1,8 +1,8 @@
 <% if floorplan.representable? %>
   <div class="col-md-3">
-    <%= form_with url: apartment_floorplan_path(apartment_id: @apartment.id,id: floorplan.id), method: "delete", class: "form-row mb-md-2" do |f| %>
-      <%= image_tag(floorplan_apartment_page_url(floorplan), alt: "") %>    
+    <%= form_with url: apartment_floorplan_path(apartment_id: @apartment.id,id: floorplan.id), method: "delete", class: "form-row my-md-2" do |f| %>
+      <%= image_tag(floorplan_apartment_page_url(floorplan), alt: "") %>
       <%= f.submit "Delete", name: "delete",  class: "m-md-2 btn btn-outline-info" %>
-      <% end %>
+    <% end %>
   </div>
 <% end %>
