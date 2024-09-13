@@ -4,12 +4,6 @@
 @import "mobile_device";
 @import "tablet_device";
 
-
-.card {
-  background-color: #c7c6c0 !important;
-  border: 1.5px solid !important;
-}
-
 nav a {
     color: antiquewhite !important;
 }
@@ -18,9 +12,8 @@ nav a {
   background-color: var(--bs-primary) !important;
   border: calc(var(--bs-primary) - 50px) solid var(--bs-primary) !important;
   position: absolute;
-  top: 4rem;
-  left: -4rem;
-
+  top: 2.5rem;
+  left: -3.75rem;
 }
 
 .dropdown-item {
