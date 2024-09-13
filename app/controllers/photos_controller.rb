@@ -2,21 +2,37 @@ class PhotosController < ApplicationController
 
   def index
     @apartment = Apartment.find(params[:apartment_id])
-    @floorplans = @apartment.floorplans if @apartment.floorplans.present? 
+    @floorplans = @apartment.floorplans if @apartment.floorplans.present?
     @photos = @apartment.presort_photos if @apartment.photos.attached?
+  rescue StandardError => e
+    Rails.logger.error { "error: #{e}" }
+    flash[:alert] = "There was an error, please try again."
+    redirect_to apartments_path
   end
 
   def create
-    @apartment = Apartment.find photo_params[:apartment_id]
-    @photo = @apartment.photos.attach(params[:photo][:photos])
-    if @apartment.photos.attached?
-      @apartment.photos.map { |pic| @apartment.photo_descriptions.create!(description: nil, photo_id: pic.id)  }
+    @apartment = Apartment.find(photo_params[:apartment_id])
+
+    # Attach new photos to the apartment
+    new_photos = params[:photo][:photos]
+    initial_size = @apartment.photos.size
+    @photos = @apartment.photos.attach(new_photos)
+
+    # Only add photo descriptions for newly added photos
+    if @apartment.photos.size > initial_size
+      @photos.each do |photo|
+        @apartment.photo_descriptions.find_or_create_by!(description: nil, blob_id: photo.id)
+      end
     end
-    redirect_to photos_path(apartment_id:@apartment.id)
+
+    redirect_to photos_path(apartment_id: @apartment.id)
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "Apartment not found."
+    redirect_to apartments_path
   rescue ArgumentError => e
-    Rails.logger.error { "error: #{e}" }
-    flash[:alert] = "There was an error, please try again."
-    render "index"
+    Rails.logger.error "Error: #{e.message}"
+    flash[:alert] = "There was an error attaching photos, please try again."
+    render :index
   end
 
   def edit

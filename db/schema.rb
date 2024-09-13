@@ -310,6 +310,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_07_10_012939) do
     t.index ["blob_id"], name: "index_photo_descriptions_on_blob_id", unique: true
   end
 
+  create_table "photos", force: :cascade do |t|
+    t.bigint "apartment_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["apartment_id"], name: "index_photos_on_apartment_id"
+  end
+
   create_table "property_milestones", force: :cascade do |t|
     t.bigint "apartment_id"
     t.boolean "first_property_uploaded", default: false

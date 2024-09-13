@@ -166,19 +166,32 @@ class Apartment < ApplicationRecord
   end
 
   def presort_photos
+    photos = []
+    featured_photo = photo_descriptions.find_by(featured: true)&.photo_id
+
     begin
-      featured = photo_descriptions.find_by_featured(true) && photo_descriptions.find_by_featured(true).photo_id
-      photo_list = self.photos.order('created_at DESC').pluck(:id)
-      photo_list.delete(featured)
-      photo_list.unshift(featured)
-      photos = Array.new
-      photo_list.map { |pic| photos.push(self.photos.find(pic))   }
-    rescue Exception => e
-      logger.error { "#{e}" }
+      # Retrieve the ordered list of photo IDs
+      photo_list = self.photos.order(created_at: :desc).pluck(:id)
+
+      # Remove the featured photo ID and place it at the start if it exists
+      if featured_photo
+        photo_list.delete(featured_photo)
+        photo_list.unshift(featured_photo)
+      end
+
+      # Build the CASE statement for ordering based on the photo list
+      order_clause = photo_list.each_with_index.map { |id, index| "WHEN id = #{id} THEN #{index}" }.join(' ')
+
+      # Fetch the photos ordered by the specified array order
+      photos = self.photos.where(id: photo_list).order(Arel.sql("CASE #{order_clause} END"))
+    rescue StandardError => e
+      logger.error "Error in presorting photos: #{e.message}"
       return self.photos
     end
-    return photos
+
+    photos
   end
+
 
   def set_featured_photo(id)
     photo_descriptions.find_by(featured:true) && photo_descriptions.find_by(featured:true).update(featured:false)

@@ -12,8 +12,8 @@
 #  index_photos_on_apartment_id  (apartment_id)
 #
 class Photo < ApplicationRecord
-  before_destroy :purge_from_storage 
-
+  before_destroy :purge_from_storage
+  has_one :photo_description
 
   def image_url
     super || default_image
