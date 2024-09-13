@@ -64,6 +64,6 @@
     <span class="property-title mt-md-3 ml-md-2" id="search-checkbox">SAVE SEARCH AS:</span>
     <%= f.text_field "saved_search_title",class: "form-control #{device_is_tablet? ? 'col-md-8' : 'col-md-9'} ml-md-4 mt-md-2 save-search-input",placeholder: "Name your search",value: DateTime.now.strftime("%a %d %b %Y %I:%M%p"), autocomplete: "gday" %>
     <br>
-    <small class="form-text text-muted align-bottom my-2">Homblok will email you when new properties match your search criteria</small>
+    <small class="form-text text-muted align-bottom my-2"><%= t("business.name") %> will email you when new properties match your search criteria</small>
   </div>
 </div>
