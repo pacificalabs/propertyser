@@ -18,11 +18,8 @@ class PhotosController < ApplicationController
     initial_size = @apartment.photos.size
     @photos = @apartment.photos.attach(new_photos)
 
-    # Only add photo descriptions for newly added photos
     if @apartment.photos.size > initial_size
-      @photos.each do |photo|
-        @apartment.photo_descriptions.find_or_create_by!(description: nil, blob_id: photo.id)
-      end
+      @photos.each { |photo| @apartment.photo_descriptions.find_or_create_by(blob_id: photo.id)  }
     end
 
     redirect_to photos_path(apartment_id: @apartment.id)
@@ -55,8 +52,7 @@ class PhotosController < ApplicationController
   end
 
   def update
-    @apartment = Apartment.find params[:photo_description][:apartment_id]
-    # define actions such as set feature or delete
+    @apartment = Apartment.find params[:apartment_id]
     if params[:featured]
       # @apartment.set_featured_photo(params[:id])
       flash[:notice] = "PHOTO SET AS FEATURE PHOTO"

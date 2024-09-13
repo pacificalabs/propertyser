@@ -160,9 +160,10 @@ class Apartment < ApplicationRecord
   end
 
   def delete_photo_and_description(photo_id)
-    self.photo_descriptions.find_by_photo_id(photo_id).destroy!
-    self.photos.find(photo_id).purge_later
-    self.update(featured_photo_id:nil)
+    photo_description = self.photo_descriptions.find_by_blob_id(photo_id)
+    photo_description&.destroy!
+    photo = self.photos.find_by(id: photo_id)
+    photo&.purge
   end
 
   def presort_photos
