@@ -93,25 +93,25 @@ time2 = Benchmark.measure {
 
   puts "creating properties!"
 
-  # 1.times do |cycle|
-  #   User.all.each_with_index do |u,i|
-  #     puts u.email
-  #     a = u.apartments.new (addresses[cycle])
-  #     puts a.full_address
-  #     a.approved = true
-  #     a.bedrooms = small_numbers.sample
-  #     a.bathrooms = small_numbers.sample
-  #     a.strata = [true,false].sample
-  #     a.parking_spaces = small_numbers.sample
-  #     a.asking_price = pricing.sample
+  1.times do |cycle|
+    User.all.each_with_index do |u,i|
+      puts u.email
+      a = u.apartments.new (addresses[cycle])
+      puts a.full_address
+      a.approved = true
+      a.bedrooms = small_numbers.sample
+      a.bathrooms = small_numbers.sample
+      a.strata = [true,false].sample
+      a.parking_spaces = small_numbers.sample
+      a.asking_price = pricing.sample
 
-  #     puts "$#{a.asking_price}"
-  #     a.save!
-  #     attach_pics a
-  #     ([t1,t2].sample).apartments << a
-  #     comments.map { |comment|  a.comments.create!( user: User.all.sample , body:comment ) }
-  #   end
-  # end
+      puts "$#{a.asking_price}"
+      a.save!
+      attach_pics a
+      ([t1,t2].sample).apartments << a
+      comments.map { |comment|  a.comments.create!( user: User.all.sample , body:comment ) }
+    end
+  end
 }
 
 puts "Seeded #{Apartment.count} apartments."
