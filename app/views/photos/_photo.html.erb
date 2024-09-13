@@ -2,20 +2,28 @@
   <div class="col-md-3">
     <%= image_tag(photo_edit_page_apartment_image_url(photo), alt: "") %>
   </div>
-  <% pd = PhotoDescription.find_by_blob_id(photo.id) %>
-  <%= form_for pd, url: photo_path(photo.id), class: "form-group alert alert-info col-md-6" do |f| %>
+  <% pd = PhotoDescription.find_or_initialize_by(blob_id: photo.id, apartment_id: @apartment.id) %>
+  <%= form_for pd, url: pd.new_record? ? apartment_photo_descriptions_path(@apartment) : apartment_photo_description_path(@apartment, pd), method: pd.new_record? ? :post : :patch, class: "form-group alert alert-info col-md-6" do |f| %>
+    <%= f.hidden_field :blob_id, value: photo.id %>
     <div class="form-row mb-md-2 ml-md-2">
-      <%= f.text_field :description, class: "form-control col-md-9 ml-md-2 mt-md-2 reply-box", value: pd&.description, maxlength: 200, placeholder: "#{pd&.description.present? ? pd&.description : "Describe this image".upcase }" %>
-      <%= f.hidden_field :apartment_id, value:@apartment.id %>
-      <%= f.submit "#{pd&.description.present? ? 'Update Description' : 'Save Description'}", name:"update", class: "m-md-2 btn #{pd&.description.present? ? 'btn-outline-info' : 'btn-outline-primary' }" %>
+      <%= f.text_field :description, class: "form-control col-md-9 ml-md-2 mt-md-2 reply-box", 
+                       value: pd&.description, maxlength: 200, 
+                       placeholder: pd&.description.presence || "DESCRIBE THIS IMAGE" %>
+      <%= f.hidden_field :apartment_id, value: @apartment.id %>
+      <%= f.submit pd.new_record? ? 'Save Description' : 'Update Description', 
+                   name: "update", 
+                   class: "m-md-2 btn #{pd.new_record? ? 'btn-outline-primary' : 'btn-outline-info'}" %>
       <% if @apartment.photos.size <= 1 %>
         <div title="min 1 photo required" class="tt d-inline-block" tabindex="0" data-toggle="tooltip" data-placement="top">
-          <%= f.submit "Delete", name:"delete", pointer_events: "none", disabled:"true", class: "m-md-2 btn btn-outline-info" %>
+          <%= f.submit "Delete", name: "delete", disabled: true, 
+                       class: "m-md-2 btn btn-outline-info" %>
         </div>
       <% else %>
-        <%= f.submit "Delete", name:"delete",  class: "m-md-2 btn btn-outline-info" %>
+        <%= f.submit "Delete", name: "delete", class: "m-md-2 btn btn-outline-info" %>
       <% end %>
-      <%= f.submit "#{pd&.featured ? 'Feature Photo' : 'Set As Feature Photo'}", name: "#{pd&.featured ? nil : 'featured'}", class: "m-md-2 btn btn-outline-info" %>
-    <% end %>
-  </div>
+      <%= f.submit pd&.featured ? 'Feature Photo' : 'Set As Feature Photo', 
+                   name: pd&.featured ? nil : 'featured', 
+                   class: "m-md-2 btn btn-outline-info" %>
+    </div>
+  <% end %>
 </div>

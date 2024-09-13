@@ -54,7 +54,7 @@ Rails.application.routes.draw do
   resources :sessions, only: %i[new create destroy]
   resources :apartments do
     resources :comments, only: [:create]
-    resources :photo_descriptions, only: [:update]
+    resources :photo_descriptions, only: [:create, :update]
     resources :market_scores, only: [:create]
     resources :floorplans, only: %i[create destroy update]
   end
