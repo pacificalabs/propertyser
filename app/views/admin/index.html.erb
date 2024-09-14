@@ -1,24 +1,23 @@
-<br>
-<div class="col-md-4"></div>
-<p class="text-center mt-md-5 ml-md-5 display-4 property-title">ADMIN SECTION</p>
-<div class="col-md-3"></div>
-<div class="col-md-3"></div>
-<div class="row">
-  <div class="col-md-1"></div>
-  <div class="col-md-10 table-responsive">
-    <table class="table table-sm" id="adminTable">
-      <thead>
+<div class="container-fluid g-0 col-lg-10 bg-white rounded-3 m-auto">
+  <h2 class="text-center mt-md-5 ml-md-5 property-title">ADMIN SECTION</h2>
+  <div class="col-md-3"></div>
+  <div class="col-md-3"></div>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 table-responsive">
+      <table class="table table-sm" id="adminTable">
+        <thead>
         <tr>
-          <th scope="col"></th>
-          <th scope="col">Address</th>
-          <th scope="col">User</th>
-          <th scope="col">Status</th>
-          <th scope="col">Actions
-            <%= link_to "View Archive", archival_path %>
+          <th scope="col" style="font-size:12px;color:#ccc;"></th>
+          <th scope="col" style="font-size:12px;color:#ccc;">Address</th>
+          <th scope="col" style="font-size:12px;color:#ccc;">User</th>
+          <th scope="col" style="font-size:12px;color:#ccc;">Status</th>
+          <th scope="col" style="font-size:12px;color:#ccc;">Actions
+            <%= link_to "View Archive", archival_path, style: "font-size:12px;color:#ccc;margin-left:1rem;" %>
           </th>
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <% @apartments.each_with_index do |apartment,i| %>
           <tr>
             <th scope="row"><span><%= i+1 %></span></th>
@@ -39,8 +38,9 @@
             </td>
           </tr>
         <% end %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-1"></div>
   </div>
-  <div class="col-md-1"></div>
 </div>
