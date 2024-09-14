@@ -1,4 +1,4 @@
-<div class="container-fluid g-0 my-3">
+<div class="container-fluid g-0 my-3 p-3">
   <!-- app/views/tags/show.html.erb -->
   <h3><%= @tag.name %></h3>
   <% if @child_tags.any? %>
@@ -13,7 +13,7 @@
     <%= render partial: "apartments/show_apartment", locals: {apartments: @apartments} %>
   <% else %>
     <p>
-      No Apartments added yet
+      Nothing to view at present
     </p>
   <% end %>
 </div>
