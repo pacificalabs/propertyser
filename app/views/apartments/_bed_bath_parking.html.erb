@@ -1,16 +1,13 @@
 <div class="row">
   <div class="col-md-4 mt-sm-3">
-    <%= image_tag get_aws_url("white_icons/icons8-bed-50.png"), class: "feature-icons-edit-new ml-md-2" %>
     <%= f.label :bedrooms, "BEDROOMS" %>
     <%= f.select(:bedrooms, [["1", 1], ["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6", 6], ["7", 7], ["8", 8], ["9", 9], ["10", 10]], { selected: apartment.bedrooms, prompt: "CHOOSE" }, class: "form-select", required: true) %>
   </div>
   <div class="col-md-4 mt-sm-3">
-    <%= image_tag get_aws_url("white_icons/icons8-bathtub-50.png"), class: "feature-icons-edit-new ml-md-2" %>
     <%= f.label :bathrooms, "BATHROOMS" %>
     <%= f.select(:bathrooms, [["1", 1], ["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6", 6], ["7", 7], ["8", 8]], { selected: apartment.bathrooms, prompt: "CHOOSE" }, class: "form-select", required: true) %>
   </div>
   <div class="col-md-4 mt-sm-3">
-    <%= image_tag get_aws_url("white_icons/icons8-car-50.png"), class: "feature-icons-edit-new ml-md-2" %>
     <%= f.label :parking_spaces, "PARKING" %>
     <%= f.select(:parking_spaces, [["0", 0], ["1", 1], ["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6", 6], ["7", 7], ["8", 8]], { selected: apartment.parking_spaces, prompt: "CHOOSE" }, class: "form-select", required: true) %>
   </div>

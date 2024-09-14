@@ -1,7 +1,7 @@
 <!-- description -->
-<h5 class="mt-3 mb-1">Description</h5>
+<!--<h5 class="mt-3 mb-1">Description</h5>-->
 <div class="text-wrap">
-    <% @descriptors&.each do|descriptor| %>
-        <%= image_tag(@descriptor_icons[descriptor.to_sym].to_s, title:descriptor.humanize.titlecase,class: "tt iconz mr-1 my-2",data:{toggle:"tooltip", placement:"bottom"}) %>
-    <% end %>
+  <% @descriptors&.each do|descriptor| %>
+    <%= image_tag(@descriptor_icons[descriptor.to_sym].to_s, title:descriptor.humanize.titlecase,class: "tt iconz mr-1 my-2",data:{toggle:"tooltip", placement:"bottom"}) %>
+  <% end %>
 </div>
