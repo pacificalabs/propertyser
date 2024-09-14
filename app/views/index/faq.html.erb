@@ -1,8 +1,8 @@
 <div class="row">
   <div class="column col-md-2"></div>
   <div class="col-md-8">
+    <h2 class="mt-md-5"><%= image_tag get_aws_url("white_icons/icons8-faq-50.png"), class: "title-icons mr-md-1 mb-md-1" %>Frequently Asked Questions</h2>
     <ul class="about">
-      <h2 class="mt-md-5"><%= image_tag get_aws_url("white_icons/icons8-faq-50.png"), class: "title-icons mr-md-1 mb-md-1" %>Frequently Asked Questions</h2>
       <li class="list-group-item"><a class="link1" href="#q1">What is <%= t("business.name") %>? </a></li>
       <li class="list-group-item"><a class="link2" href="#q2">How does it work?</a></li>
       <li class="list-group-item"><a class="link3" href="#q3">Why should I use <%= t("business.name") %>?</a></li>
@@ -16,20 +16,16 @@
 <div class="row" id="aboutus">
   <div class="column col-md-2"></div>
   <div class="col-md-8">
+    <h4 id="q1">What is <%= t("business.name") %> ?</h4>
     <ul>
-      <h4 id="q1">
-        <p>What is <%= t("business.name") %> ? </p>
-      </h4>
       <p><%= t("business.name") %> is the new way to sell your property. Flexible and transparent, it allows you to list your property with no commitment. Stay in control and outline the conditions that are right for you.</p>
     </ul>
     <ul>
       <br>
       <h4 id="q2">How does it work?</h4>
       <p>We work with Sellers who are thinking about selling their property. There is no commitment. You set the pricing, time frames and the terms that you are looking for.</p>
-      <p>
-        On the other side, we collect interest from Buyers interested in your property. </p>
-      <p>
-        We then arrange inspections, invite offers and negotiate the sale to your satisfaction.</p>
+      <p>On the other side, we collect interest from Buyers interested in your property. </p>
+      <p>We then arrange inspections, invite offers and negotiate the sale to your satisfaction.</p>
     </ul>
     <ul>
       <br>
@@ -39,17 +35,14 @@
     <ul>
       <br>
       <h4 id="q4">Can I list my home elsewhere? </h4>
-      <p>Yes, you may. With Homblok there is no exclusivity, you are free to use other services to list and sell your property. However, given the low-cost structure, we’d recommend you try selling through us before listing with a Real Estate Agent where marketing and high commissions become payable. We highly recommend you read the fine print on your Agency Agreement with an agent to ensure you won’t be in breach of the contract you signed with your agent and get to keep the entire sales proceeds without paying the agent commission.</p>
+      <p>Yes, you may. With <%= t("business.name") %> there is no exclusivity, you are free to use other services to list and sell your property. However, given the low-cost structure, we’d recommend you try selling through us before listing with a Real Estate Agent where marketing and high commissions become payable. We highly recommend you read the fine print on your Agency Agreement with an agent to ensure you won’t be in breach of the contract you signed with your agent and get to keep the entire sales proceeds without paying the agent commission.</p>
     </ul>
     <ul>
       <br>
       <h4 id="q5">When should I register on <%= t("business.name") %>?</h4>
       <p>You can register at any time, whether you are ready to sell or not. This is a good way to get pricing & general feedback on your property.</p>
-      <p>
-        An example of how you can use <%= t("business.name") %>:</p>
-      <p>
-        “My house is feeling too big to manage now that my kids have moved out, maybe I should downsize … I wonder if anyone is interested in buying my property and how much could I get for it? Have I listed at the right price? Do my photos look attractive?
-      </p>
+      <p>An example of how you can use <%= t("business.name") %>:</p>
+      <p>“My house is feeling too big to manage now that my kids have moved out, maybe I should downsize … I wonder if anyone is interested in buying my property and how much could I get for it? Have I listed at the right price? Do my photos look attractive?</p>
     </ul>
     <ul>
       <br>
@@ -63,3 +56,4 @@
     <div class="mobile-break"></div>
   </div>
   <div class="column col-md-2"></div>
+</div>
