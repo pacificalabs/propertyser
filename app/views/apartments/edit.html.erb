@@ -28,7 +28,7 @@
           <%= f.submit "SAVE AND LOAD PHOTOS", class: "btn btn-outline-primary col-md-12 mb-md-5",id: "edit-submit", method: "patch" %>
         </div>
         <div class="col-md-11">
-          <%= link_to "Delete", admin_deletion_path(@apartment), class: "btn btn-primary", onclick: "return confirm('Are you sure you want to delete this property?');" %>
+          <%= link_to "Delete This Property", admin_deletion_path(@apartment), class: "btn btn-primary", onclick: "return confirm('Are you sure you want to delete this property?');" %>
           <%#= render "photos", f:f %>
         </div>
       <% end %>
