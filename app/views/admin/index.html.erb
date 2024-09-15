@@ -33,7 +33,6 @@
                   <a href="<%= approval_path(apartment) %>" class="btn btn-primary" data-method="post">Approve</a>
                 <% end %>
                 <%= link_to("Edit", edit_apartment_path(apartment), class: "btn btn-primary")%>
-                <%= link_to "Delete", admin_deletion_path(apartment),class: "btn btn-primary" %>
                 <%= link_to("Archive", admin_archive_path(apartment), class: "btn btn-primary", method: "post")%>
               </td>
             </tr>
