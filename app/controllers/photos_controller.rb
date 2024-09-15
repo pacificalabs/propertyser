@@ -24,7 +24,7 @@ class PhotosController < ApplicationController
 
     redirect_to photos_path(apartment_id: @apartment.id)
   rescue ActiveRecord::RecordNotFound
-    flash[:alert] = "Apartment not found."
+    flash[:alert] = "Property not found."
     redirect_to apartments_path
   rescue ArgumentError => e
     Rails.logger.error "Error: #{e.message}"
@@ -47,7 +47,7 @@ class PhotosController < ApplicationController
   def destroy
     @apartment = Apartment.find(photo_delete_params[:apartment])
     @apartment.delete_photo_and_description(params[:id])
-    flash[:notice] = "DELETED PHOTO"
+    flash[:notice] = "Photo Deleted!"
     redirect_to photos_path(apartment_id:@apartment.id)
   end
 

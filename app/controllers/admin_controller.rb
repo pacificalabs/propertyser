@@ -30,9 +30,9 @@ class AdminController < ApplicationController
   def delete
     @apartment = Apartment.find(params[:id])
     if @apartment.destroy
-      flash[:notice] = "Apartment was successfully deleted."
+      flash[:notice] = "Property was successfully deleted."
     else
-      flash[:alert] = "Error deleting apartment: #{@apartment.errors.full_messages.to_sentence}"
+      flash[:alert] = "Error deleting property: #{@apartment.errors.full_messages.to_sentence}"
     end
     redirect_to admin_path
   end

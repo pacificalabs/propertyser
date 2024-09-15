@@ -16,16 +16,16 @@ class Admin::TagsController < ApplicationController
 
       # Save changes and handle errors
       unless apartment.save
-        flash[:error] = "Failed to update tags for apartment #{apartment.id}"
+        flash[:error] = "Failed to update categories for property id: #{apartment.id}"
       end
     end
 
     # Handle case where some apartments are not found
     if apartments.size < params[:apartments].keys.size
-      flash[:alert] = 'One or more apartments could not be found.'
+      flash[:alert] = 'One or more properties could not be found.'
     end
 
-    redirect_to apartments_path, notice: 'Tags were successfully updated.'
+    redirect_to apartments_path, notice: 'Categories were successfully updated.'
   end
 
 
@@ -49,7 +49,7 @@ class Admin::TagsController < ApplicationController
   def create
     @tag = current_user.tags.new(tag_params)
     if @tag.save
-      redirect_to  edit_admin_tag_path(@tag), notice: 'Tag was successfully created.'
+      redirect_to  edit_admin_tag_path(@tag), notice: 'Category was successfully created.'
     else
       logger.error @tag.errors.full_messages
       render :new
@@ -61,7 +61,7 @@ class Admin::TagsController < ApplicationController
 
   def update
     if @tag.update(tag_params)
-      redirect_to admin_tag_path(@tag), notice: 'Tag was successfully updated.'
+      redirect_to admin_tag_path(@tag), notice: 'Category was successfully updated.'
     else
       logger.error @tag.errors.full_messages
       render :edit
@@ -70,7 +70,7 @@ class Admin::TagsController < ApplicationController
 
   def destroy
     @tag.destroy
-    redirect_to admin_tags_url, notice: 'Tag was successfully destroyed.'
+    redirect_to admin_tags_url, notice: 'Category was successfully destroyed.'
   end
 
   private

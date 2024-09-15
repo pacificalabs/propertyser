@@ -36,7 +36,7 @@
         <% end %>
         <% if current_user.blank? %>
           <% unless ["search"].include? action_name %>
-            <%= link_to 'GET STARTED', mobile_login_path, class: 'nav-item nav-link active' %>
+            <%= link_to 'Admin Portal', mobile_login_path, class: 'nav-item nav-link' %>
           <% end %>
         <% else %>
           <%= render partial: 'users/dropdown' %>
