@@ -1,0 +1,8 @@
+<%= form_with(model: apartment, local: true) do |form| %>
+  <div class="field">
+    <%= form.collection_select :tag_ids, @child_tags, :id, :name, { prompt: "Choose a Child Tag" }, { multiple: true } %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Assign to Category" %>
+  </div>
+<% end %>

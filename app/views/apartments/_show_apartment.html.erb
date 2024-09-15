@@ -1,85 +1,111 @@
-<% apartments.each_with_index do |a,index| %>
-  <% @features = a&.feature&.attributes&.select {|k,f| f.present? } %>
+<% apartments.each_with_index do |a, index| %>
+  <% @features = a&.feature&.attributes&.select { |k, f| f.present? } %>
   <% @features = @features.keys if @features.present? %>
-  <% @descriptors = a&.descriptor&.attributes&.select {|k,f| f.present? } %>
+  <% @descriptors = a&.descriptor&.attributes&.select { |k, f| f.present? } %>
   <% @descriptors = @descriptors.keys if @descriptors.present? %>
-  <% @amenities = a&.amenity&.attributes&.select {|k,f| f.present? } %>
+  <% @amenities = a&.amenity&.attributes&.select { |k, f| f.present? } %>
   <% @amenities = @amenities.keys if @amenities.present? %>
   <% pic = a.featured_photo_id.present? ? a.photos.find(PhotoDescription.find_by_photo_id(a.featured_photo_id).photo_id) : a.photos.first %>
   <% search_title = nil if controller_name == "users" %>
   <% if device_is_mobile? %>
+    <!-- Mobile version -->
     <div class="card mt-md-4">
       <div class="card-body apartment-card">
         <div class="row">
-          <div class="row">
-            <div class="col-12 image-box">
-              <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : '' %>
-              <div><%= link_to tag, apartment_path(a,title: search_title), class: "alert-link" %></div>
+          <!-- Image and link -->
+          <div class="col-12 image-box">
+            <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : '' %>
+            <div>
+              <%= link_to tag, apartment_path(a, title: search_title), class: "alert-link" %>
             </div>
           </div>
-          <div class="row mt-3">
-            <div class="col-10">
-              <% if a.full_address_line_1.length < 19 %>
-                <% if current_user.blank? %>
-                  <h4 class="card-title ml-3 mt-3 tt disable-select blur" title='Become a member to see the full address.' data-toggle="tooltip" data-placement="top"> <%= a.address_line_1 %></h4>
-                <% else %>
-                  <h4 class="card-title ml-3 mt-3"><%= link_to current_user.is_admin? ? a.full_address_line_1 : a.address_line_1, apartment_path(a,title: search_title), class: "alert-link nounderline"%></h4>
-                <% end %>
-                <h4 class="card-title ml-3 mt-3"><%= link_to a.address_line_2, apartment_path(a,title: search_title), class: "alert-link nounderline" %> </h4>
-              <% else %>
-                <h5 class="card-title ml-3 mt-3"><%= link_to ( current_user.present? && current_user.is_admin? ) ? a.full_address_line_1 : a.address_line_1, apartment_path(a,title: search_title), class: "alert-link nounderline" %></h5>
-                <h5 class="card-title ml-3 mt-3"><%= link_to a.address_line_2, apartment_path(a,title: search_title), class: "alert-link nounderline" %> </h5>
-              <% end %>
-            </div>
-            <div class="col-md-8">
-              <div class="mt-3 ml-4">
-                <%= render partial: "favourites/widget", locals: {apartment: a} %>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="ml-4 mt-2">
-              <%= render partial: "apartments/property_values", locals: {apartment: a} %>
-            </div>
-          </div>
-          <div class="row tablet-card-border"></div>
-          <div class="mobile-break"></div>
         </div>
+        <div class="row mt-3">
+          <div class="col-10">
+            <% if a.full_address_line_1.length < 19 %>
+              <% if current_user.blank? %>
+                <h4 class="card-title ml-3 mt-3 tt disable-select blur" title='Become a member to see the full address.' data-toggle="tooltip" data-placement="top">
+                  <%= a.address_line_1 %>
+                </h4>
+              <% else %>
+                <h4 class="card-title ml-3 mt-3">
+                  <%= link_to current_user.is_admin? ? a.full_address_line_1 : a.address_line_1, apartment_path(a, title: search_title), class: "alert-link nounderline" %>
+                </h4>
+              <% end %>
+              <h4 class="card-title ml-3 mt-3">
+                <%= link_to a.address_line_2, apartment_path(a, title: search_title), class: "alert-link nounderline" %>
+              </h4>
+            <% else %>
+              <h5 class="card-title ml-3 mt-3">
+                <%= link_to current_user.present? && current_user.is_admin? ? a.full_address_line_1 : a.address_line_1, apartment_path(a, title: search_title), class: "alert-link nounderline" %>
+              </h5>
+              <h5 class="card-title ml-3 mt-3">
+                <%= link_to a.address_line_2, apartment_path(a, title: search_title), class: "alert-link nounderline" %>
+              </h5>
+            <% end %>
+          </div>
+          <div class="col-md-8">
+            <div class="mt-3 ml-4">
+              <%= render partial: "favourites/widget", locals: {apartment: a} %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="ml-4 mt-2">
+            <%= render partial: "apartments/property_values", locals: {apartment: a} %>
+          </div>
+        </div>
+        <div class="row tablet-card-border"></div>
+        <div class="mobile-break"></div>
       </div>
     </div>
   <% else %>
-    <!-- desktop version -->
+    <!-- Desktop version -->
     <div class="row">
-    <div class="card w-50 mt-md-4 bg-white">
-      <div class="card-body apartment-card">
-        <div class="row">
-          <div class="col-md-1 order-md-3">
-            <%= render partial: "favourites/widget", locals: {apartment: a} %>
-          </div>
-          <div class="col-md-5 order-md-1 image-box">
-            <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : "<span class='nounderline m-5'>There was a problem loading the image.</span>".html_safe  %>
-            <div><%= link_to tag, apartment_path(a,title: search_title), class: "alert-link" %></div>
-          </div>
-          <div class="col-md-6 order-md-2">
-            <% if a.full_address_line_1.length < 19  || a.address_line_2.length < 19  %>
-              <% if current_user.blank? %>
-                <h4 class="card-title ml-3 mt-3 tt disable-select blur" title='Become a member to see the full address.' data-toggle="tooltip" data-placement="top"> <%= a.address_line_1 %></h4>
+      <div class="card w-100 mt-md-4 bg-white">
+        <div class="card-body apartment-card">
+          <div class="row">
+            <!-- Image and link -->
+            <div class="col-md-5 order-md-1 image-box">
+              <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : "<span class='nounderline m-5'>There was a problem loading the image.</span>".html_safe %>
+              <div>
+                <%= link_to tag, apartment_path(a, title: search_title), class: "alert-link" %>
+              </div>
+            </div>
+            <!-- Address and property details -->
+            <div class="col-md-5 order-md-2">
+              <% if a.full_address_line_1.length < 19 || a.address_line_2.length < 19 %>
+                <% if current_user.blank? %>
+                  <h4 class="card-title ml-3 mt-3 tt disable-select blur" title="Become a member to see the full address." data-toggle="tooltip" data-placement="top">
+                    <%= a.address_line_1 %>
+                  </h4>
+                <% else %>
+                  <h4 class="card-title ml-3 mt-3">
+                    <%= link_to current_user.is_admin? ? a.full_address_line_1 : a.address_line_1, apartment_path(a, title: search_title), class: "alert-link nounderline" %>
+                  </h4>
+                <% end %>
+                <h4 class="card-title ml-3 mt-3">
+                  <%= link_to a.address_line_2, apartment_path(a, title: search_title), class: "alert-link nounderline" %>
+                </h4>
               <% else %>
-                <h4 class="card-title ml-3 mt-3"><%= link_to current_user.is_admin? ? a.full_address_line_1 : a.address_line_1, apartment_path(a,title: search_title), class: "alert-link nounderline"%></h4>
+                <h5 class="card-title ml-3 mt-3">
+                  <%= link_to current_user.present? && current_user.is_admin? ? a.full_address_line_1 : a.address_line_1, apartment_path(a, title: search_title), class: "alert-link nounderline" %>
+                </h5>
+                <h5 class="card-title ml-3 mt-3">
+                  <%= link_to a.address_line_2, apartment_path(a, title: search_title), class: "alert-link nounderline" %>
+                </h5>
               <% end %>
-              <h4 class="card-title ml-3 mt-3"><%= link_to a.address_line_2, apartment_path(a,title: search_title), class: "alert-link nounderline" %> </h4>
-            <% else %>
-              <h5 class="card-title ml-3 mt-3"><%= link_to ( current_user.present? && current_user.is_admin? ) ? a.full_address_line_1 : a.address_line_1, apartment_path(a,title: search_title), class: "alert-link nounderline" %></h5>
-              <h5 class="card-title ml-3 mt-3"><%= link_to a.address_line_2, apartment_path(a,title: search_title), class: "alert-link nounderline" %> </h5>
-            <% end %>
-            <div class="ml-3 mt-2">
-              <%= render partial: "apartments/property_values", locals: {apartment: a} %>
+              <div class="ml-3 mt-2">
+                <%= render partial: "apartments/property_values", locals: {apartment: a} %>
+              </div>
+            </div>
+            <!-- Favourites widget -->
+            <div class="col-md-1 order-md-3 d-flex align-items-center">
+              <%= render partial: "favourites/widget", locals: {apartment: a} %>
             </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
-
   <% end %>
 <% end %>

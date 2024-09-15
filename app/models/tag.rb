@@ -37,6 +37,20 @@ class Tag < ApplicationRecord
 
   before_validation :generate_slug, :format_name
 
+  # Scope to find child tags
+  scope :child_tags, -> {
+    joins(:parent_tags).distinct
+  }
+
+  # Scope to find parent tags without children
+  scope :orphaned_parents, -> {
+    left_joins(:child_tags).where(child_tags: { id: nil }).distinct
+  }
+
+  def is_a_child_tag?
+    parent_tags.exists?
+  end
+
   private
 
   def generate_slug

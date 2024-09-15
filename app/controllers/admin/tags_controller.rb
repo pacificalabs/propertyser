@@ -1,6 +1,33 @@
 # app/controllers/admin/tags_controller.rb
 class Admin::TagsController < ApplicationController
-  before_action :set_tag, only: [:show, :edit, :update, :destroy]
+  before_action :set_tag, only: [:edit, :update, :destroy]
+
+  def assign_tags
+    # Use `find` with an array of IDs to handle ActiveRecord::RecordNotFound gracefully
+    apartments = Apartment.where(id: params[:apartments].keys)
+
+    # Process each apartment
+    apartments.each do |apartment|
+      # Get submitted tag_ids for this apartment
+      tag_ids = params[:apartments][apartment.id.to_s][:tag_ids].reject(&:blank?)
+
+      # Update the tags
+      apartment.tag_ids = tag_ids
+
+      # Save changes and handle errors
+      unless apartment.save
+        flash[:error] = "Failed to update tags for apartment #{apartment.id}"
+      end
+    end
+
+    # Handle case where some apartments are not found
+    if apartments.size < params[:apartments].keys.size
+      flash[:alert] = 'One or more apartments could not be found.'
+    end
+
+    redirect_to apartments_path, notice: 'Tags were successfully updated.'
+  end
+
 
   def new
     @tag = if params[:parent]

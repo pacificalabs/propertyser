@@ -98,7 +98,11 @@ Rails.application.routes.draw do
   get 'admin/owner/:user_id', to: 'admin#owner', as: 'admin_owner'
   delete 'delete_saved_search/:id', to: 'searches#delete', as: 'delete_saved_search'
   namespace :admin do
-    resources :tags
+    resources :tags do
+      collection do
+        post 'assign_tags'
+      end
+    end
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
