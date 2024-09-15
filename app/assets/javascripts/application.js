@@ -37,6 +37,10 @@ $(document).ready(function() {
     }
     document.cookie = "viewPort=" + JSON.stringify(window.viewport);
 
+    $('form').on('submit', function() {
+        $('#progress-circle').removeClass('d-none').fadeIn();
+    });
+
     // Function to validate required fields in the current visible section
     window.validateRequiredFields = function(currentDiv) {
         let isValid = true;

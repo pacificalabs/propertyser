@@ -4,6 +4,29 @@
 @import "mobile_device";
 @import "tablet_device";
 
+/* Progress Circle CSS */
+#progress-circle {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  display: none; /* Initially hidden */
+}
+
+.spinner-border {
+  width: 15vw;
+  height: 15vw;
+  border-width: 0.5vw;
+  border-top-color: transparent;
+  animation: spinner-border 0.75s linear infinite;
+}
+
+@keyframes spinner-border {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 nav a {
     color: antiquewhite !important;
 }
