@@ -98,8 +98,8 @@ class ApplicationController < ActionController::Base
 
   def confirm_admin
     if controller_name == "admin" && !current_user.is_admin?
-      flash[:alert] = "You are not authorised to view this page."
-      redirect_back(fallback_location: root_path) and return false
+      flash[:alert] = "Only Admin Users can view the admin section."
+      redirect_to apartments_path and return false
     end
   end
 
@@ -115,7 +115,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def previous_page
-    session[:fullpath].present? ? session[:fullpath] : search_path
+    session[:fullpath].present? ? session[:fullpath] : admin_path
   end
 
   def global_request_logging
