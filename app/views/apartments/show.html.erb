@@ -13,13 +13,13 @@
       <%#= render "market_ratings" %>
       <%= link_to "Return To Search Results",return_to_search_results_path(title: @search_title), class: "btn btn-outline-primary" if @search_title.present? %>
       <%#= render "comments" %>
+      <%= render "floorplan" %>
       <%= render "edit_delete" %>
     </div>
     <div class="col-md-2 order-sm-2 ml-md-5"></div>
     <div class="col-md-7 order-sm-3 ml-md-5">
       <%= render "carousel" %>
       <%= render "map" %>
-      <%= render "floorplan" %>
     </div>
   </div>
 </div>
