@@ -270,6 +270,29 @@ $(document).ready(function() {
         }
     }
 
+    // Iterate over each multi-select field
+    $('.tag-select').each(function() {
+        // Store initial selected options for each select
+        let initialSelection = $(this).val();
+
+        // Listen for changes on this specific select field
+        $(this).change(function() {
+            let currentSelection = $(this).val();
+
+            // Check if the selection has changed
+            if (JSON.stringify(currentSelection) !== JSON.stringify(initialSelection)) {
+                // If changed, activate the submit button
+                $('#category-submit').removeClass('disabled').prop('disabled', false);
+                $('#category-submit').css('display', 'inline-block');
+            } else {
+                // If unchanged, disable the button again
+                $('#category-submit').addClass('disabled').prop('disabled', true);
+                $('#category-submit').css('display', 'none');
+
+            }
+        });
+    });
+
     window.addEventListener('turbo:load', function() {
         alert()
 

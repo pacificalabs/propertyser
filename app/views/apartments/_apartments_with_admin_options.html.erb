@@ -1,5 +1,11 @@
 <%= form_with(url: assign_tags_admin_tags_path, method: :post, local: true) do |form| %>
   <div class="row">
+    <!-- Submit button for all apartments -->
+    <div class="row mt-3">
+      <div class="col-12 text-right">
+        <%= form.submit "Save Categories", class: "btn btn-primary disabled", id: "category-submit", disabled: true, style: "display: none;" %>
+      </div>
+    </div>
     <% @apartments.each do |apartment| %>
       <div class="col-12">
         <div class="card w-100 mt-md-4 bg-white">
@@ -29,7 +35,7 @@
               <div class="col-md-3 order-md-3 d-flex align-items-center justify-content-end">
                 <div class="field w-100">
                   <%= form.label "Categories"  %>
-                  <%= form.collection_select "apartments[#{apartment.id}][tag_ids]", @child_tags, :id, :name, { selected: apartment.tag_ids }, { multiple: true, class: "form-control" } %>
+                  <%= form.collection_select "apartments[#{apartment.id}][tag_ids]", @child_tags, :id, :name, { selected: apartment.tag_ids }, { multiple: true, class: "form-control tag-select" } %>
                 </div>
               </div>
               <!-- Favourites widget -->
@@ -41,11 +47,5 @@
         </div>
       </div>
     <% end %>
-  </div>
-  <!-- Submit button for all apartments -->
-  <div class="row mt-3">
-    <div class="col-12 text-right">
-      <%= form.submit "Save Categories", class: "btn btn-primary" %>
-    </div>
   </div>
 <% end %>
