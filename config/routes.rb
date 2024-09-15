@@ -68,7 +68,7 @@ Rails.application.routes.draw do
 
 
   # Apartment search routes
-  get 'sub-search', to: 'apartments#index', constraints: lambda { |request| request.query_parameters[:commit] == 'SEARCH' }, as: 'search_page_two'
+  get 'sub-search', to: 'apartments#search_page_two', constraints: lambda { |request| request.query_parameters[:commit] == 'SEARCH' }, as: 'search_page_two'
   get 'search-page', to: 'apartments#search_page_one', as: 'search_page_one'
   get 'search_location/:data', to: 'apartments#search_location'
   get 'submit', to: 'apartments#submit', as: 'submit'

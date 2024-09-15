@@ -14,6 +14,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <div class="navbar-nav ms-auto">
+        <%= link_to 'All Listings', apartments_path, class: 'nav-item nav-link' %>
         <% @tags.each do |tag| %>
           <% if tag.parent_tags.empty? %>
             <% if tag.child_tags.any? %>
@@ -23,6 +24,9 @@
                   <% tag.child_tags.each do |child_tag| %>
                     <%= link_to child_tag.name, tag_path(child_tag), class: 'dropdown-item' %>
                   <% end %>
+                  <!-- Link to view all child tags -->
+                  <div class="dropdown-divider"></div>
+                  <%= link_to 'View All', tag_path(tag), class: 'dropdown-item' %>
                 </div>
               </div>
             <% else %>

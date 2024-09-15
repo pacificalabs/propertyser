@@ -60,7 +60,6 @@ class AdminController < ApplicationController
   end
 
   def directory
-
   end
 
   private

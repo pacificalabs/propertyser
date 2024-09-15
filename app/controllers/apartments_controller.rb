@@ -1,9 +1,22 @@
 class ApartmentsController < ApplicationController
+  include ApartmentsHelper
   before_action :update_fullpath
   skip_before_action :user_is_authorised?, only: :show
 
   # before_action :user_is_authorised?, except: [:search,:index,:search_location]
   before_action :load_icons, only: [:index,:new,:edit,:owner,:show]
+
+  def index
+    @apartments = Apartment.all
+    # Fetch child tags
+    child_tags = Tag.child_tags
+
+    # Fetch orphaned parent tags
+    orphaned_parents = Tag.orphaned_parents
+
+    # Combine and remove duplicates
+    @child_tags = (child_tags + orphaned_parents).uniq
+  end
 
   def search
     @apartment = Apartment.new
@@ -15,7 +28,7 @@ class ApartmentsController < ApplicationController
     render json: @location_data
   end
 
-  def index
+  def search_page_two
     @params = location_params.merge search_params if search_params.present?
     @search_title = helpers.assign_title(saved_search_title_params[:saved_search_title])
     suburb_list = helpers.find_matching_suburbs_across_all_states(location_params[:locale])
