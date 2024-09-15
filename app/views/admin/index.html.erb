@@ -36,9 +36,6 @@
                 <%= link_to "Delete", admin_deletion_path(apartment),class: "btn btn-primary" %>
                 <%= link_to("Archive", admin_archive_path(apartment), class: "btn btn-primary", method: "post")%>
               </td>
-              <td>
-                <%= render partial: "tag_select", locals: {apartment: apartment} %>
-              </td>
             </tr>
           <% end %>
         </tbody>
