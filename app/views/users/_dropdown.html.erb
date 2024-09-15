@@ -1,4 +1,4 @@
-<div class="dropdown">
+<div class="dropstart">
   <a class="btn btn-primary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
     <%= current_user.username %>
   </a>
@@ -25,19 +25,19 @@
     </li>
     <% if current_user.is_admin? %>
       <li><a class="dropdown-item" href=<%= admin_directory_path %>><%= image_tag get_aws_url("white_icons/icons8-administrative-tools-50.png"), class: "iconz mb-md-2 mx-md-1"%>Directory</a></li>
-      <li><a class="dropdown-item" href=<%= archival_path %>><%= image_tag get_aws_url("white_icons/icons8-archive-folder-50.png"), class: "iconz mb-md-2 mx-md-1"%>Archive</a></li>
-      <li><a class="dropdown-item" href=<%= admin_path %>><%= image_tag get_aws_url("white_icons/icons8-administrative-tools-50.png"), class: "iconz mb-md-2 mx-md-1"%>Admin</a></li>
-      <li><a class="dropdown-item" href=<%= sidekiq_web_path %>><%= image_tag get_aws_url("white_icons/icons8-administrative-tools-50.png"), class: "iconz mb-md-2 mx-md-1"%>Job Manager</a></li>
-    <% end %>
-    <li>
-      <a class="dropdown-item" href=<%= logout_path %>>
-        <div class="" style="color:white;width:1rem;">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
-          </svg>
-          Logout
+        <li><a class="dropdown-item" href=<%= archival_path %>><%= image_tag get_aws_url("white_icons/icons8-archive-folder-50.png"), class: "iconz mb-md-2 mx-md-1"%>Archive</a></li>
+          <li><a class="dropdown-item" href=<%= admin_path %>><%= image_tag get_aws_url("white_icons/icons8-administrative-tools-50.png"), class: "iconz mb-md-2 mx-md-1"%>Admin</a></li>
+            <li><a class="dropdown-item" href=<%= sidekiq_web_path %>><%= image_tag get_aws_url("white_icons/icons8-administrative-tools-50.png"), class: "iconz mb-md-2 mx-md-1"%>Job Manager</a></li>
+            <% end %>
+            <li>
+              <a class="dropdown-item" href=<%= logout_path %>>
+                <div class="" style="color:white;width:1rem;">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                  </svg>
+                  Logout
+                </div>
+              </a>
+            </li>
+          </ul>
         </div>
-      </a>
-    </li>
-  </ul>
-</div>
