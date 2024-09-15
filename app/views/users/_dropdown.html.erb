@@ -24,20 +24,36 @@
       </a>
     </li>
     <% if current_user.is_admin? %>
-      <li><a class="dropdown-item" href=<%= admin_directory_path %>><%= image_tag get_aws_url("white_icons/icons8-administrative-tools-50.png"), class: "iconz mb-md-2 mx-md-1"%>Directory</a></li>
-        <li><a class="dropdown-item" href=<%= archival_path %>><%= image_tag get_aws_url("white_icons/icons8-archive-folder-50.png"), class: "iconz mb-md-2 mx-md-1"%>Archive</a></li>
-          <li><a class="dropdown-item" href=<%= admin_path %>><%= image_tag get_aws_url("white_icons/icons8-administrative-tools-50.png"), class: "iconz mb-md-2 mx-md-1"%>Admin</a></li>
-            <li><a class="dropdown-item" href=<%= sidekiq_web_path %>><%= image_tag get_aws_url("white_icons/icons8-administrative-tools-50.png"), class: "iconz mb-md-2 mx-md-1"%>Job Manager</a></li>
-            <% end %>
-            <li>
-              <a class="dropdown-item" href=<%= logout_path %>>
-                <div class="" style="color:white;width:1rem;">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
-                  </svg>
-                  Logout
-                </div>
-              </a>
-            </li>
-          </ul>
+      <li>
+        <a class="dropdown-item" href="<%= admin_directory_path %>">
+          <div class="" style="color:white;width:1rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6V5.25A2.25 2.25 0 0 1 12.75 3h3A2.25 2.25 0 0 1 18 5.25v.75m-7.5 0h7.5m-7.5 0a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-9A2.25 2.25 0 0 0 17.25 6h-7.5z" />
+            </svg>
+            Directory
+          </div>
+        </a>
+      </li>
+      <li>
+        <a class="dropdown-item" href="<%= admin_path %>">
+          <div class="" style="color:white;width:1rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 6h6v6H9zM9 12v6H6v-6h3zm6 0v6h3v-6h-3zM6 9h3V6H6v3zm9-3v3h3V6h-3z" />
+            </svg>
+            Admin
+          </div>
+        </a>
+      </li>
+    <% end %>
+    <li>
+      <a class="dropdown-item" href=<%= logout_path %>>
+        <div class="" style="color:white;width:1rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+          </svg>
+          Logout
         </div>
+      </a>
+    </li>
+  </ul>
+</div>
