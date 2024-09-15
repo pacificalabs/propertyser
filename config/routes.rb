@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   # get 'faq', to: 'index#faq'
   get 'contact', to: 'index#contact'
   post 'contact', to: 'admin#contact_team', as: 'contact_us'
-  get 'step-by-step', to: 'index#step_by_step', as: 'guide'
+  # get 'step-by-step', to: 'index#step_by_step', as: 'guide'
   get 'privacy-policy', to: 'index#policy', as: 'policy'
   get 'ipad', to: 'index#device_warning'
 
