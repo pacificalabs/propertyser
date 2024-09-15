@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   get 'tags/index'
   get 'tags/show'
-  require 'sidekiq/web'
-  require 'admin_constraint'
+  # require 'sidekiq/web'
+  # require 'admin_constraint'
 
   # Sidekiq admin interface
-  mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
+  # mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
 
   # Root route
   root 'index#index'
@@ -36,9 +36,9 @@ Rails.application.routes.draw do
   get 'complete_signup/:token', to: 'users#complete_signup'
 
   # Index page routes
-  get 'background', to: 'index#background'
-  get 'about', to: 'index#about'
-  get 'faq', to: 'index#faq'
+  # get 'background', to: 'index#background'
+  # get 'about', to: 'index#about'
+  # get 'faq', to: 'index#faq'
   get 'contact', to: 'index#contact'
   post 'contact', to: 'admin#contact_team', as: 'contact_us'
   get 'step-by-step', to: 'index#step_by_step', as: 'guide'
