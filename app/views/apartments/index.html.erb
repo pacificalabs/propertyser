@@ -1,12 +1,21 @@
-<div class="container-fluid g-0">
-  <div class="row">
-    <div class="col-sm-2 order-sm-1 mt-md-5"></div>
-    <div class="col-sm-8 order-sm-2 mt-md-5">
-      <% if current_user.present? && current_user.is_admin? %>
-        <%= render "apartments_with_admin_options", apartments: @apartments %>
-      <% else %>
-        <%= render "show_apartment", apartments: @apartments  %>
-      <% end %>
+<div class="container g-0">
+  <% if @apartments.blank? %>
+    <div class="row mt-md-5">
+      <div class="col-md-4">
+        <h3>No Properties Currently Listed</h3>
+        <%= link_to "List A Property", new_apartment_path, class: "btn btn-primary" if current_user.present? && current_user.is_admin?  %>
+      </div>
+    </div>
+  <% else %>
+    <div class="row">
+      <div class="col-sm-2 order-sm-1 mt-md-5"></div>
+      <div class="col-sm-8 order-sm-2 mt-md-5">
+        <% if current_user.present? && current_user.is_admin? %>
+          <%= render "apartments_with_admin_options", apartments: @apartments %>
+        <% else %>
+          <%= render "show_apartment", apartments: @apartments  %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>

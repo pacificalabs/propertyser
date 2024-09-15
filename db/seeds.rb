@@ -107,7 +107,7 @@ time2 = Benchmark.measure {
 
       puts "$#{a.asking_price}"
       a.save!
-      attach_pics a
+      # attach_pics a
       ([t1,t2].sample).apartments << a
       comments.map { |comment|  a.comments.create!( user: User.all.sample , body:comment ) }
     end

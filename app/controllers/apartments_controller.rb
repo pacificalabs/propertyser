@@ -63,10 +63,10 @@ class ApartmentsController < ApplicationController
     begin
       @apartment = Apartment.new(apartment_params)
       @apartment.assign_attributes(
-        bedrooms: params[:bedrooms],
-        bathrooms: params[:bathrooms],
+        bedrooms: apartment_params[:bedrooms],
+        bathrooms: apartment_params[:bathrooms],
         strata: params[:strata],
-        parking_spaces: params[:parking_spaces],
+        parking_spaces: apartment_params[:parking_spaces],
         asking_price: helpers.currency_to_number(apartment_params[:asking_price]),
         user: current_user
       )
