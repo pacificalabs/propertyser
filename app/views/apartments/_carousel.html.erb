@@ -7,7 +7,7 @@
         <div class="carousel-item <%= active %>" style="background-image: url('<%= CGI.escapeHTML(apartment_carousel_image_url(pic)) %>');">
           <div class="carousel-caption d-none d-sm-block">
             <!-- Add caption content here -->
-            <h6><%= desc&.description&.present? ? desc.description.upcase : "" %></h6>
+            <h3><%= desc&.description&.present? ? desc.description.upcase : "" %></h3>
           </div>
         </div>
       <% end %>
