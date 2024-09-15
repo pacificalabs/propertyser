@@ -8,8 +8,7 @@
     </div>
   <% else %>
     <div class="row">
-      <div class="col-sm-2 order-sm-1 mt-md-5"></div>
-      <div class="col-sm-8 order-sm-2 mt-md-5">
+      <div class="col-sm-12 order-sm-2 mt-md-5">
         <% if current_user.present? && current_user.is_admin? %>
           <%= render "apartments_with_admin_options", apartments: @apartments %>
         <% else %>

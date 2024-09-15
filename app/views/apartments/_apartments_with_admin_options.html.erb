@@ -20,7 +20,7 @@
                 </div>
               </div>
               <!-- Address and property details -->
-              <div class="col-md-4 order-md-2">
+              <div class="col-md-3 order-md-2">
                 <h5 class="card-title ml-3 mt-3">
                   <%= link_to apartment.full_address_line_1, apartment_path(apartment), class: "alert-link nounderline" %>
                 </h5>
@@ -32,7 +32,7 @@
                 </div>
               </div>
               <!-- Tag selection -->
-              <div class="col-md-3 order-md-3 d-flex align-items-center justify-content-end">
+              <div class="col-md-4 order-md-3 d-flex align-items-center justify-content-end">
                 <div class="field w-100">
                   <%= form.label "Categories"  %>
                   <%= form.collection_select "apartments[#{apartment.id}][tag_ids]", @child_tags, :id, :name, { selected: apartment.tag_ids }, { multiple: true, class: "form-control tag-select" } %>
