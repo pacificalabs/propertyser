@@ -1,7 +1,7 @@
 class ApartmentsController < ApplicationController
   include ApartmentsHelper
   before_action :update_fullpath
-  skip_before_action :user_is_authorised?, only: :show
+  skip_before_action :user_is_authorised?, only: [:index, :show]
 
   # before_action :user_is_authorised?, except: [:search,:index,:search_location]
   before_action :load_icons, only: [:index,:new,:edit,:owner,:show]
