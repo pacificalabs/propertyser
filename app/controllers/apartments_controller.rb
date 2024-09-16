@@ -119,7 +119,7 @@ class ApartmentsController < ApplicationController
 
   def update
     begin
-      @apartment = Apartment.find(params[:id])
+      @apartment = Apartment.friendly.find(params[:id])
       @apartment.update! apartment_params.except("asking_price").merge!asking_price: helpers.currency_to_number(apartment_params[:asking_price])
       @apartment.floorplans.attach(params[:apartment][:floorplans]) if params[:apartment][:floorplans].present?
       @apartment&.feature&.destroy!
@@ -137,7 +137,7 @@ class ApartmentsController < ApplicationController
   end
 
   def destroy
-    @apartment = Apartment.find(params[:id])
+    @apartment = Apartment.friendly.find(params[:id])
     @apartment.destroy!
     redirect_to myproperties_path
     flash[:alert] = "PROPERTY WAS DELETED!"

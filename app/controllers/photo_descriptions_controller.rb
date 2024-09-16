@@ -6,7 +6,7 @@ class PhotoDescriptionsController < ApplicationController
   end
 
   def update
-    @apartment = Apartment.find params[:apartment_id]
+    @apartment = Apartment.friendly.find params[:apartment_id]
     if params[:featured]
       # @apartment.set_featured_photo(params[:id])
       flash[:notice] = "PHOTO SET AS FEATURE PHOTO"
