@@ -173,7 +173,7 @@ class ApartmentsController < ApplicationController
 
   def show
     begin
-      @apartment = Apartment.includes(:user,:amenity,:feature,{comments:[:user,:replies]}).with_attached_photos.find(params[:id])
+      @apartment = Apartment.includes(:user,:amenity,:feature,{comments:[:user,:replies]}).with_attached_photos.friendly.find(params[:id])
       # @self_rating = @apartment.market_ratings.find_by_user_id(current_user.id)
       @features = @apartment&.feature&.attributes&.select {|k,f| f == true }
       @features = @features.keys if @features.present?

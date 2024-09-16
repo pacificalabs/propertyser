@@ -16,6 +16,7 @@
 #  longitude         :float
 #  parking_spaces    :integer
 #  postcode          :integer
+#  slug              :string
 #  state             :text
 #  strata            :boolean          default(FALSE)
 #  street_address    :text
@@ -30,9 +31,13 @@
 #
 #  index_apartments_on_latitude_and_longitude  (latitude,longitude)
 #  index_apartments_on_location_id             (location_id)
+#  index_apartments_on_slug                    (slug) UNIQUE
 #  index_apartments_on_user_id                 (user_id)
 #
 class Apartment < ApplicationRecord
+
+  extend FriendlyId
+  friendly_id :slug_address, use: :slugged
 
   before_destroy :purge_from_storage
   after_create :create_associations
@@ -79,6 +84,10 @@ class Apartment < ApplicationRecord
 
   def image_url
     super || default_image
+  end
+
+  def slug_address
+    "#{street_address} #{suburb}"
   end
 
   def address_line_1
