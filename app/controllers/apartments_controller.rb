@@ -105,7 +105,7 @@ class ApartmentsController < ApplicationController
   end
 
   def edit
-    @apartment = Apartment.includes([:feature,:descriptor,:amenity]).find(params[:id])
+    @apartment = Apartment.includes([:feature,:descriptor,:amenity]).friendly.find(params[:id])
     @feature = @apartment.feature.present? ? @apartment.feature : @apartment.build_feature
     @descriptor = @apartment.descriptor.present? ? @apartment.descriptor : @apartment.build_descriptor
     @amenity = @apartment.amenity.present? ? @apartment.amenity : @apartment.build_amenity
