@@ -14,6 +14,7 @@
 #  land_size         :integer
 #  latitude          :float
 #  longitude         :float
+#  name              :string
 #  parking_spaces    :integer
 #  postcode          :integer
 #  slug              :string
