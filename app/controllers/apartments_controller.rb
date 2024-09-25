@@ -76,30 +76,26 @@ class ApartmentsController < ApplicationController
       @apartment.descriptor = Descriptor.new(descriptor_params[:descriptor]) if descriptor_params[:descriptor].present?
       @apartment.amenity = Amenity.new(amenity_params[:amenity]) if amenity_params[:amenity].present?
 
-      # Save apartment
       if @apartment.save
         flash[:notice] = "Your property has been saved to draft. Please describe your photo#{"s" if params[:apartment][:photos].size > 1} and add any floorplan if available."
-
         # Attach photos and create photo descriptions
         if params[:apartment][:photos].present?
           @apartment.photos.attach(params[:apartment][:photos])
-
           if @apartment.photos.attached?
             @apartment.photos.each do |pic|
               @apartment.photo_descriptions.create!(description: nil, blob_id: pic.blob_id)
             end
           end
         end
-
         redirect_to photos_path(apartment_id: @apartment.id)
       else
+        logger.error "Failed to save apartment: #{@apartment.errors.full_messages.join(', ')}"
         flash[:alert] = "There was an error saving the apartment. Please check the form and try again."
         render :new
       end
-
     rescue StandardError => e
+      logger.error "Error in #{action_name}: #{e.message}\n#{e.backtrace.join("\n")}"
       flash[:alert] = "There was an error. #{e.message}. Please try again."
-      logger.error { "#{action_name} ERROR: #{e.inspect}" }
       redirect_to new_apartment_path
     end
   end
@@ -118,22 +114,40 @@ class ApartmentsController < ApplicationController
   end
 
   def update
+    @apartment = Apartment.friendly.find(params[:id])
+
     begin
-      @apartment = Apartment.friendly.find(params[:id])
-      @apartment.update! apartment_params.except("asking_price").merge!asking_price: helpers.currency_to_number(apartment_params[:asking_price])
-      @apartment.floorplans.attach(params[:apartment][:floorplans]) if params[:apartment][:floorplans].present?
-      @apartment&.feature&.destroy!
-      @apartment.create_feature!(feature_params[:feature])
-      @apartment&.descriptor&.destroy!
-      @apartment.create_descriptor!(descriptor_params[:descriptor])
-      @apartment&.amenity&.destroy!
-      @apartment.create_amenity!(amenity_params[:amenity])
-    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotDestroyed => e
-      logger.error { "#{action_name} Error #{e.inspect}" }
-      flash[:alert] = "Error< #{e.inspect.split(":\ ").last}"
-      redirect_to edit_apartment_path(apartment_id: @apartment.id) and return false
+      ActiveRecord::Base.transaction do
+        # Update apartment attributes if present
+        @apartment.update!(apartment_params) if apartment_params.present?
+
+        # Handle photo uploads
+        if params.dig(:apartment, :photos).present?
+          params[:apartment][:photos].reject(&:blank?).each do |photo|
+            @apartment.photos.attach(photo)
+          end
+        end
+
+        # Handle floorplan uploads
+        if params.dig(:apartment, :floorplans).present?
+          params[:apartment][:floorplans].reject(&:blank?).each do |floorplan|
+            @apartment.floorplans.attach(floorplan)
+          end
+        end
+
+        # Update associated models if present
+        update_associated_model(:feature, feature_params) if feature_params.present?
+        update_associated_model(:descriptor, descriptor_params) if descriptor_params.present?
+        update_associated_model(:amenity, amenity_params) if amenity_params.present?
+      end
+
+      flash[:notice] = "Apartment updated successfully."
+      redirect_to apartment_path(@apartment)
+    rescue ActiveRecord::RecordInvalid, ActiveStorage::IntegrityError => e
+      logger.error "Update error: #{e.message}"
+      flash[:alert] = "Error updating apartment: #{e.message}"
+      render :edit
     end
-    redirect_to photos_path(apartment_id: @apartment.id)
   end
 
   def destroy
@@ -185,7 +199,7 @@ class ApartmentsController < ApplicationController
       @floorplans = @apartment.floorplans
       @search_title = params[:title]
     rescue ActiveRecord::RecordNotFound => e
-      Rails.logger.debug { "#{e}" }
+      Rails.logger.debug { "Error: #{e}" }
       flash[:alert] = "We were unable to display that property."
       redirect_to apartments_path
     end
@@ -252,8 +266,16 @@ class ApartmentsController < ApplicationController
     params.permit(:run_saved_search,:id)
   end
 
+  def update_associated_model(association, params)
+    if @apartment.send(association).present?
+      @apartment.send(association).update!(params)
+    else
+      @apartment.send("create_#{association}!", params)
+    end
+  end
+
   def apartment_params
-    params.require(:apartment).permit(:house_number, :strata, :bedrooms, :bathrooms,:parking_spaces,:postcode,:street_address, :suburb, :description, :land_size, :internal_space, :asking_price, :photos, :floorplans)
+    params.require(:apartment).permit(:name,:property_type_id, :house_number, :strata, :bedrooms, :bathrooms,:parking_spaces, :postcode, :street_address, :suburb, :description,:land_size, :internal_space, :asking_price, :display_option)
   end
 
   def feature_params
