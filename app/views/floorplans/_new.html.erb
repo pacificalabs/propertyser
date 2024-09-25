@@ -1,9 +1,25 @@
-<%= form_with model: @apartment, class: "form-row property-title" do |f| %>
-<div class="custom-file col-md-8">
-  <%= f.label "+", class: "custom-file-label" %>
-  <%= f.file_field :floorplans, multiple: true, direct_upload: false, id: "floorplan-upload-field", class: "custom-file-input", data:{"max-file-size":"5000000"}, onchange: "validateFloorplans(this);"%>
+<div class="form-group">
+  <%= form_with model: @apartment, class: "form-row property-title", local: true do |f| %>
+    <%= f.file_field :photos, multiple: true, class: 'd-none', id: 'apartment_photos', accept: 'image/jpeg,image/png' %>
+    <%= f.file_field :floorplans, multiple: true, class: 'd-none', id: 'apartment_floorplans', accept: 'image/jpeg,image/png,application/pdf' %>
+    <div class="mt-2">
+      <button type="button" class="btn btn-secondary col-md-4" onclick="validateAndAssignFiles('photos')">
+        Add Photos
+      </button>
+      <button type="button" class="btn btn-secondary col-md-4" onclick="validateAndAssignFiles('floorplans')">
+        Add Floorplans
+      </button>
+    </div>
+    <div class="mt-2">
+      <h5 id="photos-header" class="d-none">Photos:</h5>
+      <ul id="photos-list"></ul>
+    </div>
+    <div class="mt-2">
+      <h5 id="floorplans-header" class="d-none">Floorplans:</h5>
+      <ul id="floorplans-list"></ul>
+    </div>
+    <div class="mt-2">
+      <%= f.submit "Upload Files", id: "file-submit", class: "btn btn-primary d-none col-md-8" %>
+    </div>
+  <% end %>
 </div>
-<%= f.hidden_field :apartment_id, value: @apartment.id %>
-<%= f.submit "SAVE", class: "d-none btn btn-outline-primary ml-md-1", id: "fsubmit" %>
-<%= f.label " ", id:"floorplan-label", class: "mt-md-1" %>
-<% end %>
