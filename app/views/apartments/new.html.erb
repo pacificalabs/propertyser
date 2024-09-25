@@ -8,44 +8,39 @@
           <div class="col-lg-6  align-items-stretch d-flex buy-property-data">
             <div class='row buy-property-data-div' id="part-1" label="address">
               <div class="col-md-12">
+                <%= render "property_type", f: f, apartment: @apartment %>
+              </div>
+            </div>
+            <div class='row buy-property-data-div d-none' id="part-2" label="address">
+              <div class="col-md-12">
+                <%= render "property_name", f: f, apartment: @apartment %>
+              </div>
+            </div>
+            <div class='row buy-property-data-div d-none' id="part-3" label="address">
+              <div class="col-md-12">
                 <%= render "address", f: f %>
               </div>
             </div>
-            <div class='row buy-property-data-div d-none' id="part-2" label="bed-bath-parking">
+            <div class='row buy-property-data-div d-none' id="part-4" label="bed-bath-parking">
               <div class="col-md-12">
                 <%= render "bed_bath_parking", f: f, apartment: @apartment %>
               </div>
             </div>
-            <div class='row buy-property-data-div d-none' id="part-3" label="values">
+            <div class='row buy-property-data-div d-none' id="part-5" label="values">
               <div class="col-md-12">
                 <%= render "values", f:f, apartment: @apartment  %>
               </div>
             </div>
-            <div class='row buy-property-data-div d-none' id="part-4" label="photos">
+            <div class='row buy-property-data-div d-none' id="part-6" label="photos">
               <div class="col-md-12">
                 <%= render "photos/add", f:f, apartment: @apartment  %>
               </div>
             </div>
-            <div class='row buy-property-data-div d-none' id="part-5" label="save">
+            <div class='row buy-property-data-div d-none' id="part-7" label="save">
               <div class="col-md-12">
                 <br>
                 <%= f.submit "SAVE DRAFT and LOAD PHOTOS", class: "btn btn-outline-primary col-md-12 mb-md-5", id: "sell-submit" %>
               </div>
-            </div>
-          </div>
-          <div class='row buy-property-data-div d-none' id="part-6" label="descriptors">
-            <div class="col-md-12">
-              <%#= render "descriptors", f: f, apartment: @apartment, descriptor_icons: @descriptor_icons %>
-            </div>
-          </div>
-          <div class='row buy-property-data-div d-none' id="part-7" label="amenities">
-            <div class="col-md-12">
-              <%#= render "amenities", f: f, apartment: @apartment, amenity_icons: @amenity_icons %>
-            </div>
-          </div>
-          <div class='row buy-property-data-div d-none' id="part-8" label="features">
-            <div class="col-md-12">
-              <%#= render "features", f: f, apartment: @apartment, feature_icons: @feature_icons %>
             </div>
           </div>
           <div class="col-lg-6 position-relative overflow-hidden">
@@ -75,7 +70,7 @@
             <div class="circle part-5 price-circle" circlevalue="part-5">
             </div>
           </div>
-          <span class="btn my-2 me-5 buy-back-button shadow-none disable-btn" nextvalue="part-1" id="back-button-buy-property" aria-hidden="true">
+          <span class="btn my-2 me-5 buy-back-button shadow-none disable-btn d-none" nextvalue="part-1" id="back-button-buy-property" aria-hidden="true">
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M27.4198 36.4081L17.5878 26.5067C17.374 26.2915 17.223 26.0583 17.1347 25.8072C17.0449 25.5561 17 25.287 17 25C17 24.713 17.0449 24.4439 17.1347 24.1928C17.223 23.9417 17.374 23.7085 17.5878 23.4933L27.4198 13.5919C27.8117 13.1973 28.3104 13 28.916 13C29.5216 13 30.0204 13.1973 30.4122 13.5919C30.8041 13.9865 31 14.4888 31 15.0987C31 15.7085 30.8041 16.2108 30.4122 16.6054L22.0763 25L30.4122 33.3946C30.8041 33.7892 31 34.2915 31 34.9013C31 35.5112 30.8041 36.0135 30.4122 36.4081C30.0204 36.8027 29.5216 37 28.916 37C28.3104 37 27.8117 36.8027 27.4198 36.4081Z" fill="#18A2B8"/>
               <circle cx="25" cy="25" r="21.25" stroke="#18A2B8" stroke-width="1.5"/>
@@ -91,5 +86,5 @@
         </div>
       <% end %>
     </div>
-</div>
+  </div>
 </div>

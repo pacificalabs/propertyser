@@ -9,6 +9,55 @@
 require 'csv'
 include PostcodesHelper
 
+# db/seeds.rb
+
+def seed_property_types
+  residential_property_types = [
+    'House',
+    'Apartment/Unit',
+    'Townhouse',
+    'Villa',
+    'Duplex/Semi-detached',
+    'Studio',
+    'Penthouse',
+    'Cottage',
+    'Terrace',
+    'Farmhouse',
+    'Acreage/Rural',
+    'Granny Flat',
+    'Mansion',
+    'Bungalow',
+    'Split-level House',
+    'Loft Apartment',
+    'Converted Warehouse',
+    'Retirement Village Unit',
+    'Eco-home/Sustainable House',
+    'Beach House',
+    'Serviced Apartment',
+    'Holiday Apartment',
+    'Garden Apartment',
+    'Cluster House',
+    'Boarding House'
+  ]
+
+  land_property_types = [
+    'Vacant Residential Land',
+    'Vacant Rural Land',
+    'Residential Subdivision',
+    'Land for Development',
+    'Urban Land',
+    'Rural/Farming Land',
+    'Industrial Land',
+    'Commercial Land',
+    'Mixed-use Land'
+  ]
+
+  (residential_property_types + land_property_types).each do |type|
+    PropertyType.find_or_create_by!(name: type)
+  end
+end
+
+
 def seed_address
   csv_data = CSV.parse(File.read('lib/csv/seed_addresses.csv'), :headers => true).map{|a| a.to_hash}
   address_data = []
@@ -85,6 +134,9 @@ puts time1
 
 
 time2 = Benchmark.measure {
+
+  seed_property_types
+
   puts "creating users"
   create_users(@user_list)
 
@@ -104,6 +156,7 @@ time2 = Benchmark.measure {
       a.strata = [true,false].sample
       a.parking_spaces = small_numbers.sample
       a.asking_price = pricing.sample
+      a.property_type = PropertyType.all.sample
 
       puts "$#{a.asking_price}"
       a.save!

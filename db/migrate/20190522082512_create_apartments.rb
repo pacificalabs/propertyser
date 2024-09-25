@@ -3,6 +3,7 @@ class CreateApartments < ActiveRecord::Migration[5.2]
     create_table :apartments do |t|
       t.belongs_to :user
       t.belongs_to :location
+      t.belongs_to :property_type
       t.text :house_number
       t.text :street_address
       t.text :suburb

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_16_182019) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_25_063728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -99,6 +99,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_16_182019) do
   create_table "apartments", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "location_id"
+    t.bigint "property_type_id"
     t.text "house_number"
     t.text "street_address"
     t.text "suburb"
@@ -121,8 +122,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_16_182019) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "slug"
     t.string "name"
+    t.string "display_option", default: "both"
     t.index ["latitude", "longitude"], name: "index_apartments_on_latitude_and_longitude"
     t.index ["location_id"], name: "index_apartments_on_location_id"
+    t.index ["property_type_id"], name: "index_apartments_on_property_type_id"
     t.index ["slug"], name: "index_apartments_on_slug", unique: true
     t.index ["user_id"], name: "index_apartments_on_user_id"
   end
@@ -330,6 +333,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_16_182019) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["apartment_id"], name: "index_property_milestones_on_apartment_id"
+  end
+
+  create_table "property_types", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "qld_postcodes", force: :cascade do |t|
