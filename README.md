@@ -52,7 +52,7 @@
    ```
    Update your user access details in the seeds.rb file.
    ```ruby
-   @user_list = [{:firstname => "Tarun", :email => "tarun@pacificasearch.com", "password":"gdaymate", "username":"tarunm", is_admin:true, accepted_terms_and_conditions: true}]
+    @user_list = [{:firstname => "Tarun", :email => "tarun@pacificasearch.com", "password":"gdaymate", "username":"tarunm", is_admin:true, accepted_terms_and_conditions: true}]
    ```
    Seed the database.
    ```bash
@@ -66,5 +66,4 @@
    ```
 
    - **Web Server**: The app will be served by Puma at `http://127.0.0.1:5000`.
-   - **Worker**: Sidekiq will manage background jobs.
    - **CSS**: Sass will watch for changes and compile CSS.

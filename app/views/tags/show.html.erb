@@ -1,19 +1,13 @@
-<div class="container-fluid g-0 my-3">
-  <!-- app/views/tags/show.html.erb -->
+<div class="container-fluid g-0 my-3 p-3">
   <h3><%= @tag.name %></h3>
-  <% if @child_tags.any? %>
-    <h2>Child Tags:</h2>
-    <ul>
-      <% @child_tags.each do |child_tag| %>
-        <li><%= link_to child_tag.name, tag_child_tag_path(@tag, child_tag) %></li>
-      <% end %>
-    </ul>
-  <% end %>
-  <% if @apartments.any? %>
-    <%= render partial: "apartments/show_apartment", locals: {apartments: @apartments} %>
+  <% if @child_tags.any? || @tag.apartments.any? %>
+    <% # Collect apartments from the parent tag and child tags %>
+    <% all_apartments = @tag.apartments + @child_tags.flat_map(&:apartments) %>
+    <% # Ensure uniqueness if necessary %>
+    <% unique_apartments = all_apartments.uniq %>
+    <% # Render apartments %>
+    <%= render partial: "apartments/show_apartment", locals: { apartments: unique_apartments } %>
   <% else %>
-    <p>
-      No Apartments added yet
-    </p>
+    <p>No properties present</p>
   <% end %>
 </div>

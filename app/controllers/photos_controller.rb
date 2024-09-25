@@ -1,26 +1,39 @@
 class PhotosController < ApplicationController
 
   def index
-    @apartment = Apartment.find(params[:apartment_id])
-    @floorplans = @apartment.floorplans if @apartment.floorplans.present? 
+    @apartment = Apartment.friendly.find(params[:apartment_id])
+    @floorplans = @apartment.floorplans if @apartment.floorplans.present?
     @photos = @apartment.presort_photos if @apartment.photos.attached?
+  rescue StandardError => e
+    Rails.logger.error { "error: #{e}" }
+    flash[:alert] = "There was an error, please try again."
+    redirect_to apartments_path
   end
 
   def create
-    @apartment = Apartment.find photo_params[:apartment_id]
-    @photo = @apartment.photos.attach(params[:photo][:photos])
-    if @apartment.photos.attached?
-      @apartment.photos.map { |pic| @apartment.photo_descriptions.create!(description: nil, photo_id: pic.id)  }
+    @apartment = Apartment.find(photo_params[:apartment_id])
+
+    # Attach new photos to the apartment
+    new_photos = params[:photo][:photos]
+    initial_size = @apartment.photos.size
+    @photos = @apartment.photos.attach(new_photos)
+
+    if @apartment.photos.size > initial_size
+      @photos.each { |photo| @apartment.photo_descriptions.find_or_create_by(blob_id: photo.id)  }
     end
-    redirect_to photos_path(apartment_id:@apartment.id)
+
+    redirect_to photos_path(apartment_id: @apartment.id)
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "Property not found."
+    redirect_to apartments_path
   rescue ArgumentError => e
-    Rails.logger.error { "error: #{e}" }
-    flash[:alert] = "There was an error, please try again."
-    render "index"
+    Rails.logger.error "Error: #{e.message}"
+    flash[:alert] = "There was an error attaching photos, please try again."
+    render :index
   end
 
   def edit
-    @apartment = Apartment.find(photo_edit_params[:apartment_id])
+    @apartment = Apartment.friendly.find(photo_edit_params[:apartment_id])
     @photo = @apartment.photos.find(photo_edit_params[:id])
   end
 
@@ -34,37 +47,38 @@ class PhotosController < ApplicationController
   def destroy
     @apartment = Apartment.find(photo_delete_params[:apartment])
     @apartment.delete_photo_and_description(params[:id])
-    flash[:notice] = "DELETED PHOTO"
+    flash[:notice] = "Photo Deleted!"
     redirect_to photos_path(apartment_id:@apartment.id)
   end
 
   def update
-    @apartment = Apartment.find params[:attachment][:apartment_id]
-      # define actions such as set feature or delete
-      if params[:featured]
-        @apartment.set_featured_photo(params[:id])
-        flash[:notice] = "PHOTO SET AS FEATURE PHOTO"
-      elsif params[:delete]
-        @apartment.delete_photo_and_description(params[:id]) 
-      elsif params[:update]
-        @description = PhotoDescription.find_by_photo_id(params[:id])
-        @description.update!(description:params[:attachment][:description])
-      end
-      redirect_to photos_path(apartment_id: @apartment.id)
+    @apartment = Apartment.friendly.find params[:apartment_id]
+    if params[:featured]
+      # @apartment.set_featured_photo(params[:id])
+      flash[:notice] = "PHOTO SET AS FEATURE PHOTO"
+    elsif params[:delete]
+      @apartment.delete_photo_and_description(params[:id])
+      flash[:notice] = "Photo Deleted!"
+    elsif params[:update]
+      @description = PhotoDescription.find_or_initialize_by(apartment_id: @apartment.id, blob_id: params[:id])
+      @description.update!(description: params[:photo_description][:description])
+      flash[:notice] = "Photo Description Updated!"
     end
-
-    private
-
-    def photo_edit_params
-      params.permit(:apartment_id,:id)
-    end
-
-    def photo_delete_params
-      params.permit(:apartment,:id)
-    end
-
-    def photo_params
-      params.require(:photo).permit(:photos,:apartment_id)
-    end
-
+    redirect_to photos_path(apartment_id: @apartment.id)
   end
+
+  private
+
+  def photo_edit_params
+    params.permit(:apartment_id,:id)
+  end
+
+  def photo_delete_params
+    params.permit(:apartment,:id)
+  end
+
+  def photo_params
+    params.require(:photo).permit(:photos,:apartment_id)
+  end
+
+end

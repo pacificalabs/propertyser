@@ -1,11 +1,13 @@
-<% content_for(:html_title) { "Buy Properties - Homblok" } %>
+<% content_for(:html_title) { "Buy Properties - #{t("business.name")}" } %>
 <%#= render partial: "postcodes/seed" %>
 <div class="container-fluid g-0">
   <div class="row">
-    <div class="col-lg-1 col-md-1 mt-md-5"></div>
-    <div class="col-lg-10 col-md-10 mt-md-5" id="location">
+    <div class="bg-white rounded-3 m-auto col-lg-10 col-md-10 mt-md-5" id="location">
       <% if @options.present? %>
-        <h2 class="text-center mt-md-5"><%= image_tag get_aws_url("dark_icons/icons8-home-address-50.png"), class: "title-icons mb-md-1" %>LOCATIONS</h2>
+        <h2 class="text-center mt-md-5">
+          <%= image_tag get_aws_url("dark_icons/icons8-home-address-50.png"), class: "title-icons mb-md-1" %>
+          LOCATIONS
+        </h2>
       <% end %>
       <%= form_with model: Apartment.new, url: search_page_two_path, local:true, multiple: true, method: :get do |f| %>
         <%= render "saved_searches" %>

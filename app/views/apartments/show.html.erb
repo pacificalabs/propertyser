@@ -1,5 +1,5 @@
-<% @address = (@apartment.owner == current_user || @current_user.is_admin?) ? @apartment.full_address_line_1 : @apartment.address_line_1 %>
-<% content_for(:html_title) { "#{@address}, #{@apartment.suburb} - Homblok" } %>
+<% @address = current_user.present? && (@apartment.owner == current_user || @current_user&.is_admin?) ? @apartment.full_address_line_1 : @apartment.address_line_1 %>
+<% content_for(:html_title) { "#{@address}, #{@apartment.suburb} - #{t("business.name")}" } %>
 <% unless device_is_mobile? %>
   <div id="navArrow"></div>
 <% end %>
@@ -11,15 +11,15 @@
       <%= render "description" if @descriptors.present? %>
       <%= render "features_amenities", apartment: @apartment %>
       <%#= render "market_ratings" %>
-      <%= render "floorplan" %>
       <%= link_to "Return To Search Results",return_to_search_results_path(title: @search_title), class: "btn btn-outline-primary" if @search_title.present? %>
       <%#= render "comments" %>
-      <%= render "map" %>
+      <%= render "floorplan" %>
       <%= render "edit_delete" %>
     </div>
     <div class="col-md-2 order-sm-2 ml-md-5"></div>
     <div class="col-md-7 order-sm-3 ml-md-5">
       <%= render "carousel" %>
+      <%= render "map" %>
     </div>
   </div>
 </div>

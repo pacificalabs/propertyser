@@ -94,7 +94,6 @@ gem "geocoder"
 gem "activerecord-import"
 gem "pg_search"
 gem "image_processing", "~> 1.12"
-gem "sidekiq"
 gem "haml"
 gem "slim"
 

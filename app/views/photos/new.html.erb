@@ -3,6 +3,14 @@
     <div class="col-sm-3 order-sm-1 mt-md-5"></div>
     <div class="col-sm-5 order-sm-2 mt-md-5">
       <p class="text-center ml-md-5 display-4">ADD A NEW PHOTO</p>
+      <%= form_with model: @apartment, url: apartment_photos_path(@apartment), class: "form-row property-title", local: true, multipart: true do |f| %>
+        <div class="custom-file col-md-8">
+          <%= f.label :photos, "+", class: "custom-file-label" %>
+          <%= f.file_field :photos, multiple: true, direct_upload: true, id: "photo-upload-field", class: "custom-file-input", data: { "max-file-size": "5000000" }, onchange: "validatePhotos(this);" %>
+        </div>
+        <%= f.hidden_field :apartment_id, value: @apartment.id %>
+        <%= f.submit "SAVE", class: "btn btn-outline-primary ml-md-1 mt-md-2", id: "photo-submit" %>
+      <% end %>
     </div>
   </div>
 </div>

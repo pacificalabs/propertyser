@@ -37,66 +37,212 @@ $(document).ready(function() {
     }
     document.cookie = "viewPort=" + JSON.stringify(window.viewport);
 
-    $('#next-button-buy-property')
-        .click(function(event) {
-            event.preventDefault();
-            // addRemoveLoader();
-            var DivId = $(this).attr('nextvalue');
-            var currentDiv = $(`#${DivId}`);
-            var nextDiv = $(`#${DivId}`).next()[0];
-            if (nextDiv && nextDiv.id) {
-                $(this).attr('nextvalue', nextDiv.id);
-                $(this).prev().attr('nextvalue', nextDiv.id);
-                $(nextDiv).removeClass("d-none");
-                if (nextDiv.id && nextDiv.id === "part-2") {
+    $('form').on('submit', function() {
+        $('#progress-circle').removeClass('d-none').fadeIn();
+    });
+
+    // Function to validate required fields in the current visible section
+    window.validateRequiredFields = function(currentDiv) {
+        let isValid = true;
+        currentDiv.find('.form-control[required]').each(function() {
+            if ($(this).val().trim() === "") {
+                isValid = false;
+                return false; // Exit loop as soon as an empty required field is found
+            }
+        });
+        return isValid;
+    }
+
+    // Consolidated click event for both 'next' and 'back' buttons
+    $('#next-button-buy-property, #back-button-buy-property').click(function(event) {
+        event.preventDefault();
+
+        var isNext = $(this).attr('id') === 'next-button-buy-property'; // Check if it's the next button
+        var DivId = $(this).attr('nextvalue');
+        var currentDiv = $(`#${DivId}`);
+
+        // If moving to the next section, validate required fields
+        if (isNext && !validateRequiredFields(currentDiv)) {
+            alert("Please fill in all required fields before proceeding.");
+            return;
+        }
+
+        var targetDiv = isNext ? currentDiv.next() : currentDiv.prev(); // Determine target div based on button
+        if (targetDiv && targetDiv.length) {
+            $(this).attr('nextvalue', targetDiv.attr('id'));
+            $(this).siblings('button').attr('nextvalue', targetDiv.attr('id'));
+
+            targetDiv.removeClass("d-none");
+
+            if (isNext) {
+                // If moving forward, update button states and progress indicators
+                if (targetDiv.attr('id') === "part-2") {
                     $(this).prev().removeClass("disable-btn");
                 }
-                if (nextDiv.id) {
-                    var circleDiv = $(`.${nextDiv.id}`);
-                    if (circleDiv) {
-                        circleDiv.addClass('active');
-                    }
+                var circleDiv = $(`.${targetDiv.attr('id')}`);
+                if (circleDiv) {
+                    circleDiv.addClass('active');
+                }
+            } else {
+                // If moving backward, update progress indicators
+                var circleDiv = $(`.${currentDiv.attr('id')}`);
+                if (circleDiv) {
+                    circleDiv.removeClass('active');
+                    circleDiv.prev().addClass('active');
                 }
             }
-            if (currentDiv) {
-                currentDiv.addClass("d-none");
-                if (currentDiv.attr('id') && currentDiv.attr('id') === "part-4") {
-                    $('#startSearching').removeClass("d-none");
-                    $(this).addClass('d-none');
-                }
-            }
-        });
 
-    $('#back-button-buy-property')
-        .click(function(event) {
-            event.preventDefault();
-            // addRemoveLoader();
-            var DivId = $(this).attr('nextvalue');
-            var prevDiv = $(`#${DivId}`).prev();
-            var currentDiv = $(`#${DivId}`);
-            if (currentDiv) {
-                currentDiv.addClass("d-none");
-                if (currentDiv.attr('id')) {
-                    var circleDiv = $(`.${currentDiv.attr('id')}`);
-                    if (circleDiv) {
-                        circleDiv.removeClass('active');
-                        circleDiv.prev().addClass('active');
-                    }
-                }
+            currentDiv.addClass("d-none");
+
+            if (isNext && currentDiv.attr('id') === "part-4") {
+                $('#startSearching').removeClass("d-none");
+                $(this).addClass('d-none');
             }
-            if (prevDiv) {
-                prevDiv.removeClass("d-none");
-                if (prevDiv.attr('id') && prevDiv.attr('id') === "part-1") {
-                    $(this).addClass('disable-btn');
-                }
-                if (prevDiv.attr('id') && prevDiv.attr('id') === "part-4") {
-                    $('#startSearching').addClass("d-none");
-                    $(this).next().removeClass('d-none');
-                }
-                $(this).attr('nextvalue', prevDiv.attr('id'));
-                $(this).next().attr('nextvalue', prevDiv.attr('id'));
+            if (!isNext && targetDiv.attr('id') === "part-1") {
+                $(this).addClass('disable-btn');
             }
+            if (!isNext && targetDiv.attr('id') === "part-4") {
+                $('#startSearching').addClass("d-none");
+                $(this).next().removeClass('d-none');
+            }
+        }
+    });
+
+    window.validateFloorplans = function(inputFile) {
+        var maxExceededMessage = "This file exceeds the maximum allowed file size (5 MB)";
+        var extErrorMessage = "Only image files with extension: .jpg, .jpeg, or .png are allowed";
+        var allowedExtension = ["jpg", "jpeg", "JPG", "JPEG", "PNG", "png", "pdf", "PDF"];
+        var extName;
+        var maxFileSize = $(inputFile)
+            .data('max-file-size');
+        var sizeExceeded = false;
+        var extError = false;
+        var floorPlanList = [];
+        $.each(inputFile.files, function() {
+            floorPlanList.push("  " + this.name)
+            if (this.size && maxFileSize && this.size > parseInt(maxFileSize)) {
+                sizeExceeded = true;
+            };
+            extName = this.name.split('.')
+                .pop();
+            if ($.inArray(extName, allowedExtension) == -1) {
+                extError = true;
+            };
         });
+        if (sizeExceeded) {
+            window.alert(maxExceededMessage);
+            $(inputFile)
+                .val('');
+        };
+
+        if (extError) {
+            window.alert(extErrorMessage);
+
+            $(inputFile)
+                .val('');
+        };
+        if (floorPlanList.length > 0 && extError == false && sizeExceeded == false) {
+            $('#floorplan-label')
+                .html(floorPlanList);
+            $('#fsubmit')
+                .removeClass('d-none');
+        }
+    }
+
+    window.validateFiles = function(inputFile) {
+        var maxExceededMessage = "This file exceeds the maximum allowed file size (5 MB)";
+        var extErrorMessage = "Only image files with extension: .jpg, .jpeg, or .png are allowed";
+        var allowedExtension = ["jpg", "jpeg", "JPG", "JPEG", "PNG", "png"];
+        var extName;
+        var maxFileSize = $(inputFile)
+            .data('max-file-size');
+        var sizeExceeded = false;
+        var extError = false;
+        var photoList = [];
+        $.each(inputFile.files, function() {
+            photoList.push("  " + this.name)
+            if (this.size && maxFileSize && this.size > parseInt(maxFileSize)) {
+                sizeExceeded = true;
+            };
+            extName = this.name.split('.')
+                .pop();
+            if ($.inArray(extName, allowedExtension) == -1) {
+                extError = true;
+            };
+        });
+        if (sizeExceeded) {
+            window.alert(maxExceededMessage);
+            $(inputFile)
+                .val('');
+        };
+
+        if (extError) {
+            window.alert(extErrorMessage);
+
+            $(inputFile)
+                .val('');
+        };
+        if (photoList.length > 0 && extError == false && sizeExceeded == false) {
+            // $('#photo-label')
+            // .html(photoList);
+            $('#psubmit')
+                .removeClass('d-none');
+        }
+    }
+
+    window.validatePhotos = function(inputFile) {
+        var maxExceededMessage = "This file exceeds the maximum allowed file size (5 MB)";
+        var extErrorMessage = "Only image files with extension: .jpg, .jpeg, or .png are allowed";
+        var allowedExtension = ["jpg", "jpeg", "JPG", "JPEG", "PNG", "png"];
+        var extName;
+        var maxFileSize = $(inputFile)
+            .data('max-file-size');
+        var sizeExceeded = false;
+        var extError = false;
+        var photoList = [];
+        $.each(inputFile.files, function() {
+            photoList.push("  " + this.name)
+            if (this.size && maxFileSize && this.size > parseInt(maxFileSize)) {
+                sizeExceeded = true;
+            };
+            extName = this.name.split('.')
+                .pop();
+            if ($.inArray(extName, allowedExtension) == -1) {
+                extError = true;
+            };
+        });
+        if (sizeExceeded) {
+            window.alert(maxExceededMessage);
+            $(inputFile)
+                .val('');
+        };
+
+        if (extError) {
+            window.alert(extErrorMessage);
+
+            $(inputFile)
+                .val('');
+        };
+        if (photoList.length > 0 && extError == false && sizeExceeded == false) {
+            $('#photo-label')
+                .html(photoList);
+            $('#fsubmit')
+                .removeClass('d-none');
+        }
+    }
+
+    window.readURL = function(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#profile-avatar')
+                    .attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
 
     var deviceIsIpad = function(angle) {
         if (window.navigator.userAgent.includes('iPad') && angle == 0) {
@@ -127,6 +273,29 @@ $(document).ready(function() {
             }
         }
     }
+
+    // Iterate over each multi-select field
+    $('.tag-select').each(function() {
+        // Store initial selected options for each select
+        let initialSelection = $(this).val();
+
+        // Listen for changes on this specific select field
+        $(this).change(function() {
+            let currentSelection = $(this).val();
+
+            // Check if the selection has changed
+            if (JSON.stringify(currentSelection) !== JSON.stringify(initialSelection)) {
+                // If changed, activate the submit button
+                $('#category-submit').removeClass('disabled').prop('disabled', false);
+                $('#category-submit').css('display', 'inline-block');
+            } else {
+                // If unchanged, disable the button again
+                $('#category-submit').addClass('disabled').prop('disabled', true);
+                $('#category-submit').css('display', 'none');
+
+            }
+        });
+    });
 
     window.addEventListener('turbo:load', function() {
         alert()

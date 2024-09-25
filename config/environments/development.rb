@@ -39,7 +39,20 @@ Rails.application.configure do
   end
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
+
+  # config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+    address:         Rails.application.credentials.dig(:smtp,:address),
+    port:            587,
+    user_name:       Rails.application.credentials.dig(:smtp,:user_name),
+    password:        Rails.application.credentials.dig(:smtp,:password),
+    authentication:  'login',
+    enable_starttls: true,
+    open_timeout:    60,
+  read_timeout:    60 }
 
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.

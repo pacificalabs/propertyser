@@ -1,0 +1,51 @@
+<%= form_with(url: assign_tags_admin_tags_path, method: :post, local: true) do |form| %>
+  <div class="row">
+    <!-- Submit button for all apartments -->
+    <div class="row mt-3">
+      <div class="col-12 text-right">
+        <%= form.submit "Save Categories", class: "btn btn-primary disabled", id: "category-submit", disabled: true, style: "display: none;" %>
+      </div>
+    </div>
+    <% @apartments.each do |apartment| %>
+      <div class="col-12">
+        <div class="card w-100 mt-md-4 bg-white">
+          <div class="card-body apartment-card">
+            <div class="row">
+              <!-- Image and link -->
+              <div class="col-md-5 order-md-1 image-box">
+                <% pic = apartment.photos&.first %>
+                <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : "<span class='nounderline m-5'>There was a problem loading the image.</span>".html_safe  %>
+                <div>
+                  <%= link_to tag, apartment_path(apartment), class: "alert-link" %>
+                </div>
+              </div>
+              <!-- Address and property details -->
+              <div class="col-md-3 order-md-2">
+                <h5 class="card-title ml-3 mt-3">
+                  <%= link_to apartment.full_address_line_1, apartment_path(apartment), class: "alert-link nounderline" %>
+                </h5>
+                <h5 class="card-title ml-3 mt-3">
+                  <%= link_to apartment.address_line_2, apartment_path(apartment), class: "alert-link nounderline" %>
+                </h5>
+                <div class="ml-3 mt-2">
+                  <%= render partial: "apartments/property_values", locals: {apartment: apartment} %>
+                </div>
+              </div>
+              <!-- Tag selection -->
+              <div class="col-md-4 order-md-3 d-flex align-items-center justify-content-end">
+                <div class="field w-100">
+                  <%= form.label "Categories"  %>
+                  <%= form.collection_select "apartments[#{apartment.id}][tag_ids]", @child_tags, :id, :name, { selected: apartment.tag_ids }, { multiple: true, class: "form-control tag-select" } %>
+                </div>
+              </div>
+              <!-- Favourites widget -->
+              <div class="col-md-1 order-md-4 d-flex align-items-center">
+                <%= render partial: "favourites/widget", locals: {apartment: apartment} %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

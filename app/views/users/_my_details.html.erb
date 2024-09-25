@@ -3,40 +3,32 @@
   <div class="col-md-11">
     <%= form_with url: user_path(user_id: current_user.id), local:true, method: "PATCH", class:"form-row", id: "personal-page-form" do |f| %>
       <div class="col-md-7">
-        <%= image_tag get_aws_url("white_icons/icons8-name-50.png"), class: "feature-icons-edit-new ml-md-2" %>
-        <%= f.label :username, :"Update your details" %>
+        <h3 class="mb-5">Update your details</h3>
+        <%= f.label :username, :"Display name", style: "font-size:small;" %>
         <%= f.text_field :username, autofocus: true, placeholder:"Your Username",required:true, class: "form-control mb-md-3",value: current_user.username %>
-        <div class="form-row">
-          <div class="col-md-6">
-            <%= image_tag get_aws_url("white_icons/icons8-name-50.png"), class: "feature-icons-edit-new ml-md-2" %>
-            <%= f.label :firstname, "First Name" %>
+
+            <%= f.label :firstname, "First Name", style: "font-size:small;" %>
             <%= f.text_field :firstname, placeholder:"Your First Name",required:true, class: "form-control mb-md-3",value: current_user.firstname %>
-          </div>
-          <div class="col-md-6">
-            <%= image_tag get_aws_url("dark_icons/identification-documents.png"), class: "feature-icons-edit-new ml-md-2" %>
-            <%= f.label :surname, "Surname" %>
+
+            <%= f.label :surname, "Surname", style: "font-size:small;" %>
             <%= f.text_field :surname, placeholder:"Your Surname",required:true, class: "form-control mb-md-3",value: current_user.surname %>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="col-md-12">
-            <%= image_tag get_aws_url("white_icons/icons8-mobile-50.png"), class: "feature-icons-edit-new" %>
-            <%= f.label :phone %>
+
+            <%= f.label :phone, style: "font-size:small;" %>
             <%= f.text_field :phone, placeholder:"Your Phone",required:true, class: "form-control mb-md-3", value: current_user.phone %>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="col-md-12">
-            <%= image_tag get_aws_url("white_icons/icons8-email-50.png"), class: "feature-icons-edit-new ml-md-2" %>
-            <%= f.label :email %>
+
+            <%= f.label :email, style: "font-size:small;" %>
             <%= f.text_field :email, placeholder:"Your Email Address",required:true, class: "form-control mb-md-3", value: current_user.email %>
-          </div>
-        </div>
+
         <%= f.submit "Save", id: "my-details-send", class:"btn btn-outline-info col-md-12"  %>
         <div class="actions">
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 mt-5">
+        <div style="width: 1.5rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>
+          </div>
         <%= f.label user_avatar_profile_label, id: "profile-avatar-label" %>
         <span id="profile-pic"></span>
         <%= f.label :avatar do %>
@@ -46,7 +38,7 @@
         <% if current_user.avatar.attached?  %>
           <%= image_tag profile_pic_url(current_user), id: "profile-avatar" %>
         <% else %>
-          <img id="profile-avatar"></img>
+
       <% end %>
     <% end %>
   </div>

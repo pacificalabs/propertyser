@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: tags
+#
+#  id         :bigint           not null, primary key
+#  name       :string
+#  slug       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :bigint           not null
+#
+# Indexes
+#
+#  index_tags_on_slug     (slug) UNIQUE
+#  index_tags_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 # app/models/tag.rb
 class Tag < ApplicationRecord
   extend FriendlyId
@@ -16,6 +36,20 @@ class Tag < ApplicationRecord
   validate :parent_tags_valid?
 
   before_validation :generate_slug, :format_name
+
+  # Scope to find child tags
+  scope :child_tags, -> {
+    joins(:parent_tags).distinct
+  }
+
+  # Scope to find parent tags without children
+  scope :orphaned_parents, -> {
+    left_joins(:child_tags).where(child_tags: { id: nil }).distinct
+  }
+
+  def is_a_child_tag?
+    parent_tags.exists?
+  end
 
   private
 

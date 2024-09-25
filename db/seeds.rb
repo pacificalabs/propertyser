@@ -34,7 +34,7 @@ def attach_pics(apartment)
     apartment.photos.attach(io: File.open(Rails.root.join("./app/assets/images/#{pik}")),filename: "#{pik}",content_type:'image/png')
     puts "attached! #{apartment.photos.pluck :blob_id}" if apartment.photos.attached?
     apartment.photos.each do |pic|
-      p = apartment.photo_descriptions.create!(description: "pic #{shindex+1}", photo_id: pic.id, featured: false)
+      description = apartment.photo_descriptions.create!(description: "pic #{shindex+1}", blob_id: pic.blob_id, featured: false)
       # p.featured && self.update!(featured_photo_id:p.photo_id)
     end
   end
@@ -57,7 +57,8 @@ end
 
 @user_list = [
   {:firstname => "Tarun", :email => "tarun@pacificasearch.com", "password":"gdaymate", "username":"tarunm", is_admin:true, accepted_terms_and_conditions: true},
-  {:firstname => "Tarun", :email => "test@test.com", "password":"gdaymate", "username":"tyrone", is_admin:false, accepted_terms_and_conditions: false}
+  {:firstname => "Tarun", :email => "test@test.com", "password":"gdaymate", "username":"tyrone", is_admin:false, accepted_terms_and_conditions: false},
+  {:firstname => "Lee", :email => "lee@toonstudio.com.au", "password":"gdaymate", "username":"leesheppard", is_admin:true, accepted_terms_and_conditions: true}
 ]
 
 small_numbers = (1..10).to_a
@@ -92,7 +93,7 @@ time2 = Benchmark.measure {
 
   puts "creating properties!"
 
-  5.times do |cycle|
+  1.times do |cycle|
     User.all.each_with_index do |u,i|
       puts u.email
       a = u.apartments.new (addresses[cycle])
@@ -106,8 +107,7 @@ time2 = Benchmark.measure {
 
       puts "$#{a.asking_price}"
       a.save!
-      puts a.full_address
-      attach_pics a
+      # attach_pics a
       ([t1,t2].sample).apartments << a
       comments.map { |comment|  a.comments.create!( user: User.all.sample , body:comment ) }
     end

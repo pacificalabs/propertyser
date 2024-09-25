@@ -1,12 +1,55 @@
-<div class="my-md-5">
-  <div class="embed-responsive embed-responsive-4by3">
-    <iframe class="embed-responsive-item img-thumbnail"
-    frameborder="0" 
-    scrolling="no" 
-    marginheight="0" 
-    marginwidth="0"
-    loading="lazy" 
-    src="https://maps.google.com/maps?q=<%= @apartment.latitude%>,<%=@apartment.longitude%>&output=embed&zoom=21">
-  </iframe>  
-</div>
+    <script>
+  async function init() {
+    await customElements.whenDefined('gmp-map');
+
+    const map = document.querySelector('gmp-map');
+    const marker = document.querySelector('gmp-advanced-marker');
+    const placePicker = document.querySelector('gmpx-place-picker');
+    const infowindow = new google.maps.InfoWindow();
+
+    map.innerMap.setOptions({
+      mapTypeControl: false
+    });
+
+    placePicker.addEventListener('gmpx-placechange', () => {
+      const place = placePicker.value;
+
+      if (!place.location) {
+        window.alert(
+          "No details available for input: '" + place.name + "'"
+        );
+        infowindow.close();
+        marker.position = null;
+        return;
+      }
+
+      if (place.viewport) {
+        map.innerMap.fitBounds(place.viewport);
+      } else {
+        map.center = place.location;
+        map.zoom = 17;
+      }
+
+      marker.position = place.location;
+      infowindow.setContent(
+        `<strong>${place.displayName}</strong><br>
+         <span>${place.formattedAddress}</span>
+      `);
+      infowindow.open(map.innerMap, marker);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+</script>
+<script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@0.6"></script>
+<style type="text/css">
+  gmp-map {
+        height: 33vh;
+      }
+</style>
+<% string = [@apartment.latitude,@apartment.longitude].join(",") %>
+<div class="my-md-3">
+  <gmpx-api-loader key=<%= Rails.application.credentials.dig(:google, :maps_api_key) %> solution-channel="GMP_GE_mapsandplacesautocomplete_v1"></gmpx-api-loader>
+  <gmp-map center=<%= string %> zoom="13" map-id="DEMO_MAP_ID">
+    <gmp-advanced-marker position=<%= string %> title=<%= @apartment.full_address %>></gmp-advanced-marker></gmp-map>
 </div>

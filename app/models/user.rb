@@ -82,7 +82,7 @@ class User < ApplicationRecord
   private
 
   def send_email_address_confirmation
-    User::RequestEmailAddressConfirmationJob.perform_later(user_id: self.id)
+    User::RequestEmailAddressConfirmationJob.perform(user_id: self.id)
   end
 
 end

@@ -1,11 +1,8 @@
 <div class="container-fluid g-0 nav-bar">
-  <nav class="navbar navbar-expand-lg bg-primary navbar-light py-0 px-4">
+  <nav class="navbar navbar-expand-lg navbar-light py-0 px-4">
     <%= link_to root_path, class: 'navbar-brand d-flex align-items-center text-center' do %>
       <div class="nav_logo">
-        <h4 class="nav-text">
-          <%= BRAND_NAME.upcase %>
-        </h4>
-        <%= image_tag "ruyi_block_logo.svg" %>
+        <%= image_tag "ruyi_block_logo.svg", height: "60" %>
       </div>
     <% end %>
     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -16,7 +13,15 @@
       </span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
+      <!-- Progress Circle HTML -->
+      <div id="progress-circle" class="progress-circle d-none">
+        <div class="spinner-border text-danger" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <h5 class="text-secondary">Working...</h5>
+      </div>
       <div class="navbar-nav ms-auto">
+        <%= link_to 'All Listings', apartments_path, class: 'nav-item nav-link' %>
         <% @tags.each do |tag| %>
           <% if tag.parent_tags.empty? %>
             <% if tag.child_tags.any? %>
@@ -26,6 +31,9 @@
                   <% tag.child_tags.each do |child_tag| %>
                     <%= link_to child_tag.name, tag_path(child_tag), class: 'dropdown-item' %>
                   <% end %>
+                  <!-- Link to view all child tags -->
+                  <div class="dropdown-divider"></div>
+                  <%= link_to 'View All', tag_path(tag), class: 'dropdown-item' %>
                 </div>
               </div>
             <% else %>
@@ -35,7 +43,7 @@
         <% end %>
         <% if current_user.blank? %>
           <% unless ["search"].include? action_name %>
-            <%= link_to 'GET STARTED', mobile_login_path, class: 'nav-item nav-link active' %>
+            <%= link_to 'Admin Portal', mobile_login_path, class: 'nav-item nav-link' %>
           <% end %>
         <% else %>
           <%= render partial: 'users/dropdown' %>

@@ -6,36 +6,36 @@
 <div class="row">
   <div class="col-md-4 mt-sm-3">
     <br>
-    <%= image_tag get_aws_url("white_icons/icons8-apartment-50.png"), class: "feature-icons-edit-new ml-md-2"%>
     <%= f.label :strata, "STRATA TITLE ?" %>
-    <%= select_tag(:strata, options_for_select([["YES",true,],["NO",false]],selected: apartment.strata), class: "form-control", required: true)%>
+    <%= f.select :strata, [["YES", true], ["NO", false]], {selected: apartment.strata}, class: "form-select", required: true %>
   </div>
   <div class="col-md-4 mt-sm-3">
     <br>
-    <%= image_tag(get_aws_url("dark_icons/icons8-country-50.png"), class: "feature-icons-edit-new ml-md-2") %>
-    <%= f.label :land_size, "LAND SIZE" %>
+    <%= f.label :land_size, "LAND SIZE (m&#178;)".html_safe %>
     <%= f.text_field :land_size, class: "form-control", placeholder: "leave blank if n/a"  %>
   </div>
   <div class="col-md-4 mt-sm-3">
     <br>
-    <%= image_tag(get_aws_url("dark_icons/icons8-extra-features-50.png"), class: "feature-icons-edit-new ml-md-2") %>
-    <%= f.label :internal_space, "INTERNAL AREA"  %>
-    <%= f.text_field 'internal_space', class: "form-control", placeholder: "leave blank if n/a" %>
+    <%= f.label :internal_space, "INTERNAL AREA (m&#178;)".html_safe  %>
+    <%= f.text_field :internal_space, class: "form-control", placeholder: "leave blank if n/a" %>
   </div>
 </div>
 <br>
 <% if device_is_mobile? %>
-  <% options = [["CHOOSE",nil]] %>
-  <% (200000..10000000).step(50000).each_with_index { |i| options << ["$#{number_with_delimiter i}",i] } %>
-  <p class="mt-md-3"><%#= image_tag(get_aws_url("dark_icons/icons8-price-tag-50.png"), class: "iconz mr-md-1 mt-md-1") %><span>ASKING PRICE</span></p>
-  <%= select_tag(:asking_price, options_for_select(options, selected: apartment.asking_price), class: "form-control", required: true) %>
+  <% options = [["CHOOSE", nil]] %>
+  <% (200000..10000000).step(50000).each do |i| %>
+    <% options << ["$#{number_with_delimiter(i)}", i] %>
+  <% end %>
+  <p class="mt-md-3"><span>ASKING PRICE</span></p>
+  <%= f.select :asking_price, options, {selected: apartment.asking_price}, class: "form-control", required: true %>
 <% else %>
   <div class="row">
     <div class="col-md-3">
-      <p class="mt-md-3"><%#= image_tag(get_aws_url("dark_icons/icons8-price-tag-50.png"), class: "iconz mr-md-1 mt-md-1") %><span id="asking_price_label">ASKING PRICE</span></p>
+      <p class="mt-md-3"><span id="asking_price_label">ASKING PRICE</span></p>
     </div>
     <div class="col-md-9">
-      <%= f.text_field("asking_price", value: apartment.asking_price.present? ? apartment.asking_price : nil, min: 0, step: 50000, class: "form-control ml-2 mt-2", required: true) %></div>
+      <%= f.text_field :asking_price, value: apartment.asking_price.present? ? apartment.asking_price : nil, min: 0, step: 50000, class: "form-control ml-2 mt-2", required: true %>
+    </div>
   </div>
   <br>
 <% end %>

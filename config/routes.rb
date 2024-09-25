@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   get 'tags/index'
   get 'tags/show'
-  require 'sidekiq/web'
-  require 'admin_constraint'
+  # require 'sidekiq/web'
+  # require 'admin_constraint'
 
   # Sidekiq admin interface
-  mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
+  # mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
 
   # Root route
   root 'index#index'
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   # Mobile routes
   get 'mobile', to: 'sessions#mobile', as: 'mobile'
   get 'mobile/signup', to: 'sessions#mobile_signup'
-  get 'mobile/login', to: 'sessions#mobile_login'
+  get 'admin/login', to: 'sessions#mobile_login', as: 'mobile_login'
   get 'welcome-back', to: 'sessions#welcome_back_user', as: 'welcome_back_user'
 
   # Password routes
@@ -36,12 +36,12 @@ Rails.application.routes.draw do
   get 'complete_signup/:token', to: 'users#complete_signup'
 
   # Index page routes
-  get 'background', to: 'index#background'
-  get 'about', to: 'index#about'
-  get 'faq', to: 'index#faq'
+  # get 'background', to: 'index#background'
+  # get 'about', to: 'index#about'
+  # get 'faq', to: 'index#faq'
   get 'contact', to: 'index#contact'
   post 'contact', to: 'admin#contact_team', as: 'contact_us'
-  get 'step-by-step', to: 'index#step_by_step', as: 'guide'
+  # get 'step-by-step', to: 'index#step_by_step', as: 'guide'
   get 'privacy-policy', to: 'index#policy', as: 'policy'
   get 'ipad', to: 'index#device_warning'
 
@@ -52,9 +52,9 @@ Rails.application.routes.draw do
   # Resourceful routes
   resources :users
   resources :sessions, only: %i[new create destroy]
-  resources :apartments do
+  resources :apartments, path: 'listings' do
     resources :comments, only: [:create]
-    resources :photo_descriptions, only: [:update]
+    resources :photo_descriptions, only: [:create, :update]
     resources :market_scores, only: [:create]
     resources :floorplans, only: %i[create destroy update]
   end
@@ -62,13 +62,13 @@ Rails.application.routes.draw do
   resources :photos
   resources :replies
   # config/routes.rb
-  resources :tags, param: :slug do
+  resources :tags, path: 'categories', param: :slug do
     resources :child_tags, only: [:show], param: :slug, controller: 'tags'
   end
 
 
   # Apartment search routes
-  get 'sub-search', to: 'apartments#index', constraints: lambda { |request| request.query_parameters[:commit] == 'SEARCH' }, as: 'search_page_two'
+  get 'sub-search', to: 'apartments#search_page_two', constraints: lambda { |request| request.query_parameters[:commit] == 'SEARCH' }, as: 'search_page_two'
   get 'search-page', to: 'apartments#search_page_one', as: 'search_page_one'
   get 'search_location/:data', to: 'apartments#search_location'
   get 'submit', to: 'apartments#submit', as: 'submit'
@@ -98,7 +98,11 @@ Rails.application.routes.draw do
   get 'admin/owner/:user_id', to: 'admin#owner', as: 'admin_owner'
   delete 'delete_saved_search/:id', to: 'searches#delete', as: 'delete_saved_search'
   namespace :admin do
-    resources :tags
+    resources :tags do
+      collection do
+        post 'assign_tags'
+      end
+    end
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

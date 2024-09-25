@@ -458,7 +458,6 @@ DEPENDENCIES
   rails (~> 7.2)
   redis
   selenium-webdriver
-  sidekiq
   slim
   sprockets-rails
   stimulus-rails

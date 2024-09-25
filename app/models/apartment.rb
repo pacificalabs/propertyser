@@ -16,6 +16,7 @@
 #  longitude         :float
 #  parking_spaces    :integer
 #  postcode          :integer
+#  slug              :string
 #  state             :text
 #  strata            :boolean          default(FALSE)
 #  street_address    :text
@@ -30,15 +31,19 @@
 #
 #  index_apartments_on_latitude_and_longitude  (latitude,longitude)
 #  index_apartments_on_location_id             (location_id)
+#  index_apartments_on_slug                    (slug) UNIQUE
 #  index_apartments_on_user_id                 (user_id)
 #
 class Apartment < ApplicationRecord
+
+  extend FriendlyId
+  friendly_id :slug_address, use: :slugged
 
   before_destroy :purge_from_storage
   after_create :create_associations
 
   # TODO change this to get lat long from db
-  after_create :run_geocode_job
+  after_save :run_geocode_job
   geocoded_by :full_address
 
   belongs_to :user
@@ -79,6 +84,10 @@ class Apartment < ApplicationRecord
 
   def image_url
     super || default_image
+  end
+
+  def slug_address
+    "#{street_address} #{suburb}"
   end
 
   def address_line_1
@@ -160,29 +169,43 @@ class Apartment < ApplicationRecord
   end
 
   def delete_photo_and_description(photo_id)
-    self.photo_descriptions.find_by_photo_id(photo_id).destroy!
-    self.photos.find(photo_id).purge_later
-    self.update(featured_photo_id:nil)
+    photo_description = self.photo_descriptions.find_by_blob_id(photo_id)
+    photo_description&.destroy!
+    photo = self.photos.find_by(id: photo_id)
+    photo&.purge
   end
 
   def presort_photos
+    photos = []
+    featured_photo = photo_descriptions.find_by(featured: true)&.photo_id
+
     begin
-      featured = photo_descriptions.find_by_featured(true) && photo_descriptions.find_by_featured(true).photo_id
-      photo_list = self.photos.order('created_at DESC').pluck(:id)
-      photo_list.delete(featured)
-      photo_list.unshift(featured)
-      photos = Array.new
-      photo_list.map { |pic| photos.push(self.photos.find(pic))   }
-    rescue Exception => e
-      logger.error { "#{e}" }
+      # Retrieve the ordered list of photo IDs
+      photo_list = self.photos.order(created_at: :desc).pluck(:id)
+
+      # Remove the featured photo ID and place it at the start if it exists
+      if featured_photo
+        photo_list.delete(featured_photo)
+        photo_list.unshift(featured_photo)
+      end
+
+      # Build the CASE statement for ordering based on the photo list
+      order_clause = photo_list.each_with_index.map { |id, index| "WHEN id = #{id} THEN #{index}" }.join(' ')
+
+      # Fetch the photos ordered by the specified array order
+      photos = self.photos.where(id: photo_list).order(Arel.sql("CASE #{order_clause} END"))
+    rescue StandardError => e
+      logger.error "Error in presorting photos: #{e.message}"
       return self.photos
     end
-    return photos
+
+    photos
   end
+
 
   def set_featured_photo(id)
     photo_descriptions.find_by(featured:true) && photo_descriptions.find_by(featured:true).update(featured:false)
-    photo_descriptions.find_by_photo_id(id).update!(featured:true)
+    photo_descriptions.find_by_blob_id(id).update!(featured:true)
     update!(featured_photo_id:id)
   end
 
@@ -207,7 +230,7 @@ class Apartment < ApplicationRecord
   end
 
   def run_geocode_job
-    GeocodeApartmentJob.perform_later(self.id)
+    GeocodeApartmentJob.perform(self.id)
   end
 
 end

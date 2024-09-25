@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_10_012939) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_16_091923) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -119,8 +119,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_012939) do
     t.boolean "archived", default: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.string "slug"
     t.index ["latitude", "longitude"], name: "index_apartments_on_latitude_and_longitude"
     t.index ["location_id"], name: "index_apartments_on_location_id"
+    t.index ["slug"], name: "index_apartments_on_slug", unique: true
     t.index ["user_id"], name: "index_apartments_on_user_id"
   end
 
@@ -302,12 +304,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_012939) do
   create_table "photo_descriptions", force: :cascade do |t|
     t.text "description"
     t.boolean "featured", default: false
-    t.integer "photo_id"
+    t.integer "blob_id"
     t.bigint "apartment_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["apartment_id"], name: "index_photo_descriptions_on_apartment_id"
-    t.index ["photo_id"], name: "index_photo_descriptions_on_photo_id"
+    t.index ["blob_id"], name: "index_photo_descriptions_on_blob_id", unique: true
   end
 
   create_table "photos", force: :cascade do |t|

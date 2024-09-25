@@ -1,7 +1,22 @@
 class ApartmentsController < ApplicationController
+  include ApartmentsHelper
   before_action :update_fullpath
-  before_action :user_is_authorised?, except: [:search,:index,:search_location]
+  skip_before_action :user_is_authorised?, only: [:index, :show]
+
+  # before_action :user_is_authorised?, except: [:search,:index,:search_location]
   before_action :load_icons, only: [:index,:new,:edit,:owner,:show]
+
+  def index
+    @apartments = Apartment.all
+    # Fetch child tags
+    child_tags = Tag.child_tags
+
+    # Fetch orphaned parent tags
+    orphaned_parents = Tag.orphaned_parents
+
+    # Combine and remove duplicates
+    @child_tags = (child_tags + orphaned_parents).uniq
+  end
 
   def search
     @apartment = Apartment.new
@@ -13,7 +28,7 @@ class ApartmentsController < ApplicationController
     render json: @location_data
   end
 
-  def index
+  def search_page_two
     @params = location_params.merge search_params if search_params.present?
     @search_title = helpers.assign_title(saved_search_title_params[:saved_search_title])
     suburb_list = helpers.find_matching_suburbs_across_all_states(location_params[:locale])
@@ -47,37 +62,50 @@ class ApartmentsController < ApplicationController
   def create
     begin
       @apartment = Apartment.new(apartment_params)
-      @apartment.bedrooms = params[:bedrooms]
-      @apartment.bathrooms = params[:bathrooms]
-      @apartment.strata = params[:strata]
-      @apartment.parking_spaces = params[:parking_spaces]
-      @apartment.asking_price = helpers.currency_to_number(apartment_params[:asking_price])
-      f = Feature.new(feature_params[:feature])
-      @apartment.feature = f
-      d = Descriptor.new(descriptor_params[:descriptor])
-      @apartment.descriptor = d
-      a = Amenity.new(amenity_params[:amenity])
-      @apartment.amenity = a
-      @apartment.user = current_user
-      @apartment.save
-      @apartment.valid? && flash[:notice] = "Your property has been saved to draft. Please describe your photo#{"s" if params[:apartment][:photos].size > 1} and add any floorplan if available."
-      if params[:apartment][:photos]
-        @apartment.photos.attach(params[:apartment][:photos])
-        if @apartment.photos.attached?
-          @apartment.photos.each do |pic|
-            @apartment.photo_descriptions.create!(description: nil, photo_id: pic.id)
+      @apartment.assign_attributes(
+        bedrooms: apartment_params[:bedrooms],
+        bathrooms: apartment_params[:bathrooms],
+        strata: params[:strata],
+        parking_spaces: apartment_params[:parking_spaces],
+        asking_price: helpers.currency_to_number(apartment_params[:asking_price]),
+        user: current_user
+      )
+
+      # Creating associated objects
+      @apartment.feature = Feature.new(feature_params[:feature]) if feature_params[:feature].present?
+      @apartment.descriptor = Descriptor.new(descriptor_params[:descriptor]) if descriptor_params[:descriptor].present?
+      @apartment.amenity = Amenity.new(amenity_params[:amenity]) if amenity_params[:amenity].present?
+
+      # Save apartment
+      if @apartment.save
+        flash[:notice] = "Your property has been saved to draft. Please describe your photo#{"s" if params[:apartment][:photos].size > 1} and add any floorplan if available."
+
+        # Attach photos and create photo descriptions
+        if params[:apartment][:photos].present?
+          @apartment.photos.attach(params[:apartment][:photos])
+
+          if @apartment.photos.attached?
+            @apartment.photos.each do |pic|
+              @apartment.photo_descriptions.create!(description: nil, blob_id: pic.blob_id)
+            end
           end
         end
+
+        redirect_to photos_path(apartment_id: @apartment.id)
+      else
+        flash[:alert] = "There was an error saving the apartment. Please check the form and try again."
+        render :new
       end
-    rescue Exception => e
-      redirect_to new_apartment_path, alert: "There was an error. #{e.inspect}. Please try again"
+
+    rescue StandardError => e
+      flash[:alert] = "There was an error. #{e.message}. Please try again."
       logger.error { "#{action_name} ERROR: #{e.inspect}" }
+      redirect_to new_apartment_path
     end
-    redirect_to photos_path(apartment_id: @apartment.id)
   end
 
   def edit
-    @apartment = Apartment.includes([:feature,:descriptor,:amenity]).find(params[:id])
+    @apartment = Apartment.includes([:feature,:descriptor,:amenity]).friendly.find(params[:id])
     @feature = @apartment.feature.present? ? @apartment.feature : @apartment.build_feature
     @descriptor = @apartment.descriptor.present? ? @apartment.descriptor : @apartment.build_descriptor
     @amenity = @apartment.amenity.present? ? @apartment.amenity : @apartment.build_amenity
@@ -91,7 +119,7 @@ class ApartmentsController < ApplicationController
 
   def update
     begin
-      @apartment = Apartment.find(params[:id])
+      @apartment = Apartment.friendly.find(params[:id])
       @apartment.update! apartment_params.except("asking_price").merge!asking_price: helpers.currency_to_number(apartment_params[:asking_price])
       @apartment.floorplans.attach(params[:apartment][:floorplans]) if params[:apartment][:floorplans].present?
       @apartment&.feature&.destroy!
@@ -109,7 +137,7 @@ class ApartmentsController < ApplicationController
   end
 
   def destroy
-    @apartment = Apartment.find(params[:id])
+    @apartment = Apartment.friendly.find(params[:id])
     @apartment.destroy!
     redirect_to myproperties_path
     flash[:alert] = "PROPERTY WAS DELETED!"
@@ -145,8 +173,8 @@ class ApartmentsController < ApplicationController
 
   def show
     begin
-      @apartment = Apartment.includes(:user,:amenity,:feature,{comments:[:user,:replies]}).with_attached_photos.find(params[:id])
-      @self_rating = @apartment.market_ratings.find_by_user_id(current_user.id)
+      @apartment = Apartment.includes(:user,:amenity,:feature,{comments:[:user,:replies]}).with_attached_photos.friendly.find(params[:id])
+      # @self_rating = @apartment.market_ratings.find_by_user_id(current_user.id)
       @features = @apartment&.feature&.attributes&.select {|k,f| f == true }
       @features = @features.keys if @features.present?
       @descriptors = @apartment&.descriptor&.attributes&.select {|k,f| f == true }
