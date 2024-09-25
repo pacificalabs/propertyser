@@ -178,7 +178,7 @@ class Apartment < ApplicationRecord
 
   def presort_photos
     photos = []
-    featured_photo = photo_descriptions.find_by(featured: true)&.photo_id
+    featured_photo = photo_descriptions.find_by(featured: true)&.blob_id
 
     begin
       # Retrieve the ordered list of photo IDs
