@@ -19,7 +19,11 @@
   <div class="col-md-1 mt-md-5"></div>
   <div class="col-md-11 mt-md-5">
     <div class="row mt-md-2">
+      <% if @photos.present? %>
       <%= render "photo", photos: @photos %>
+      <% else %>
+      <h3>No Photos Yet</h3>
+      <% end %>
       <% if @floorplans.present? %>
         <h5 class="mt-md-1">Floorplans</h5>
         <div class="row mt-md-2 mb-md-5">
