@@ -76,7 +76,8 @@ class ApartmentsController < ApplicationController
       @apartment.descriptor = Descriptor.new(descriptor_params[:descriptor]) if descriptor_params[:descriptor].present?
       @apartment.amenity = Amenity.new(amenity_params[:amenity]) if amenity_params[:amenity].present?
 
-      if @apartment.save
+
+      if @apartment.approve
         flash[:notice] = "Your property has been saved to draft. Please describe your photo#{"s" if params[:apartment][:photos].size > 1} and add any floorplan if available."
         # Attach photos and create photo descriptions
         if params[:apartment][:photos].present?
