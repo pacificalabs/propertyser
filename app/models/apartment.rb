@@ -224,8 +224,9 @@ class Apartment < ApplicationRecord
 
   def set_featured_photo(id)
     photo_descriptions.find_by(featured:true) && photo_descriptions.find_by(featured:true).update(featured:false)
-    photo_descriptions.find_by_blob_id(id).update!(featured:true)
-    update!(featured_photo_id:id)
+    update! featured_photo_id:id
+    pd = photo_descriptions.find_or_initialize_by(blob_id:id)
+    pd.update! featured:true
   end
 
   def purge_from_storage

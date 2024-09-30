@@ -5,7 +5,7 @@
   <% @descriptors = @descriptors.keys if @descriptors.present? %>
   <% @amenities = a&.amenity&.attributes&.select { |k, f| f.present? } %>
   <% @amenities = @amenities.keys if @amenities.present? %>
-  <% pic = a.featured_photo_id.present? ? a.photos.find(PhotoDescription.find_by_photo_id(a.featured_photo_id).photo_id) : a.photos.first %>
+  <% pic = a.featured_photo_id.present? ? a.photos.find_by(blob_id: a.featured_photo_id) : a.photos.first %>
   <% search_title = nil if controller_name == "users" %>
   <% if device_is_mobile? %>
     <!-- Mobile version -->
