@@ -11,13 +11,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 9999;
-  display: none; /* Initially hidden */
 }
 
 .spinner-border {
-  width: 15vw;
-  height: 15vw;
-  border-width: 0.5vw;
+  width: 25vw;
+  height: 25vw;
+  border-width: 0.75vw;
   border-top-color: transparent;
   animation: spinner-border 0.75s linear infinite;
 }
