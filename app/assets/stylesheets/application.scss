@@ -4,6 +4,10 @@
 @import "mobile_device";
 @import "tablet_device";
 
+body {
+  background: image_path('bg-home.webp') no-repeat center;
+}
+
 /* Progress Circle CSS */
 #progress-circle {
   position: fixed;
