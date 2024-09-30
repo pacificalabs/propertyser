@@ -48,7 +48,7 @@ class Apartment < ApplicationRecord
 
   # TODO change this to get lat long from db
   after_save :run_geocode_job
-  geocoded_by :full_address
+  geocoded_by :suburb
 
   belongs_to :user
   belongs_to :property_type
