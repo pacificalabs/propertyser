@@ -83,7 +83,7 @@ class Apartment < ApplicationRecord
     when 'address'
       slug_address
     else
-      "#{name} - #{slug_address}"
+      "#{name} | #{slug_address}"
     end
   end
 

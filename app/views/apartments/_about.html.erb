@@ -24,7 +24,7 @@
   <div class="row">
     <div class="col-sm-11">
       <% if @apartment.display_option == 'name' %>
-        <h1><%= @apartment.name.titlecase %></h1>
+        <h1><%= @apartment&.name&.titlecase %></h1>
       <% elsif @apartment.display_option == 'address' %>
         <% if @address.length > 18 %>
           <h5><%= @address %></h5>
@@ -34,7 +34,7 @@
           <h3><%= @apartment.address_line_2 %></h3>
         <% end %>
       <% else %> <!-- 'both' option -->
-        <h1><%= @apartment.name.titlecase %></h1>
+        <h1><%= @apartment&.name&.titlecase %></h1>
         <% if @address.length > 18 %>
           <h5><%= @address %></h5>
           <h5><%= @apartment.address_line_2 %></h5>
