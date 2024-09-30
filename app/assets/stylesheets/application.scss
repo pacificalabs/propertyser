@@ -4,6 +4,11 @@
 @import "mobile_device";
 @import "tablet_device";
 
+body {
+  background: url('bg-home.webp') no-repeat center;
+  min-height: 100vh;
+}
+
 /* Progress Circle CSS */
 #progress-circle {
   position: fixed;
@@ -30,6 +35,11 @@ nav a {
     color: antiquewhite !important;
 }
 
+.antiquewhite-dark {
+  background: #d6c2a9;
+  color: antiquewhite;
+}
+
 .dropdown-menu {
   background-color: var(--bs-primary) !important;
   border: calc(var(--bs-primary) - 50px) solid var(--bs-primary) !important;
@@ -50,8 +60,10 @@ nav a {
 
 .homepage {
   background: image_url('bg-home.webp') no-repeat center;
+  background-color: rgba(0, 0, 0, 0.5);
   background-size: cover;
-}
+  transform: translate(50%, 50%);
+  }
 
 nav.navbar.bg-primary, .btn-primary, .dropdown-item,
 .dropdown-menu, .btn-info, .bg-primary {
