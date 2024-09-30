@@ -1,0 +1,8 @@
+<div class="row my-5"></div>
+<div class="row my-5"></div>
+<div class="row">
+  <div class="col-md-12 mt-sm-3">
+    <%= f.label :property_type_id, "What Type of Property?" %>
+    <%= f.collection_select(:property_type_id, PropertyType.all, :id, :name, { selected: apartment.property_type_id, prompt: "CHOOSE ONE" }, class: "form-select my-md-3") %>
+  </div>
+</div>

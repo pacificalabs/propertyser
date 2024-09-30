@@ -1,6 +1,8 @@
 <% if device_is_mobile? %>
   <div class="row">
     <div class="col-10">
+      <h5><%= @apartment.name %></h5>
+      <%= @apartment.display_text %>
       <% if @address.length > 18 %>
         <h5><%= @address %></h5>
         <h5><%= @apartment.address_line_2 %></h5>
@@ -21,12 +23,25 @@
 <% else %>
   <div class="row">
     <div class="col-sm-11">
-      <% if @address.length > 18 %>
-        <h5><%= @address %></h5>
-        <h5><%= @apartment.address_line_2 %></h5>
-      <% else %>
-        <h3><%= @address %></h3>
-        <h3><%= @apartment.address_line_2 %></h3>
+      <% if @apartment.display_option == 'name' %>
+        <h1><%= @apartment.name.titlecase %></h1>
+      <% elsif @apartment.display_option == 'address' %>
+        <% if @address.length > 18 %>
+          <h5><%= @address %></h5>
+          <h5><%= @apartment.address_line_2 %></h5>
+        <% else %>
+          <h3><%= @address %></h3>
+          <h3><%= @apartment.address_line_2 %></h3>
+        <% end %>
+      <% else %> <!-- 'both' option -->
+        <h1><%= @apartment.name.titlecase %></h1>
+        <% if @address.length > 18 %>
+          <h5><%= @address %></h5>
+          <h5><%= @apartment.address_line_2 %></h5>
+        <% else %>
+          <h3><%= @address %></h3>
+          <h3><%= @apartment.address_line_2 %></h3>
+        <% end %>
       <% end %>
       <h6 class="mt-4">
         <%= render "property_values", apartment: @apartment %>

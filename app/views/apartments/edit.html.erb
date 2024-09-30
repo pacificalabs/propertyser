@@ -6,7 +6,15 @@
       <%= form_for @apartment, html: {class: "form-row property-title"} do |f| %>
         <div class="col-md-11">
           <h2 class="text-center ml-md-4 mt-md-5">EDIT PROPERTY DETAILS</h2>
+          <%= f.label :name, "NAME", class: "text-md-left" %>
+          <%= f.text_field :name, class: "form-control", placeholder: "Property Name or Description in One Sentence" %>
           <%= render "address", f: f %>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group mt-md-2">
+            <%= f.label :display_option, "Display Option" %>
+            <%= f.select :display_option, options_for_select([['Display Name', 'name'], ['Display Address', 'address'], ['Display Both', 'both']], @apartment.display_option), {}, class: "form-control" %>
+          </div>
         </div>
         <div class="col-md-11">
           <%= render partial: "bed_bath_parking",locals: { f: f, apartment: @apartment} %>

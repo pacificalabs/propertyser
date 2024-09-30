@@ -9,13 +9,16 @@
 #  bathrooms         :integer
 #  bedrooms          :integer
 #  description       :text
+#  display_option    :string           default("both")
 #  house_number      :text
 #  internal_space    :integer
 #  land_size         :integer
 #  latitude          :float
 #  longitude         :float
+#  name              :string
 #  parking_spaces    :integer
 #  postcode          :integer
+#  slug              :string
 #  state             :text
 #  strata            :boolean          default(FALSE)
 #  street_address    :text
@@ -24,15 +27,21 @@
 #  updated_at        :datetime         not null
 #  featured_photo_id :bigint
 #  location_id       :bigint
+#  property_type_id  :bigint
 #  user_id           :bigint
 #
 # Indexes
 #
 #  index_apartments_on_latitude_and_longitude  (latitude,longitude)
 #  index_apartments_on_location_id             (location_id)
+#  index_apartments_on_property_type_id        (property_type_id)
+#  index_apartments_on_slug                    (slug) UNIQUE
 #  index_apartments_on_user_id                 (user_id)
 #
 class Apartment < ApplicationRecord
+
+  extend FriendlyId
+  friendly_id :slug_address, use: :slugged
 
   before_destroy :purge_from_storage
   after_create :create_associations
@@ -42,6 +51,8 @@ class Apartment < ApplicationRecord
   geocoded_by :full_address
 
   belongs_to :user
+  belongs_to :property_type
+
   belongs_to :location, optional: true
   has_and_belongs_to_many :searches
   has_and_belongs_to_many :fans, class_name: "User"
@@ -63,6 +74,19 @@ class Apartment < ApplicationRecord
 
   scope :not_owned_by, ->(user) { where.not(user_id: user.id) }
 
+  validates :display_option, inclusion: { in: %w(name address both) }
+
+  def display_text
+    case display_option
+    when 'name'
+      name
+    when 'address'
+      slug_address
+    else
+      "#{name} - #{slug_address}"
+    end
+  end
+
   def create_associations
     Feature.create! apartment: self
     Descriptor.create! apartment: self
@@ -79,6 +103,10 @@ class Apartment < ApplicationRecord
 
   def image_url
     super || default_image
+  end
+
+  def slug_address
+    "#{street_address} #{suburb}"
   end
 
   def address_line_1
@@ -168,7 +196,7 @@ class Apartment < ApplicationRecord
 
   def presort_photos
     photos = []
-    featured_photo = photo_descriptions.find_by(featured: true)&.photo_id
+    featured_photo = photo_descriptions.find_by(featured: true)&.blob_id
 
     begin
       # Retrieve the ordered list of photo IDs

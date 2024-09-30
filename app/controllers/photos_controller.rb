@@ -1,7 +1,7 @@
 class PhotosController < ApplicationController
 
   def index
-    @apartment = Apartment.find(params[:apartment_id])
+    @apartment = Apartment.friendly.find(params[:apartment_id])
     @floorplans = @apartment.floorplans if @apartment.floorplans.present?
     @photos = @apartment.presort_photos if @apartment.photos.attached?
   rescue StandardError => e
@@ -33,7 +33,7 @@ class PhotosController < ApplicationController
   end
 
   def edit
-    @apartment = Apartment.find(photo_edit_params[:apartment_id])
+    @apartment = Apartment.friendly.find(photo_edit_params[:apartment_id])
     @photo = @apartment.photos.find(photo_edit_params[:id])
   end
 
@@ -52,7 +52,7 @@ class PhotosController < ApplicationController
   end
 
   def update
-    @apartment = Apartment.find params[:apartment_id]
+    @apartment = Apartment.friendly.find params[:apartment_id]
     if params[:featured]
       # @apartment.set_featured_photo(params[:id])
       flash[:notice] = "PHOTO SET AS FEATURE PHOTO"

@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   # Mobile routes
   get 'mobile', to: 'sessions#mobile', as: 'mobile'
   get 'mobile/signup', to: 'sessions#mobile_signup'
-  get 'mobile/login', to: 'sessions#mobile_login'
+  get 'admin/login', to: 'sessions#mobile_login', as: 'mobile_login'
   get 'welcome-back', to: 'sessions#welcome_back_user', as: 'welcome_back_user'
 
   # Password routes
@@ -52,17 +52,22 @@ Rails.application.routes.draw do
   # Resourceful routes
   resources :users
   resources :sessions, only: %i[new create destroy]
-  resources :apartments do
+  resources :apartments, path: 'listings' do
     resources :comments, only: [:create]
-    resources :photo_descriptions, only: [:create, :update]
+    resources :photo_descriptions, only: [] do
+      collection do
+        patch :update_all
+      end
+    end
     resources :market_scores, only: [:create]
     resources :floorplans, only: %i[create destroy update]
   end
+
   resources :favourites
   resources :photos
   resources :replies
   # config/routes.rb
-  resources :tags, param: :slug do
+  resources :tags, path: 'categories', param: :slug do
     resources :child_tags, only: [:show], param: :slug, controller: 'tags'
   end
 

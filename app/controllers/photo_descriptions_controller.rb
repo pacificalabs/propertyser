@@ -1,28 +1,38 @@
 class PhotoDescriptionsController < ApplicationController
-  def create
-    p = PhotoDescription.create!(description_params)
-    flash.notice = "Your description has been saved!"
-    redirect_to photos_path(apartment_id: p.apartment.id)
-  end
+  def update_all
+    @apartment = Apartment.friendly.find(params[:apartment_id])
 
-  def update
-    @apartment = Apartment.find params[:apartment_id]
     if params[:featured]
-      # @apartment.set_featured_photo(params[:id])
-      flash[:notice] = "PHOTO SET AS FEATURE PHOTO"
+      set_as_featured_photo
     elsif params[:delete]
-      @apartment.delete_photo_and_description(params["photo_description"]["blob_id"])
-      flash[:notice] = "Photo Deleted!"
-    elsif params[:commit] == "Update Description"
-      @description = PhotoDescription.find_or_initialize_by(apartment_id: @apartment.id, blob_id: params["photo_description"]["blob_id"])
-      @description.update!(description: params[:photo_description][:description])
-      flash[:notice] = "Photo Description Updated!"
+      delete_photo
     end
+    update_photo_descriptions
+
     redirect_to photos_path(apartment_id: @apartment.id)
   end
 
   private
-  def description_params
-    params.require(:photo_description).permit(:description, :apartment_id, :blob_id)
+
+  def set_as_featured_photo
+    @apartment.set_featured_photo(params[:featured])
+    flash[:notice] = "Photo set as feature photo"
+  end
+
+  def delete_photo
+    blob_id = params[:delete].keys.first
+    @apartment.delete_photo_and_description(blob_id)
+    flash[:notice] = "Photo deleted!"
+  end
+
+  def update_photo_descriptions
+    params[:photos].each do |blob_id, photo_params|
+      description = PhotoDescription.find_or_initialize_by(
+        apartment_id: @apartment.id,
+        blob_id: blob_id
+      )
+      description.update!(description: photo_params[:description])
+    end
+    flash[:notice] = "Photo descriptions updated!"
   end
 end

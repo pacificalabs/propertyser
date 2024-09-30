@@ -14,7 +14,7 @@ class IndexController < ApplicationController
   end
 
   def contact
-    @apartment = Apartment.find apartment_params[:id] if apartment_params.present?
+    @apartment = Apartment.friendly.find apartment_params[:id] if apartment_params.present?
   end
 
   def faq

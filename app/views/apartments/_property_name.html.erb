@@ -1,0 +1,13 @@
+<div class="row my-5"></div>
+<div class="row my-5"></div>
+<div class="row">
+  <div class="col-md-12 mt-sm-3">
+    <%= f.label :name, "Describe your property in one sentence.", class: "mt-md-3"  %>
+    <br>
+    <%= f.text_area :name, class: "form-control", maxlength: 200 %>
+  </div>
+  <div class="form-group mt-md-2">
+    <%= f.label :display_option, "Choose an Option" %>
+    <%= f.select :display_option, options_for_select([['Display One-Line Sentence', 'name'], ['Display Limited Address', 'address'], ['Display Name & Limited Address', 'both']], @apartment.display_option), {}, class: "form-control" %>
+  </div>
+</div>
