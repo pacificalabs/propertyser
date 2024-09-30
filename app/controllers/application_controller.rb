@@ -63,9 +63,11 @@ class ApplicationController < ActionController::Base
     flash.delete "alert"
   end
 
-  def notify_admin_team(mailer,data = {})
+  def notify_admin_team(mailer_action, data = {})
     User.where(is_admin: true).find_each do |admin_user|
-      AdminMailer.with(recipient:admin_user, data:data).new_user_alert.deliver_later
+      AdminMailer.with(recipient: admin_user, data: data)
+      .send(mailer_action)
+      .deliver_later
     end
   end
 
