@@ -5,7 +5,7 @@
 <% end %>
 <div class="container g-0">
   <div class="row mt-md-3 mb-md-5 ml-md-5">
-    <div class="col-md-4 order-sm-1 mt-md-5">
+    <div class="col-md-4 order-sm-1 mt-md-5 bg-white shadow-sm rounded p-3">
       <%= render "about", apartment: @apartment  %>
       <%= render "land_size_internal_space", apartment: @apartment %>
       <%= render "description" if @descriptors.present? %>

@@ -1,13 +1,11 @@
 <div class='container-xxl py-5'>
-  <div class='container'>
-    <div class='text-center mx-auto mb-5 fadeInUp'  style='max-width: 600px;'>
-      <h1 class='mb-3'>Login</h1>
-    </div>
-    <div class='row g-4'>
+  <div class='container bg-white shadow-sm rounded-3'>
+    <div class='row p-4'>
       <div class='col-md-6 fadeInUp' >
         <%= image_tag(get_aws_url('image5traditionalhouse.jpg'), class: 'img-fluid') %>
       </div>
       <div class='col-md-6'>
+        <h1 class='mb-3'>Login</h1>
         <div class='wow fadeInUp' data-wow-delay='0.5s'>
           <p class='mb-4'>Already Registered? Log In</p>
           <%= form_with(url: login_path, local: true, class: 'form-group') do |f| %>
