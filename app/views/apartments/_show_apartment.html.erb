@@ -8,7 +8,9 @@
     <% @amenities = @amenities.keys if @amenities.present? %>
     <% pic = a.featured_photo_id.present? ? a.photos.find_by(blob_id: a.featured_photo_id) : a.photos.first %>
     <% search_title = nil if controller_name == "users" %>
-    <% if device_is_mobile? %>
+
+    <% unless a.archived %>
+      <% if device_is_mobile? %>
       <!-- Mobile version -->
       <div class="card mt-md-4">
         <div class="card-body apartment-card">
@@ -69,6 +71,7 @@
           </div>
         </div>
       </div>
+    <% end %>
     <% end %>
   <% end %>
 </div>
