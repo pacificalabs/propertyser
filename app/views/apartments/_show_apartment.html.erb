@@ -1,3 +1,4 @@
+<div class="row d-flex justify-content-evenly">
 <% apartments.each_with_index do |a, index| %>
   <% @features = a&.feature&.attributes&.select { |k, f| f.present? } %>
   <% @features = @features.keys if @features.present? %>
@@ -41,31 +42,29 @@
     </div>
   <% else %>
     <!-- Desktop version -->
-    <div class="row">
-      <div class="card w-100 mt-md-4 bg-white">
-        <div class="card-body apartment-card">
-          <div class="row">
-            <!-- Image and link -->
-            <div class="col-md-5 order-md-1 image-box">
-              <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : "<span class='nounderline m-5'>There was a problem loading the image.</span>".html_safe %>
-              <div>
-                <%= link_to tag, apartment_path(a, title: search_title), class: "alert-link" %>
-              </div>
-            </div>
-            <!-- Address and property details -->
-            <div class="col-md-5 order-md-2">
+
+      <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+        <div class="card" style="width: 18rem;">
+          <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : '' %>
+          <div>
+            <%= link_to tag, apartment_path(a, title: search_title), class: "alert-link" %>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">
               <%= render partial: "apartments/display_address", locals: { apartment: a, search_title: search_title } %>
-              <div class="ml-3 mt-2">
-                <%= render partial: "apartments/property_values", locals: {apartment: a} %>
-              </div>
-            </div>
-            <!-- Favourites widget -->
+            </h5>
+            <p class="card-text">
+              <%= render partial: "apartments/property_values", locals: {apartment: a} %>
+            </p>
             <div class="col-md-1 order-md-3 d-flex align-items-center">
               <%= render partial: "favourites/widget", locals: {apartment: a} %>
             </div>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
           </div>
         </div>
-      </div>
+
     </div>
   <% end %>
 <% end %>
+</div>
+
