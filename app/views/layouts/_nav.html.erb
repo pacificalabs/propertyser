@@ -17,7 +17,7 @@
         <h5 class="text-secondary">Working...</h5>
       </div>
       <div class="navbar-nav ms-auto">
-        <%= link_to 'All Listings', apartments_path, class: 'nav-item nav-link' %>
+        <%= link_to 'Current Listings', apartments_path, class: 'nav-item nav-link' %>
         <% @tags.each do |tag| %>
           <% if tag.parent_tags.empty? %>
             <% if tag.child_tags.any? %>
