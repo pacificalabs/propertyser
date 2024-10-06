@@ -37,7 +37,6 @@ class Admin::TagsController < ApplicationController
     end
   end
 
-  # app/controllers/tags_controller.rb
   def show
     @tag = Tag.friendly.find(params[:id]) # assuming you use friendly_id for slug
     @child_tags = @tag.child_tags
