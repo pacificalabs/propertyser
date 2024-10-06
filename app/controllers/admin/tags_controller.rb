@@ -33,7 +33,7 @@ class Admin::TagsController < ApplicationController
     @tag = if params[:parent]
       Tag.find(params[:parent])
     else
-      current_user.tags.new
+      Tags.new
     end
   end
 
@@ -47,7 +47,7 @@ class Admin::TagsController < ApplicationController
   end
 
   def create
-    @tag = current_user.tags.new(tag_params)
+    @tag = Tag.new(tag_params)
     if @tag.save
       redirect_to  edit_admin_tag_path(@tag), notice: 'Category was successfully created.'
     else
@@ -76,7 +76,7 @@ class Admin::TagsController < ApplicationController
   private
 
   def set_tag
-    @tag = current_user.tags.friendly.find(params[:id])
+    @tag = Tag.friendly.find(params[:id])
   rescue StandardError => e
     redirect_to admin_tags_path
   end
