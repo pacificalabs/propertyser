@@ -4,5 +4,5 @@
   <%= link_to 'Back', admin_tags_path %>
   <%= render 'form', tag: @tag %>
   <p><%= @apartments&.size.to_i %>  properties assigned</p>
-  <%= link_to "Assign Properties", search_page_two_path(@apartments) %>
+  <%= link_to "Assign Properties", apartments_path %>
 </div>
