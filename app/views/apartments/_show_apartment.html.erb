@@ -59,7 +59,9 @@
             <div class="col-md-1 order-md-3 d-flex align-items-center">
               <%= render partial: "favourites/widget", locals: {apartment: a} %>
             </div>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <%= link_to apartment_path(a, title: search_title), class: "btn btn-primary" do %>
+              More information
+            <% end %>
           </div>
         </div>
 
