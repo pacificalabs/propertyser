@@ -1,6 +1,5 @@
 # app/controllers/admin/tags_controller.rb
 class Admin::TagsController < ApplicationController
-  before_action :set_tag, only: [:edit, :update, :destroy]
 
   def assign_tags
     # Use `find` with an array of IDs to handle ActiveRecord::RecordNotFound gracefully
@@ -59,6 +58,7 @@ class Admin::TagsController < ApplicationController
   end
 
   def update
+    @tag = Tag.friendly.find(params[:id])
     if @tag.update(tag_params)
       redirect_to admin_tag_path(@tag), notice: 'Category was successfully updated.'
     else
@@ -68,6 +68,7 @@ class Admin::TagsController < ApplicationController
   end
 
   def destroy
+    @tag = Tag.friendly.find(params[:id])
     @tag.destroy
     redirect_to admin_tags_url, notice: 'Category was successfully destroyed.'
   end

@@ -1,10 +1,10 @@
 <%= form_with(url: assign_tags_admin_tags_path, method: :post, local: true) do |form| %>
   <div class="row">
     <!-- Submit button for all apartments -->
-    <div class="row mt-3">
-      <div class="col-12 text-right">
-        <%= form.submit "Save Categories", class: "btn btn-primary disabled", id: "category-submit", disabled: true, style: "display: none;" %>
-      </div>
+    <div class="col-12 align-self-end">
+      <%= form.submit "Save Categories", class: "btn btn-primary d-none", id: "category-submit" do %>
+        <span class="d-block p-2 text-bg-danger">d-block</span>
+      <% end %>
     </div>
     <% @apartments.each do |apartment| %>
       <div class="col-12">

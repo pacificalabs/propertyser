@@ -15,9 +15,11 @@
           <td><%= tag.name %></td>
           <td><%= tag.slug %></td>
           <td>
-            <%= link_to 'Show', admin_tag_path(tag, slug: tag.slug), class: 'btn btn-info btn-sm' %> |
+            <%= link_to 'Show', admin_tag_path(tag, slug: tag.slug), class: 'btn btn-primary btn-sm' %> |
             <%= link_to 'Edit', edit_admin_tag_path(tag), class: 'btn btn-primary btn-sm' %> |
-            <%= link_to 'Delete', admin_tag_path(tag), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+            <%= form_with url: admin_tag_path(tag), method: :delete, class: 'd-inline' do |f| %>
+              <%= f.submit 'Delete', class: 'btn btn-danger btn-sm', onclick: "return confirm('Are you sure?');" %>
+            <% end %>
           </td>
         </tr>
       <% end %>
