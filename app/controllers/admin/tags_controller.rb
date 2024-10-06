@@ -33,13 +33,12 @@ class Admin::TagsController < ApplicationController
     @tag = if params[:parent]
       Tag.find(params[:parent])
     else
-      current_user.tags.new
+      Tags.new
     end
   end
 
-  # app/controllers/tags_controller.rb
   def show
-    @tag = Tag.friendly.find(params[:slug]) # assuming you use friendly_id for slug
+    @tag = Tag.friendly.find(params[:id]) # assuming you use friendly_id for slug
     @child_tags = @tag.child_tags
     @apartments_by_child_tag = @child_tags.each_with_object({}) do |child_tag, hash|
       hash[child_tag.name] = child_tag.apartments
@@ -47,7 +46,7 @@ class Admin::TagsController < ApplicationController
   end
 
   def create
-    @tag = current_user.tags.new(tag_params)
+    @tag = Tag.new(tag_params)
     if @tag.save
       redirect_to  edit_admin_tag_path(@tag), notice: 'Category was successfully created.'
     else
@@ -76,7 +75,7 @@ class Admin::TagsController < ApplicationController
   private
 
   def set_tag
-    @tag = current_user.tags.friendly.find(params[:id])
+    @tag = Tag.friendly.find(params[:id])
   rescue StandardError => e
     redirect_to admin_tags_path
   end
