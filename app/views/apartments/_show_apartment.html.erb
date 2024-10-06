@@ -56,6 +56,11 @@
             <p class="card-text">
               <%= render partial: "apartments/property_values", locals: {apartment: a} %>
             </p>
+            <% if a.asking_price.present? %>
+              <div class="">
+                <%= a.asking_price %>
+              </div>
+            <% end %>
             <div class="col-md-1 order-md-3 d-flex align-items-center">
               <%= render partial: "favourites/widget", locals: {apartment: a} %>
             </div>
