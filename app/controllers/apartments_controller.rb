@@ -7,7 +7,7 @@ class ApartmentsController < ApplicationController
   before_action :load_icons, only: [:index,:new,:edit,:owner,:show]
 
   def index
-    @apartments = Apartment.all
+    @apartments = Apartment.un_archived
     # Fetch child tags
     child_tags = Tag.child_tags
 
