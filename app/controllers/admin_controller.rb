@@ -23,10 +23,6 @@ class AdminController < ApplicationController
     redirect_to admin_path
   end
 
-  def approval_params
-    params.permit(:id)
-  end
-
   def delete
     @apartment = Apartment.find(params[:id])
     if @apartment.destroy
@@ -38,17 +34,17 @@ class AdminController < ApplicationController
   end
 
   def archive
-    @apartment = Apartment.find_by_id(approval_params[:id])
+    @apartment = Apartment.friendly.find(approval_params[:id])
     @apartment.archive
     flash[:alert] = "PROPERTY WAS ARCHIVED!"
-    redirect_to admin_path
+    redirect_to archival_path
   end
 
   def unarchive
-    @apartment = Apartment.find_by_id(approval_params[:id])
+    @apartment = Apartment.friendly.find(approval_params[:id])
     @apartment.unarchive
     flash[:alert] = "PROPERTY WAS UNARCHIVED!"
-    redirect_to archival_path
+    redirect_to admin_path
   end
 
   def archival
@@ -63,6 +59,10 @@ class AdminController < ApplicationController
   end
 
   private
+
+  def approval_params
+    params.permit(:id)
+  end
 
   def contact_form_params
     params.permit(:firstname,:phone,:email,:subject,:message_body)

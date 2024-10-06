@@ -97,8 +97,8 @@ Rails.application.routes.draw do
   post 'approve/:id', to: 'admin#approve', as: 'approval'
   post 'revoke/:id', to: 'admin#revoke', as: 'revoke'
   get 'delete/:id', to: 'admin#delete', as: :admin_deletion
-  post 'admin/archive/:id', to: 'admin#archive', as: 'admin_archive'
-  post 'admin/unarchive/:id', to: 'admin#unarchive', as: 'admin_unarchive'
+  get 'admin/archive/:id', to: 'admin#archive', as: 'admin_archive'
+  get 'admin/unarchive/:id', to: 'admin#unarchive', as: 'admin_unarchive'
   get 'admin/archival', to: 'admin#archival', as: 'archival'
   get 'admin/owner/:user_id', to: 'admin#owner', as: 'admin_owner'
   delete 'delete_saved_search/:id', to: 'searches#delete', as: 'delete_saved_search'
