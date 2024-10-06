@@ -1,48 +1,47 @@
 <div class="row d-flex justify-content-evenly">
-<% apartments.each_with_index do |a, index| %>
-  <% @features = a&.feature&.attributes&.select { |k, f| f.present? } %>
-  <% @features = @features.keys if @features.present? %>
-  <% @descriptors = a&.descriptor&.attributes&.select { |k, f| f.present? } %>
-  <% @descriptors = @descriptors.keys if @descriptors.present? %>
-  <% @amenities = a&.amenity&.attributes&.select { |k, f| f.present? } %>
-  <% @amenities = @amenities.keys if @amenities.present? %>
-  <% pic = a.featured_photo_id.present? ? a.photos.find_by(blob_id: a.featured_photo_id) : a.photos.first %>
-  <% search_title = nil if controller_name == "users" %>
-  <% if device_is_mobile? %>
-    <!-- Mobile version -->
-    <div class="card mt-md-4">
-      <div class="card-body apartment-card">
-        <div class="row">
-          <!-- Image and link -->
-          <div class="col-12 image-box">
-            <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : '' %>
-            <div>
-              <%= link_to tag, apartment_path(a, title: search_title), class: "alert-link" %>
+  <% apartments.each_with_index do |a, index| %>
+    <% @features = a&.feature&.attributes&.select { |k, f| f.present? } %>
+    <% @features = @features.keys if @features.present? %>
+    <% @descriptors = a&.descriptor&.attributes&.select { |k, f| f.present? } %>
+    <% @descriptors = @descriptors.keys if @descriptors.present? %>
+    <% @amenities = a&.amenity&.attributes&.select { |k, f| f.present? } %>
+    <% @amenities = @amenities.keys if @amenities.present? %>
+    <% pic = a.featured_photo_id.present? ? a.photos.find_by(blob_id: a.featured_photo_id) : a.photos.first %>
+    <% search_title = nil if controller_name == "users" %>
+    <% if device_is_mobile? %>
+      <!-- Mobile version -->
+      <div class="card mt-md-4">
+        <div class="card-body apartment-card">
+          <div class="row">
+            <!-- Image and link -->
+            <div class="col-12 image-box">
+              <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : '' %>
+              <div>
+                <%= link_to tag, apartment_path(a, title: search_title), class: "alert-link" %>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="row mt-3">
-          <div class="col-10">
-            <%= render partial: "apartments/display_address", locals: { apartment: a, search_title: search_title } %>
-          </div>
-          <div class="col-md-8">
-            <div class="mt-3 ml-4">
-              <%= render partial: "favourites/widget", locals: {apartment: a} %>
+          <div class="row mt-3">
+            <div class="col-10">
+              <%= render partial: "apartments/display_address", locals: { apartment: a, search_title: search_title } %>
+            </div>
+            <div class="col-md-8">
+              <div class="mt-3 ml-4">
+                <%= render partial: "favourites/widget", locals: {apartment: a} %>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="ml-4 mt-2">
-            <%= render partial: "apartments/property_values", locals: {apartment: a} %>
+          <div class="row">
+            <div class="ml-4 mt-2">
+              <%= render partial: "apartments/property_values", locals: {apartment: a} %>
+            </div>
           </div>
+          <div class="row tablet-card-border"></div>
+          <div class="mobile-break"></div>
         </div>
-        <div class="row tablet-card-border"></div>
-        <div class="mobile-break"></div>
       </div>
-    </div>
-  <% else %>
-    <!-- Desktop version -->
-
+    <% else %>
+      <!-- Desktop version -->
       <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
         <div class="card" style="width: 18rem;">
           <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : '' %>
@@ -69,9 +68,7 @@
             <% end %>
           </div>
         </div>
-
-    </div>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
 </div>
-
