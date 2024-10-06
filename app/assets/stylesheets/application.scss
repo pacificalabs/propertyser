@@ -5,7 +5,13 @@
 @import "tablet_device";
 
 body {
+  background-color: #FBFCF8;
+  min-height: 100vh;
+}
+
+.landing {
   background: url('bg-home.webp') no-repeat center;
+  background-size: cover;
   min-height: 100vh;
 }
 
@@ -60,10 +66,9 @@ nav a {
 }
 
 .homepage {
-  background: image_url('bg-home.webp') no-repeat center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: url('bg-home.webp') no-repeat center;
   background-size: cover;
-  transform: translate(50%, 50%);
+  min-height: 100vh;
   }
 
 nav.navbar.bg-primary, .btn-primary, .dropdown-item,
