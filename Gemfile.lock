@@ -509,7 +509,6 @@ DEPENDENCIES
   rubocop
   rubocop-capybara
   rubocop-i18n
-  rubocop-minitest
   rubocop-performance
   rubocop-rails
   rubocop-rails_config
