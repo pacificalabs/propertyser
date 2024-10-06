@@ -24,7 +24,7 @@ class AdminController < ApplicationController
   end
 
   def delete
-    @apartment = Apartment.find(params[:id])
+    @apartment = Apartment.friendly.find(params[:id])
     if @apartment.destroy
       flash[:notice] = "Property was successfully deleted."
     else
