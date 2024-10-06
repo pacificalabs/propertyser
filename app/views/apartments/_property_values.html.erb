@@ -1,23 +1,25 @@
-<div class="bedbathpark d-flex mt-2 ml-xs-5">
-  <% if (apartment.bedrooms || 0) > 0 %>
-    <%= image_tag get_aws_url("new_system_icons/bed.svg"), title:"Bedrooms", class:"tt iconz mb-md-2", data:{toggle:"tooltip", placement:"top"} %>
-    <span class="show-property tt badge<%= ' badge-light' if action_name == 'owner' %> alert-link property-value" title="Bedrooms" data-toggle="tooltip" data-placement="top"}>
-      <%= apartment.bedrooms || 0 %>
-    </span>
-  <% end %>
+<% if (apartment.bathrooms || 0) > 0 || (apartment.parking_spaces || 0) > 0 || (apartment.bedrooms || 0) > 0 %>
+  <div class="bedbathpark d-flex mt-2 ml-xs-5">
+    <% if (apartment.bedrooms || 0) > 0 %>
+      <%= image_tag get_aws_url("new_system_icons/bed.svg"), title:"Bedrooms", class:"tt iconz mb-md-2", data:{toggle:"tooltip", placement:"top"} %>
+      <span class="show-property tt badge<%= ' badge-light' if action_name == 'owner' %> alert-link property-value" title="Bedrooms" data-toggle="tooltip" data-placement="top"}>
+        <%= apartment.bedrooms || 0 %>
+      </span>
+    <% end %>
 
-  <% if (apartment.bathrooms || 0) > 0 %>
-    <%= image_tag get_aws_url("new_system_icons/bath.svg"), title: "Bathrooms", class:"tt iconz mb-md-2" , data:{toggle:"tooltip", placement:"top"} %>
-    <span class="show-property tt badge #{'badge-light' if action_name == 'owner'} alert-link property-value" title:="Bathrooms" data-toggle="tooltip" data-placement="top">
-      <%= apartment.bathrooms || 0 %>
-    </span>
-  <% end %>
+    <% if (apartment.bathrooms || 0) > 0 %>
+      <%= image_tag get_aws_url("new_system_icons/bath.svg"), title: "Bathrooms", class:"tt iconz mb-md-2" , data:{toggle:"tooltip", placement:"top"} %>
+      <span class="show-property tt badge #{'badge-light' if action_name == 'owner'} alert-link property-value" title:="Bathrooms" data-toggle="tooltip" data-placement="top">
+        <%= apartment.bathrooms || 0 %>
+      </span>
+    <% end %>
 
-  <% if (apartment.parking_spaces || 0) > 0 %>
-    <%= image_tag get_aws_url("new_system_icons/car.svg"), title: "Parking", class:"tt iconz mb-md-2" , data:{toggle:"tooltip", placement:"top"} %>
-    <span class="show-property tt badge #{'badge-light' if action_name == 'owner'} alert-link property-value" title="Parking Spaces"  data-toggle="tooltip" data-placement="top">
-      <%= apartment.parking_spaces || 0 %>
-    </span>
-  <% end %>
-   <br>
-</div>
+    <% if (apartment.parking_spaces || 0) > 0 %>
+      <%= image_tag get_aws_url("new_system_icons/car.svg"), title: "Parking", class:"tt iconz mb-md-2" , data:{toggle:"tooltip", placement:"top"} %>
+      <span class="show-property tt badge #{'badge-light' if action_name == 'owner'} alert-link property-value" title="Parking Spaces"  data-toggle="tooltip" data-placement="top">
+        <%= apartment.parking_spaces || 0 %>
+      </span>
+    <% end %>
+     <br>
+  </div>
+<% end %>
