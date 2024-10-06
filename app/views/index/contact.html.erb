@@ -1,7 +1,6 @@
 <div class="row">
-  <div class="column col-md-4" id="contact-column"></div>
-  <div class="col-md-4">
-    <h2 class="text-center my-md-5"><%= image_tag get_aws_url("white_icons/icons8-new-contact-50.png"), class: "title-icons ml-md-2 mb-md-1" %> Make an Enquiry</h2>
+  <div class="col-md-4 m-auto">
+    <h2 class="text-center my-md-5">Make an Enquiry</h2>
     <%= form_with url: contact_us_path, local:true, class:"form-group" do |f| %>
       <%= image_tag get_aws_url("white_icons/icons8-name-50.png"), class: "feature-icons-edit-new ml-md-2" %>
       <%= f.label :name %>
@@ -18,11 +17,7 @@
       <%= image_tag get_aws_url("white_icons/icons8-messaging-50.png"), class: "feature-icons-edit-new ml-md-2" %>
       <%= f.label :message %>
       <%= f.text_area :message_body, required:true, placeholder: "Your message", class: "form-control mb-md-3" %>
-      <%= f.submit "Send", id: "contact-us-send", class:"btn btn-outline-primary col-md-12"  %>
+      <%= f.submit "Send", id: "contact-us-send", class:"btn btn-primary col-md-12"  %>
     <% end %>
-    <div class="actions">
-    </div>
-    <div class="mobile-break"></div>
   </div>
-  <div class="column col-md-4"></div>
 </div>
