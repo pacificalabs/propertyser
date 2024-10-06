@@ -47,6 +47,16 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'rubocop-minitest', require: false
+  gem 'rubocop-thread_safety', require: false
+  gem 'rubocop-require_tools', require: false
+  gem 'rubocop-i18n', require: false
+  gem 'rubocop-rails_config', require: false
+  gem 'rubocop-capybara', require: false
 end
 
 group :development do
