@@ -142,6 +142,18 @@ $(document).ready(function() {
         submitButton.classList.toggle('d-none', !(photoInput.files.length || floorplanInput.files.length));
     }
 
+    function updateCategorySubmitButtonVisibility() {
+        var selectedCategoryIds = $(".tag-select").val();
+        // Check if any category is selected
+        if (selectedCategoryIds && selectedCategoryIds.length > 0) {
+            // Show the submit button
+            $("#category-submit").removeClass("d-none");
+        } else {
+            // Hide the submit button
+            $("#category-submit").addClass("d-none");
+        }
+    }
+
     // Viewport handling
     window.viewport = {
         height: window.innerHeight,
@@ -156,7 +168,11 @@ $(document).ready(function() {
     });
 
     // Initialize file lists and submit button visibility
-    updateSubmitButtonVisibility();
-    updateFileList('photos', []);
-    updateFileList('floorplans', []);
+    if (window.location.href.includes('photos')) {
+        updateSubmitButtonVisibility();
+        updateFileList('photos', []);
+        updateFileList('floorplans', []);
+    }
+    $(".tag-select").on("change", updateCategorySubmitButtonVisibility);
+    updateCategorySubmitButtonVisibility();
 });
