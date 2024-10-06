@@ -24,7 +24,7 @@
   <div class="row">
     <div class="col-sm-11">
       <% if @apartment.display_option == 'name' %>
-        <h1><%= @apartment&.name&.titlecase %></h1>
+        <h1><%= @apartment.name %></h1>
       <% elsif @apartment.display_option == 'address' %>
         <% if @address.length > 18 %>
           <h5><%= @address %></h5>
