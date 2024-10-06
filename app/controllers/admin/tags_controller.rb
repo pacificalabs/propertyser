@@ -39,7 +39,7 @@ class Admin::TagsController < ApplicationController
 
   # app/controllers/tags_controller.rb
   def show
-    @tag = Tag.friendly.find(params[:slug]) # assuming you use friendly_id for slug
+    @tag = Tag.friendly.find(params[:id]) # assuming you use friendly_id for slug
     @child_tags = @tag.child_tags
     @apartments_by_child_tag = @child_tags.each_with_object({}) do |child_tag, hash|
       hash[child_tag.name] = child_tag.apartments
