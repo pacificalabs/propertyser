@@ -32,7 +32,7 @@
       <div class="body-content">
         <%= render 'layouts/nav' %>
         <div id="homblok-container">
-          <div class="<%= 'd-none' unless flash[:notice].present? || flash[:alert].present? %> alert alert-warning alert-dismissible fade show text-center mt-2" id="notice-alert-banner" role="alert">
+          <div class="<%= 'd-none' unless flash[:notice].present? || flash[:alert].present? %> alert alert-warning alert-dismissible fade show text-center" id="notice-alert-banner" role="alert">
             <span>
               <%= flash[:notice] %>
               <%= flash[:alert] %>
