@@ -128,6 +128,11 @@ nav a {
   min-height: 100vh;
   }
 
+.body-content {
+  background-color: #fffbf5;
+  min-height: 100vh;
+}
+
 nav.navbar.bg-primary, .btn-primary, .dropdown-item,
 .dropdown-menu, .btn-info, .bg-primary {
   --bs-bg-opacity: 1;
