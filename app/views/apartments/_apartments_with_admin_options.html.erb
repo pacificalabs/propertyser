@@ -1,47 +1,45 @@
 <%= form_with(url: assign_tags_admin_tags_path, method: :post, local: true) do |form| %>
-  <div class="row">
+  <div class="row d-flex flex-wrap">
     <!-- Submit button for all apartments -->
-    <div class="col-12 align-self-end">
+    <div class="col-12 align-self-end my-2">
       <%= form.submit "Save Categories", class: "btn btn-primary d-none", id: "category-submit" do %>
         <span class="d-block p-2 text-bg-danger">d-block</span>
       <% end %>
     </div>
     <% @apartments.each do |apartment| %>
-      <div class="col-12">
-        <div class="card w-100 mt-md-4 bg-white">
+      <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+        <div class="card"  style="min-width: 18rem;min-height:380px;">
           <div class="card-body apartment-card">
             <div class="row">
               <!-- Image and link -->
-              <div class="col-md-5 order-md-1 image-box">
+
                 <% pic = apartment.photos&.first %>
-                <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : "<span class='nounderline m-5'>There was a problem loading the image.</span>".html_safe  %>
-                <div>
+                <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail property-thumbnail") : "<div class='property-thumbnail small text-decoration-none'>There was a problem loading the image.</div>".html_safe  %>
+                <div style="max-height: 180px;overflow: clip;display: flex;justify-content: center;align-items: center;">
                   <%= link_to tag, apartment_path(apartment), class: "alert-link" %>
                 </div>
-              </div>
+
               <!-- Address and property details -->
-              <div class="col-md-3 order-md-2">
-                <h5 class="card-title ml-3 mt-3">
+              <div class="card-body">
+                <h5 class="card-title">
                   <%= link_to apartment.full_address_line_1, apartment_path(apartment), class: "alert-link nounderline" %>
                 </h5>
-                <h5 class="card-title ml-3 mt-3">
+                <h5 class="card-title">
                   <%= link_to apartment.address_line_2, apartment_path(apartment), class: "alert-link nounderline" %>
                 </h5>
-                <div class="ml-3 mt-2">
+                <div class="card-text">
                   <%= render partial: "apartments/property_values", locals: {apartment: apartment} %>
-                </div>
-              </div>
-              <!-- Tag selection -->
-              <div class="col-md-4 order-md-3 d-flex align-items-center justify-content-end">
-                <div class="field w-100">
-                  <%= form.label "Categories"  %>
-                  <%= form.collection_select "apartments[#{apartment.id}][tag_ids]", @child_tags, :id, :name, { selected: apartment.tag_ids }, { multiple: true, class: "form-control tag-select" } %>
                 </div>
               </div>
               <!-- Favourites widget -->
               <div class="col-md-1 order-md-4 d-flex align-items-center">
                 <%= render partial: "favourites/widget", locals: {apartment: apartment} %>
               </div>
+            </div>
+            <!-- Tag selection -->
+            <div class="field w-100">
+              <%= form.label "Categories" %>
+              <%= form.collection_select "apartments[#{apartment.id}][tag_ids]", @child_tags, :id, :name, { selected: apartment.tag_ids }, { multiple: true, class: "form-control tag-select" } %>
             </div>
           </div>
         </div>
