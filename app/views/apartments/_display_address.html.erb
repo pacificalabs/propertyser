@@ -1,15 +1,15 @@
 <!-- app/views/apartments/_display_address.html.erb -->
 <% case apartment.display_option %>
 <% when 'name' %>
-  <h4 class="card-title ml-3 mt-3">
+  <h6 class="card-title ml-3 mt-3">
     <%= link_to apartment.display_text.html_safe, apartment_path(apartment, title: search_title), class: "alert-link nounderline" %>
-  </h4>
+  </h6>
 <% when 'address' %>
   <%= render partial: "apartments/display_address_only", locals: { apartment: apartment, search_title: search_title } %>
 <% else %> <!-- 'both' option -->
-  <h4 class="card-title ml-3 mt-3">
+  <h6 class="card-title ml-3 mt-3">
     <%= link_to apartment.display_text, apartment_path(apartment, title: search_title), class: "alert-link nounderline" %>
-  </h4>
+  </h6>
   <%= render partial: "apartments/display_address_only", locals: { apartment: apartment, search_title: search_title } %>
 <% end %>
 <% if current_user&.is_admin? %>
