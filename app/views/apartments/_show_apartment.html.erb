@@ -1,4 +1,4 @@
-<div class="row d-flex justify-content-evenly">
+<div class="row d-flex flex-wrap">
   <% apartments.each_with_index do |a, index| %>
     <% @features = a&.feature&.attributes&.select { |k, f| f.present? } %>
     <% @features = @features.keys if @features.present? %>
@@ -47,7 +47,7 @@
       <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
         <div class="card" style="width: 18rem;">
           <% tag = pic.present? ? image_tag(pic, alt: "", class: "img-fluid img-thumbnail") : '' %>
-          <div>
+          <div style="max-height: 180px;overflow: clip;display: flex;justify-content: center;align-items: center;">
             <%= link_to tag, apartment_path(a, title: search_title), class: "alert-link" %>
           </div>
           <div class="card-body">
@@ -57,7 +57,7 @@
             <p class="card-text">
               <%= render partial: "apartments/property_values", locals: {apartment: a} %>
             </p>
-            <% if a.asking_price.present? %>
+            <% if a.asking_price.present? && a.asking_price > 0 %>
               <div class="">
                 <%= a.asking_price %>
               </div>
